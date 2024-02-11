@@ -1,3 +1,5 @@
+#pragma once
+
 #define LOG_INFO " @ " << __FUNC__ << " (" << __FILE__ << ":" << __LINE__ << ")"
 
 namespace mce {
