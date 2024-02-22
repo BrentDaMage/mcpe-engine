@@ -1,0 +1,20 @@
+#pragma once
+
+namespace mce
+{
+    enum VertexField
+    {
+        VERTEX_FIELD_POSITION,
+        VERTEX_FIELD_COLOR,
+        VERTEX_FIELD_NORMAL,
+        VERTEX_FIELD_TEXCOORD_0,
+        VERTEX_FIELD_TEXCOORD_1,
+        VERTEX_FIELD_TEXCOORD_2,
+        VERTEX_FIELD_TEXCOORD_4,
+        VERTEX_FIELD_BONEID_0,
+        VERTEX_FIELD_TEXCOORD_5,
+        VERTEX_FIELD_HB_POSITION,
+        VERTEX_FIELD_HB_COLOR,
+        VERTEX_FIELD_HB_ADDITIONAL
+    };
+}
