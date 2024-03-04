@@ -4,25 +4,28 @@ namespace mce
 {
 	enum ShaderPrimitiveTypes
 	{
-		UnknownPrimitiveType = 0,
-		Float1 = 1,
-		Float2 = 2,
-		Float3 = 3,
-		Float4 = 4,
-		Int1 = 5,
-		Int2 = 6,
-		Int3 = 7,
-		Int4 = 8,
-		Matrix2x2 = 9,
-		Matrix3x3 = 10,
-		Matrix3x4 = 11,
-		Matrix2x4 = 12,
-		Matrix4x4 = 13
+		SHADER_PRIMITIVE_UNKNOWN,
+		SHADER_PRIMITIVE_FLOAT1,
+		SHADER_PRIMITIVE_FLOAT2,
+		SHADER_PRIMITIVE_FLOAT3,
+		SHADER_PRIMITIVE_FLOAT4,
+		SHADER_PRIMITIVE_INT1,
+		SHADER_PRIMITIVE_INT2,
+		SHADER_PRIMITIVE_INT3,
+		SHADER_PRIMITIVE_INT4,
+		SHADER_PRIMITIVE_MATRIX2x2,
+		SHADER_PRIMITIVE_MATRIX3x3,
+		SHADER_PRIMITIVE_MATRIX4x4,
+		SHADER_PRIMITIVES_END,
+		SHADER_PRIMITIVE_SAMPLER1D,
+		SHADER_PRIMITIVE_SAMPLER2D,
+		SHADER_PRIMITIVE_SAMPLER3D,
+		SHADER_PRIMITIVES_MAX
 	};
 
 	class ShaderPrimitiveTypeHelper
 	{
 	public:
-		int sizeInBytesFromShaderPrimitiveType(ShaderPrimitiveTypes* shaderPrimitiveType);
+		static int sizeInBytesFromShaderPrimitiveType(mce::ShaderPrimitiveTypes shaderPrimitiveType);
 	};
 }

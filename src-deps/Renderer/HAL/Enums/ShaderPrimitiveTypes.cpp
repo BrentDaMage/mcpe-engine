@@ -1,28 +1,30 @@
-using namespace mce;
+#include <typeinfo>
 
-int ShaderPrimitiveTypeHelper::sizeInBytesFromShaderPrimitiveType(ShaderPrimitiveTypes* shaderPrimitiveType)
+#include "ShaderPrimitiveTypes.h"
+
+int mce::ShaderPrimitiveTypeHelper::sizeInBytesFromShaderPrimitiveType(mce::ShaderPrimitiveTypes shaderPrimitiveType)
 {
     switch (shaderPrimitiveType)
     {
-        case Float1:
-        case Int1:
+        case SHADER_PRIMITIVE_FLOAT1:
+        case SHADER_PRIMITIVE_INT1:
             return 4;
-        case Float2:
-        case Int2:
+        case SHADER_PRIMITIVE_FLOAT2:
+        case SHADER_PRIMITIVE_INT2:
             return 8;
-        case Float3:
-        case Int3:
+        case SHADER_PRIMITIVE_FLOAT3:
+        case SHADER_PRIMITIVE_INT3:
             return 12;
-        case Float4:
-        case Int4:
-        case Matrix2x2:
+        case SHADER_PRIMITIVE_FLOAT4:
+        case SHADER_PRIMITIVE_INT4:
+        case SHADER_PRIMITIVE_MATRIX2x2:
             return 16;
-        case Matrix3x3:
+        case SHADER_PRIMITIVE_MATRIX3x3:
             return 36;
-        case Matrix3x4:
+        case SHADER_PRIMITIVE_MATRIX4x4:
             return 64;
         default:
-            LOG_E("Unknown shaderPrimitiveType: " << shaderPrimitiveType);
-            return nullptr;
+            //LOG_E("Unknown shaderPrimitiveType: " << shaderPrimitiveType);
+            throw std::bad_cast();
     }
 }
