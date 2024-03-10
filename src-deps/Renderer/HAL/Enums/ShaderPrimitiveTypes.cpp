@@ -1,5 +1,4 @@
 #include <typeinfo>
-
 #include "ShaderPrimitiveTypes.h"
 
 int mce::ShaderPrimitiveTypeHelper::sizeInBytesFromShaderPrimitiveType(mce::ShaderPrimitiveTypes shaderPrimitiveType)
