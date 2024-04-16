@@ -5,11 +5,11 @@ mce::DepthStencilStateDescription::DepthStencilStateDescription()
     depthFunc = COMPARISON_FUNC_LESS;
     depthTestEnabled = true;
     stencilTestEnabled = false;
-    frontFace = StencilFaceDescription();
-    backFace = StencilFaceDescription();
+    frontFace = mce::StencilFaceDescription();
+    backFace = mce::StencilFaceDescription();
     depthWriteMask = DEPTH_WRITE_MASK_ALL;
 
-    stencilRef = StencilRefObject(0);
+    stencilRef = mce::StencilRefObject(0);
     overwroteStencilRef = false;
     stencilReadMask = 0xFFFFFFFF;
     stencilWriteMask = 0xFFFFFFFF;

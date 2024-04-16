@@ -5,7 +5,7 @@ mce::ImageDescription::ImageDescription()
 {
 	m_width = 0;
 	m_height = 0;
-	bufferProbably = 0;
+	m_pixels = nullptr;
 	m_textureFormat = TEXTURE_FORMAT_UNKNOWN;
 }
 
