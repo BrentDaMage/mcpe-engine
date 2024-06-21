@@ -1,12 +1,22 @@
-class RasterizerStateOGL {
-private:
-    GLenum m_cullFace;
-    bool m_enableScissorTest;
-    bool m_cullMode;
-    GLfloat m_depthScale;
+#pragma once
 
-public:
-    bool bindRaserizerState(RenderContext* ctx, int forceBind);
-    void setRasterizerStateDescription(RenderContext* ctx, const RasterizerStateDescription* desc);
-    void setScissorRect(RenderContext* ctx, GLint x, GLint y, GLsizei width, GLsizei height);
+#include <gl/GL.h>
+#include "../Base/RasterizerStateBase.h"
+#include "../Interface/RenderContext.h"
+
+namespace mce
+{
+    class RasterizerStateOGL : RasterizerStateBase
+    {
+    private:
+        GLenum m_cullFace;
+        bool m_enableScissorTest;
+        bool m_cullMode;
+        GLfloat m_depthScale;
+
+    public:
+        bool bindRasterizerState(RenderContext& context, bool forceBind);
+        void setRasterizerStateDescription(RenderContext& context, const RasterizerStateDescription& description);
+        void setScissorRect(RenderContext &context, GLint x, GLint y, GLsizei width, GLsizei height);
+    };
 }

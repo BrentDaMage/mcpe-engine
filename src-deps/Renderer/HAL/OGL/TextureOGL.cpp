@@ -17,11 +17,11 @@ void TextureOGL::deleteTexture()
     ErrorHandler::checkForErrors();
 }
 
-void convertToMipmapedTexture(RenderContext& ctx, GLuint mipMaps)
+void TextureOGL::convertToMipmapedTexture(RenderContext& ctx, GLuint mipMaps)
 {
     if (mipMaps < 1)
     {
-        LOG_E("You must have a positive number of mip maps that is greater than 1");
+        //LOG_E("You must have a positive number of mip maps that is greater than 1");
     }
     bindTexture(ctx, 0, 2u);
     convertToMipmapedTexture(mipMaps - 1);
@@ -34,11 +34,15 @@ void TextureOGL::subBuffer(RenderContext& ctx, void const* pixels, GLint xoffset
 {
     bindTexture(ctx, GL_FALSE, GL_LINE_LOOP);
     ErrorHandler::checkForErrors();
-    if (textureTarget != GL_TEXTURE_2D)
+    switch (textureTarget)
     {
-        LOG_E("Unknown textureTarget " << textureTarget);
+        case GL_TEXTURE_2D:
+            glTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, width, height, format, type, pixels);
+            break;
+        default:
+            //LOG_E("Unknown textureTarget " << textureTarget);
+            throw std::bad_cast();
     }
-    glTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, width, height, format, type, pixels);
 }
 
 void TextureOGL::subBuffer(RenderContext& ctx, void const* pixels)
@@ -46,12 +50,12 @@ void TextureOGL::subBuffer(RenderContext& ctx, void const* pixels)
     subBuffer(ctx, pixels, 0, 0, description->m_image->m_width, description->m_image->m_height, 0);
 }
 
-void lock(RenderContext& ctx)
+void TextureOGL::lock(RenderContext& ctx)
 {
 
 }
 
-void unlock(RenderContext& ctx)
+void TextureOGL::unlock(RenderContext& ctx)
 {
     bindTexture(ctx, GL_FALSE, GL_LINE_LOOP);
     subBuffer(ctx, context->pixels);
