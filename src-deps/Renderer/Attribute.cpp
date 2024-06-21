@@ -7,7 +7,7 @@ mce::Attribute::Attribute()
 	m_count = 0;
 }
 
-mce::Attribute::Attribute(unsigned int location,  unsigned int count, mce::VertexField vertexField)
+mce::Attribute::Attribute(unsigned int location, unsigned int count, mce::VertexField vertexField)
 {
 	m_vertexField = vertexField;
 	m_location = location;
