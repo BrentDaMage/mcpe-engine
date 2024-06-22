@@ -12,7 +12,7 @@ namespace mce
 		
 		DepthStencilStateBase();
 		
-		virtual void createDepthState(mce::RenderContext& context, const mce::DepthStencilStateDescription& description);
-        virtual bool bindDepthStencilState(mce::RenderContext& context);
+		void createDepthState(mce::RenderContext& ctx, const mce::DepthStencilStateDescription& desc);
+        bool bindDepthStencilState(mce::RenderContext& ctx);
 	};
 }

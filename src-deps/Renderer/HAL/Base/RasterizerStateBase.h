@@ -12,7 +12,7 @@ namespace mce
 		
 		RasterizerStateBase();
 		
-		virtual void createRasterizerStateDescription(mce::RenderContext& context, const mce::RasterizerStateDescription& description);
-        virtual bool bindRasterizerState(mce::RenderContext& context);
+		void createRasterizerStateDescription(mce::RenderContext& ctx, const mce::RasterizerStateDescription& desc);
+        bool bindRasterizerState(mce::RenderContext& ctx);
 	};
 }

@@ -3,7 +3,7 @@
 
 bool mce::RasterizerStateOGL::bindRasterizerState(mce::RenderContext& ctx, bool forceBind)
 {
-    mce::RasterizerStateDescription& ctxDesc = ctx.m_currentState.m_rasterizerStateDescription;
+    mce::RasterizerStateDescription& ctxDesc = ctx.m_state.m_rasterizerStateDescription;
 
     if (ctxDesc.cullMode != m_description.cullMode || forceBind)
     {
@@ -51,11 +51,11 @@ LABEL_10:
     return mce::RasterizerStateBase::bindRasterizerState(ctx);
 }
 
-void mce::RasterizerStateOGL::setRasterizerStateDescription(mce::RenderContext& ctx, const mce::RasterizerStateDescription& description)
+void mce::RasterizerStateOGL::setRasterizerStateDescription(mce::RenderContext& ctx, const mce::RasterizerStateDescription& desc)
 {
-    createRasterizerStateDescription(ctx, description);
-    m_enableScissorTest = description.enableScissorTest;
-    m_cullMode = description.cullMode;
+    createRasterizerStateDescription(ctx, desc);
+    m_enableScissorTest = desc.enableScissorTest;
+    m_cullMode = desc.cullMode;
     switch (m_cullMode)
     {
         case CULL_NONE:
@@ -71,15 +71,12 @@ void mce::RasterizerStateOGL::setRasterizerStateDescription(mce::RenderContext& 
             throw std::bad_cast();
     }
 
-    m_depthScale = description.depthBias;
-    if ( !ctx.m_currentState.m_bBoundRasterizerState )
+    m_depthScale = desc.depthBias;
+    if ( !ctx.m_state.m_bBoundRasterizerState )
     {
         bindRasterizerState(ctx, true);
-        // ctx.m_currentState.m_rasterizerStateDescription = description;
-        ctx.m_currentState.m_rasterizerStateDescription.depthBias = description.depthBias;
-        ctx.m_currentState.m_rasterizerStateDescription.cullMode = description.cullMode;
-        ctx.m_currentState.m_rasterizerStateDescription.enableScissorTest = description.enableScissorTest;
-        ctx.m_currentState.m_bBoundRasterizerState = 1;
+        ctx.m_state.m_rasterizerStateDescription = desc;
+        ctx.m_state.m_bBoundRasterizerState = 1;
     }
 }
 
