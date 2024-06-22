@@ -5,12 +5,12 @@ mce::RasterizerStateBase::RasterizerStateBase()
     m_description = mce::RasterizerStateDescription();
 }
 
-void mce::RasterizerStateBase::createRasterizerStateDescription(mce::RenderContext& context, const mce::RasterizerStateDescription& description)
+void mce::RasterizerStateBase::createRasterizerStateDescription(mce::RenderContext& ctx, const mce::RasterizerStateDescription& desc)
 {
-    m_description = description;
+    m_description = desc;
 }
 
-bool mce::RasterizerStateBase::bindRasterizerState(mce::RenderContext& context)
+bool mce::RasterizerStateBase::bindRasterizerState(mce::RenderContext& ctx)
 {
-    return context.m_currentState.m_rasterizerStateDescription == m_description;
+    return ctx.m_state.m_rasterizerStateDescription == m_description;
 }

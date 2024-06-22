@@ -8,7 +8,7 @@ namespace mce
     class RenderContextBase
     {
     public:
-        mce::RenderContextStateBase m_currentState;
-        mce::VertexFormat m_lastVertexFormat;
+        mce::RenderContextStateBase m_state;
+        mce::VertexFormat m_vertexFormat;
     };
 }
