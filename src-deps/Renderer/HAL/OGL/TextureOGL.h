@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Base/TextureBase.h"
+#include "TextureBase.h"
 
 class TextureOGL : TextureBase
 {

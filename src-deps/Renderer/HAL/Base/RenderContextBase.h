@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RenderContextStateBase.h"
-#include "../../VertexFormat.h"
+#include "VertexFormat.h"
 
 namespace mce
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../DepthStencilStateDescription.h"
-#include "../Interface/RenderContext.h"
+#include "DepthStencilStateDescription.h"
+#include "RenderContext.h"
 
 namespace mce
 {

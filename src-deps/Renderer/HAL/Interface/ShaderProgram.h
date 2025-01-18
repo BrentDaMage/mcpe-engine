@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Base/ShaderProgramBase.h"
+#include "ShaderProgramBase.h"
 
 namespace mce
 {

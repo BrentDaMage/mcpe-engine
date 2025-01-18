@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Enums/BufferType.h"
-#include "../Interface/RenderContext.h"
+#include "BufferType.h"
+#include "RenderContext.h"
 
 namespace mce
 {

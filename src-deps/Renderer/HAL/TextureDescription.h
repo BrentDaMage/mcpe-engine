@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 #include "ImageDescription.h"
-#include "Enums/TextureFiltering.h"
+#include "TextureFiltering.h"
 
 namespace mce
 {

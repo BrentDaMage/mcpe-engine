@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../RasterizerStateDescription.h"
-#include "../Interface/RenderContext.h"
+#include "RasterizerStateDescription.h"
+#include "RenderContext.h"
 
 namespace mce
 {

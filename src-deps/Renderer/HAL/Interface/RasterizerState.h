@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../OGL/RasterizerStateOGL.h"
+#include "OGL/RasterizerStateOGL.h"
 
 namespace mce
 {

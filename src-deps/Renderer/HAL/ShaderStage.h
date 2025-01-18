@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Enums/ShaderStagesBits.h"
+#include "ShaderStagesBits.h"
 
 namespace mce
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Enums/BlendTarget.h"
-#include "Enums/ColorWriteMask.h"
+#include "BlendTarget.h"
+#include "ColorWriteMask.h"
 
 namespace mce
 {

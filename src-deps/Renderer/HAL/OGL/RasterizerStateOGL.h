@@ -1,12 +1,12 @@
 #pragma once
 
 #include <gl/GL.h>
-#include "../Base/RasterizerStateBase.h"
-#include "../Interface/RenderContext.h"
+#include "RasterizerStateBase.h"
+#include "RenderContext.h"
 
 namespace mce
 {
-    class RasterizerStateOGL : RasterizerStateBase
+    class RasterizerStateOGL : public RasterizerStateBase
     {
     private:
         GLenum m_cullFace;

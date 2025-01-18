@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../BlendStateDescription.h"
-#include "../Interface/RenderContext.h"
+#include "BlendStateDescription.h"
+#include "RenderContext.h"
 
 namespace mce
 {
