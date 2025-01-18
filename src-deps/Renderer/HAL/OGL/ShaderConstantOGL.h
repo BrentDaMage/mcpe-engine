@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../Base/ShaderConstantBase.h"
+#include "ShaderConstantBase.h"
 
 namespace mce
 {
-    class ShaderConstantOGL : ShaderConstantBase
+    class ShaderConstantOGL : public ShaderConstantBase
     {
     public:
         void syncUniform(int);

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "../Enums/ShaderType.h"
+#include "ShaderType.h"
 
 namespace mce
 {

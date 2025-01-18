@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../BlendStateDescription.h"
-#include "../DepthStencilStateDescription.h"
-#include "../RasterizerStateDescription.h"
+#include "BlendStateDescription.h"
+#include "DepthStencilStateDescription.h"
+#include "RasterizerStateDescription.h"
 
 namespace mce
 {

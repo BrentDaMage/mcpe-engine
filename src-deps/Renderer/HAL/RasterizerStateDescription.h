@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Enums/CullMode.h"
+#include "CullMode.h"
 
 namespace mce
 {

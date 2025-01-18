@@ -1,5 +1,5 @@
 #include "ImageDescription.h"
-#include "../Helpers/TextureHelper.h"
+#include "TextureHelper.h"
 
 mce::ImageDescription::ImageDescription()
 {

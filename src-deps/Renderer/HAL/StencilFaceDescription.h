@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Enums/ComparisonFunc.h"
-#include "Enums/StencilOp.h"
+#include "ComparisonFunc.h"
+#include "StencilOp.h"
 
 namespace mce
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../OGL/ShaderConstantOGL.h"
+#include "OGL/ShaderConstantOGL.h"
 
 namespace mce
 {

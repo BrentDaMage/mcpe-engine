@@ -1,9 +1,9 @@
 #pragma once
 
 #include "StencilFaceDescription.h"
-#include "../StencilRefObject.h"
-#include "Enums/ComparisonFunc.h"
-#include "Enums/DepthWriteMask.h"
+#include "StencilRefObject.h"
+#include "ComparisonFunc.h"
+#include "DepthWriteMask.h"
 
 namespace mce
 {

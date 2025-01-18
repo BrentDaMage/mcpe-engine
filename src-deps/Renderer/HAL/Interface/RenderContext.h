@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Base/RenderContextBase.h"
+#include "RenderContextBase.h"
 
 namespace mce
 {

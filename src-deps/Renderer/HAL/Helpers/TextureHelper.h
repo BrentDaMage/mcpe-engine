@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Enums/TextureFormat.h"
+#include "TextureFormat.h"
 
 namespace mce
 {
