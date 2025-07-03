@@ -1,4 +1,5 @@
 #include <typeinfo>
+#include "OGL_API.h"
 #include "RasterizerStateOGL.h"
 
 bool mce::RasterizerStateOGL::bindRasterizerState(mce::RenderContext& ctx, bool forceBind)

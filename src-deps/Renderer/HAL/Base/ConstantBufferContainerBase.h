@@ -18,7 +18,10 @@ namespace mce
         std::string m_constantBufferName;
         bool m_currentlyMapped;
 
-        ConstantBufferContainerBase();
+    private:
+        void _init();
+    public:
+        ConstantBufferContainerBase() { _init(); }
         ConstantBufferContainerBase(mce::ConstantBufferContainerBase& other);
 
         void bindConstantBuffer(mce::RenderContext& ctx, unsigned int, unsigned int) { }
