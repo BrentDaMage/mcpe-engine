@@ -1,11 +1,22 @@
+#include "UniformMetaData.h"
+
 #include "ShaderConstantBase.h"
 
-mce::ShaderConstantBase::ShaderConstantBase()
+void mce::ShaderConstantBase::_init()
 {
     m_numberOfElements = 0;
     m_byteOffset = 0;
     m_shaderPrimitiveType = SHADER_PRIMITIVE_UNKNOWN;
-    m_dirty = 0;
+    m_dirty = false;
+}
+
+mce::ShaderConstantBase::ShaderConstantBase(const mce::UniformMetaData& uniMeta)
+{
+    _init();
+    m_name = uniMeta.m_uniformName;
+    m_shaderPrimitiveType = uniMeta.m_shaderPrimitiveType;
+    m_numberOfElements = uniMeta.m_numberOfElements;
+    m_byteOffset = uniMeta.m_byteOffset;
 }
 
 mce::ShaderConstantBase::~ShaderConstantBase()
@@ -15,8 +26,8 @@ mce::ShaderConstantBase::~ShaderConstantBase()
 
 bool mce::ShaderConstantBase::operator==(const mce::ShaderConstantBase& other) const
 {
-    return m_name == other.m_name &&
+    return getName() == other.getName() &&
            m_numberOfElements == other.m_numberOfElements &&
-           m_shaderPrimitiveType == other.m_shaderPrimitiveType &&
+           getType() == other.getType() &&
            m_byteOffset == other.m_byteOffset;
 }

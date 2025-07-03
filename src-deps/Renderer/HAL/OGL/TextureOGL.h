@@ -2,7 +2,7 @@
 
 #include "TextureBase.h"
 
-class TextureOGL : TextureBase
+class TextureOGL : public TextureBase
 {
 private:
     TextureDescription description;

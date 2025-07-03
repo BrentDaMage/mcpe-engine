@@ -5,6 +5,8 @@
 
 namespace mce
 {
+    class UniformMetaData;
+
     class ShaderConstantBase
     {
     public:
@@ -14,8 +16,12 @@ namespace mce
         mce::ShaderPrimitiveTypes m_shaderPrimitiveType;
         bool m_dirty;
 
+    private:
+        void _init();
+
     public:
-        ShaderConstantBase();
+        ShaderConstantBase() { _init(); }
+        ShaderConstantBase(const mce::UniformMetaData&);
         virtual ~ShaderConstantBase();
 
         void release();
