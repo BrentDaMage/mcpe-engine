@@ -14,7 +14,7 @@ namespace mce
     public:
         std::vector<mce::ShaderConstantBase> m_reflectedShaderConstants;
         std::vector<mce::ShaderConstant*> m_shaderConstants;
-        std::vector<unsigned char> m_constantBufferBytes;
+        std::vector<uint8_t> m_constantBufferBytes;
         std::string m_constantBufferName;
         bool m_currentlyMapped;
 
@@ -30,7 +30,9 @@ namespace mce
         void allocateRenderContextBuffer(mce::RenderContext& ctx) { }
         void reserveMemoryForShaderConstants(unsigned int shaderConstSize, unsigned int constBufferSize);
         void registerReflectedShaderParameter(const mce::UniformMetaData& uniMeta);
+        void registerShaderParameter(const mce::ShaderConstantBase &shaderConst);
+        void finalizeConstantBufferLayout();
         bool isDirty() const;
-        const std::string& getConstantBufferName() const {return m_constantBufferName; }
+        const std::string& getConstantBufferName() const { return m_constantBufferName; }
     };
 }
