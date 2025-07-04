@@ -23,7 +23,7 @@ int mce::ShaderPrimitiveTypeHelper::sizeInBytesFromShaderPrimitiveType(mce::Shad
         case SHADER_PRIMITIVE_MATRIX4x4:
             return 64;
         default:
-            //LOG_E("Unknown shaderPrimitiveType: " << shaderPrimitiveType);
+            //LOG_E("Unknown shaderPrimitiveType: %d", shaderPrimitiveType);
             throw std::bad_cast();
     }
 }
