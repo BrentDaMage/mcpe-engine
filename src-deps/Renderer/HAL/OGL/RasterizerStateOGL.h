@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gl/GL.h>
+#include "API_OGL.h"
 #include "RasterizerStateBase.h"
 #include "RenderContext.h"
 
