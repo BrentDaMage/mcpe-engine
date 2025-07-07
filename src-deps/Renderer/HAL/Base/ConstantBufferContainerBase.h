@@ -33,6 +33,6 @@ namespace mce
         void registerShaderParameter(const mce::ShaderConstantBase &shaderConst);
         void finalizeConstantBufferLayout();
         bool isDirty() const;
-        const std::string& getConstantBufferName() const { return m_constantBufferName; }
+        std::string getConstantBufferName() const { return m_constantBufferName; }
     };
 }
