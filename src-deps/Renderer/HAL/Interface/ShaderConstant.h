@@ -7,5 +7,5 @@ namespace mce
     class ShaderConstant : public ShaderConstantOGL
     {
         
-    }
+    };
 }
