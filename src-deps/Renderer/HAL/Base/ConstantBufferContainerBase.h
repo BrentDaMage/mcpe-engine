@@ -12,7 +12,9 @@ namespace mce
     class ConstantBufferContainerBase
     {
     public:
+        // confirmed std::vector<mce::ShaderConstantBase>
         std::vector<mce::ShaderConstantBase> m_reflectedShaderConstants;
+        // confirmed std::vector<std::unique_ptr<mce::ShaderConstant>>
         std::vector<mce::ShaderConstant*> m_shaderConstants;
         std::vector<uint8_t> m_constantBufferBytes;
         std::string m_constantBufferName;
@@ -32,6 +34,19 @@ namespace mce
         void registerReflectedShaderParameter(const mce::UniformMetaData& uniMeta);
         void registerShaderParameter(const mce::ShaderConstantBase &shaderConst);
         void finalizeConstantBufferLayout();
+        // gets inlined in mce::ConstantBufferContainer::getUnspecializedShaderConstant
+        mce::ShaderConstant* getUnspecializedShaderConstant(const std::string& name)
+        {
+            for (std::vector<mce::ShaderConstant*>::iterator it = m_shaderConstants.begin(); it != m_shaderConstants.end(); it++)
+            {
+                if ((*it)->getName() == name)
+                {
+                    return *it;
+                }
+            }
+
+            return nullptr;
+        }
         bool isDirty() const;
         std::string getConstantBufferName() const { return m_constantBufferName; }
     };

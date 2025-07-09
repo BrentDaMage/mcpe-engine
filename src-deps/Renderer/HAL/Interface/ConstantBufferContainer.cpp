@@ -17,13 +17,7 @@ mce::ConstantBufferContainer::~ConstantBufferContainer()
 
 mce::ShaderConstant* mce::ConstantBufferContainer::getUnspecializedShaderConstant(const std::string& name)
 {
-    for (std::vector<mce::ShaderConstant*>::iterator it = m_shaderConstants.begin(); it != m_shaderConstants.end(); it++)
-    {
-        if ((*it)->getName() == name)
-        {
-            return;
-        }
-    }
+    return mce::ConstantBufferContainerOGL::getUnspecializedShaderConstant(name);
 }
 
 void mce::ConstantBufferContainer::registerReflectedShaderParameter(const mce::UniformMetaData& uniMeta)
