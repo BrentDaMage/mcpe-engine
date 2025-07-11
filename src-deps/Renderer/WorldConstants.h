@@ -5,7 +5,7 @@
 
 namespace mce
 {
-    class WorldConstants : public mce::ConstantBufferConstants
+    class WorldConstants : public ConstantBufferConstants
     {
     public:
         mce::ShaderConstantMatrix4x4* WORLDVIEWPROJ;
