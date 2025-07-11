@@ -6,7 +6,7 @@
 
 namespace mce
 {
-	class TextureDescription : public mce::ImageDescription
+	class TextureDescription : public ImageDescription
 	{
 	public:
         unsigned int unknown1;

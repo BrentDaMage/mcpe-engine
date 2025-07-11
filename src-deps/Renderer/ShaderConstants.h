@@ -9,7 +9,7 @@ Color currentShaderDarkColor;
 
 namespace mce
 {
-    class ShaderConstants : public mce::ConstantBufferConstants
+    class ShaderConstants : public ConstantBufferConstants
     {
     public:
         mce::ShaderConstantFloat4* CURRENT_COLOR;

@@ -13,8 +13,8 @@ void mce::GlobalConstantBufferManager::refreshWorldConstants()
 {
     mce::GlobalConstantBuffers* pBuffers = mce::GlobalConstantBuffers::getInstance();
 
-    pBuffers->m_worldConstants->refreshWorldConstants();
-    pBuffers->m_shaderConstants->setShaderColors(&currentShaderColor,&currentShaderDarkColor);
+    pBuffers->m_worldConstants.refreshWorldConstants();
+    pBuffers->m_shaderConstants.setShaderColors(currentShaderColor, currentShaderDarkColor);
 }
 
 void mce::GlobalConstantBufferManager::allocateAndSetupConstantBuffersFromMetadata(mce::RenderContext& ctx)
@@ -30,7 +30,7 @@ mce::ConstantBufferContainer* mce::GlobalConstantBufferManager::findConstantBuff
     for (std::vector<ConstantBufferContainer>::iterator it = m_constantBufferContainers.begin(); it != m_constantBufferContainers.end(); it++)
     {
         if (it->getConstantBufferName() == bufferName)
-            return *it;
+            return &*it; // solid
     }
 
     //LOG_E("Couldn't find the constant buffer named: %s was it properly reflected in the uniforms metadata file?", bufferName);
