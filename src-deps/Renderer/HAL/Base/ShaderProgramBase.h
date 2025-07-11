@@ -13,6 +13,6 @@ namespace mce
         const mce::ShaderType m_shaderType;
         bool m_valid;
 
-       ShaderProgramBase(const std::string& header, const std::string& shaderPath, mce::ShaderType shaderType);
+        ShaderProgramBase(const std::string& header, const std::string& shaderPath, mce::ShaderType shaderType);
     };
 }
