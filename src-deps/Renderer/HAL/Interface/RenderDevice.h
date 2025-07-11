@@ -1,5 +1,12 @@
-class RenderDevice : Singleton<RenderDevice>
+#pragma once
+
+#include "Core/Utility/Singleton.h"
+
+namespace mce
 {
-public:
-    RenderDevice();
+    class RenderDevice : public Singleton<RenderDevice>
+    {
+    public:
+        RenderDevice();
+    }
 }

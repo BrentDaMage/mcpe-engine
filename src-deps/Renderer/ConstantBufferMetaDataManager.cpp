@@ -1,8 +1,11 @@
 #include "ConstantBufferMetaDataManager.h"
 
-using namespace mce;
+mce::ConstantBufferMetaDataManager::ConstantBufferMetaDataManager()
+{
 
-ConstantBufferMetaData::ConstantBufferMetaData()
-{}
+}
 
-void ConstantBufferMetaDataManager::getConstantBufferName() {}
+void mce::ConstantBufferMetaDataManager::getConstantBufferName() const
+{
+    
+}

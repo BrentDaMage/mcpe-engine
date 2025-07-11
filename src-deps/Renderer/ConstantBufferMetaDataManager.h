@@ -1,8 +1,15 @@
-using namespace mce;
+#pragma once
 
-class ConstantBufferMetaDataManager : Singleton<ConstantBufferMetaDataManager>
+#include "Core/Utility/Singleton.h"
+
+namespace mce
 {
-public:
-    ConstantBufferMetaData();
-    void getConstantBufferName();
+    class ConstantBufferMetaDataManager : public Singleton<ConstantBufferMetaDataManager>
+    {
+    public:
+        ConstantBufferMetaDataManager();
+
+    public:
+        void getConstantBufferName() const;
+    };
 }
