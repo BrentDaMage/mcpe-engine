@@ -8,5 +8,12 @@ namespace mce
     {
     public:
         uint8_t* m_data;
+
+    public:
+        void setData(const void* data)
+        {
+            memcpy(m_data, data, getSize());
+            m_dirty = true;
+        }
     };
 }

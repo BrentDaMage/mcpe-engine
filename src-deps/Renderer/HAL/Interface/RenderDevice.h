@@ -8,5 +8,5 @@ namespace mce
     {
     public:
         RenderDevice();
-    }
+    };
 }
