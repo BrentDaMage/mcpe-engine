@@ -4,6 +4,9 @@
 #include "Interface/ShaderConstantWithData.h"
 #include "Core/Math/Color.h"
 
+Color currentShaderColor;
+Color currentShaderDarkColor;
+
 namespace mce
 {
     class ShaderConstants : public mce::ConstantBufferConstants
