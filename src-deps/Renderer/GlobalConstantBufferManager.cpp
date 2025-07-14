@@ -27,7 +27,7 @@ void mce::GlobalConstantBufferManager::allocateAndSetupConstantBuffersFromMetada
 
 mce::ConstantBufferContainer* mce::GlobalConstantBufferManager::findConstantBufferContainer(const std::string& bufferName)
 {
-    for (std::vector<ConstantBufferContainer>::iterator it = m_constantBufferContainers.begin(); it != m_constantBufferContainers.end(); it++)
+    for (std::vector<mce::ConstantBufferContainer>::iterator it = m_constantBufferContainers.begin(); it != m_constantBufferContainers.end(); it++)
     {
         if (it->getConstantBufferName() == bufferName)
             return &*it; // solid
