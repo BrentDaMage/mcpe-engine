@@ -10,9 +10,9 @@ namespace mce
 	{
 	public:
         unsigned int unknown1;
-        unsigned int m_mipmapEnabled;
+        unsigned int m_mipCount;
         bool unknown2;
-        mce::TextureFiltering m_filteringLevel;
+        TextureFiltering m_filteringLevel;
         uint8_t unknown3;
 		
 		TextureDescription();

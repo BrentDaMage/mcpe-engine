@@ -1,23 +1,18 @@
-#include "TextureBase.h"
-
 #include <typeinfo>
+
+#include "TextureBase.h"
 
 using namespace mce;
 
-void TextureBase::createTexture(const TextureDescription& description)
+void TextureBase::convertToMipmapedTexture(unsigned int mipmaps)
 {
-    m_description = description;
-}
-
-void TextureBase::convertToMipmapedTexture(unsigned int mipmapEnabled)
-{
-    if (m_description.m_mipmapEnabled == mipmapEnabled)
+    if (m_description.m_mipCount == mipmaps)
         return;
     
     if (m_description.m_filteringLevel == TEXTURE_FILTERING_BILINEAR)
     {
         //LOG_E("Unsupported filtering level for mip maps, please add the correct filtering case: " << m_description << m_filteringLevel);
-        std::bad_cast();
+        throw std::bad_cast();
     }
 
     m_description.m_filteringLevel = TEXTURE_FILTERING_MIPMAP_BILINEAR;
