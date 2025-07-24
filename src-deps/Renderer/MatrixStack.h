@@ -60,7 +60,8 @@ public:
     void makeClean() { m_bIsDirty = false; };
     void pop();
     size_t size() const { return m_stack.size(); }
-    Ref push();
+    Ref* push();
+    Ref* pushIdentity();
 
     class Ref
     {
