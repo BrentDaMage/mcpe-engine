@@ -11,7 +11,7 @@ namespace mce
         uint32_t m_width;
         uint32_t m_height;
         char *m_pixels;
-        mce::TextureFormat m_textureFormat;
+        TextureFormat m_textureFormat;
 		
 		ImageDescription();
 		

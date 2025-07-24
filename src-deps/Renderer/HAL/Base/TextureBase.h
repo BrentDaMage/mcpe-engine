@@ -7,8 +7,10 @@ namespace mce
 
 class TextureBase
 {
-private:
+public:
     TextureDescription m_description;
+
+private:
     bool m_created;
 
 public:
