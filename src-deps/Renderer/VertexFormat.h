@@ -19,7 +19,7 @@ namespace mce
         static const unsigned int FieldSize[8];
 
     private:
-        uint8_t m_formatId;
+        uint8_t m_fieldMask;
         uint8_t m_fieldOffset[5];
         uint8_t m_vertexSize;
 
@@ -29,9 +29,9 @@ namespace mce
         void enableField(mce::VertexField vertexField);
 
         bool hasField(mce::VertexField vertexField) const;
-        unsigned int getFieldOffset(mce::VertexField vertexField, void *vertexData) const { return (unsigned int)vertexData + m_fieldOffset[vertexField]; }
+        unsigned int getFieldOffset(mce::VertexField vertexField, void *vertexData = nullptr) const { return (unsigned int)vertexData + m_fieldOffset[vertexField]; }
 
-        unsigned int getID() const { return m_formatId; }
+        unsigned int getID() const { return m_fieldMask; }
         unsigned int getVertexSize() const { return m_vertexSize; }
 
         bool operator==(const mce::VertexFormat &other) const;

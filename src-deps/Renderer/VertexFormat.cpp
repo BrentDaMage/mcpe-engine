@@ -7,7 +7,7 @@ const unsigned int mce::VertexFormat::FieldSize[8] = { 0xC, 4, 4, 4, 4, 0, 0, 0 
 
 mce::VertexFormat::VertexFormat()
 {
-    m_formatId = 0;
+    m_fieldMask = 0;
     m_vertexSize = 0;
     if (m_vertexSize != m_fieldOffset[0])
         memset(m_fieldOffset, -1, sizeof(m_fieldOffset));
@@ -23,17 +23,17 @@ void mce::VertexFormat::enableField(mce::VertexField vertexField)
     m_vertexSize = v6;
     if (v8)
         m_vertexSize += 4 - v8;
-    m_formatId = (1 << vertexField) | m_formatId;
+    m_fieldMask = (1 << vertexField) | m_fieldMask;
 }
 
 bool mce::VertexFormat::hasField(mce::VertexField vertexField) const
 {
-    return ((int)m_formatId >> vertexField) & 1;
+    return ((int)m_fieldMask >> vertexField) & 1;
 }
 
 bool mce::VertexFormat::operator==(const mce::VertexFormat &other) const
 {
-    return m_formatId == other.m_formatId
+    return m_fieldMask == other.m_fieldMask
         && m_vertexSize == other.m_vertexSize
         && memcmp(m_fieldOffset, other.m_fieldOffset, sizeof(m_fieldOffset)) == 0;
 }
