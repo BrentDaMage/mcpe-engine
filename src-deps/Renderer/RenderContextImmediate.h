@@ -1,10 +1,11 @@
 #pragma once
 
 #include "HAL/Interface/RenderContext.h"
+#include "HAL/Base/RenderContextBase.h"
 
 namespace mce
 {
-    class RenderContextImmediate
+    class RenderContextImmediate : public RenderContextBase
     {
     public:
         static mce::RenderContext& get();

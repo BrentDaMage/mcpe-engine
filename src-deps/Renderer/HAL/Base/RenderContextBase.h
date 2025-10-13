@@ -10,5 +10,6 @@ namespace mce
     public:
         mce::RenderContextStateBase m_state;
         mce::VertexFormat m_vertexFormat;
+        unsigned int m_lastShaderProgram;
     };
 }

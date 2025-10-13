@@ -1,6 +1,7 @@
 #pragma once
 
 #include "API_OGL.h"
+#include "../../RenderContextImmediate.h"
 #include "../Base/ShaderBase.h"
 #include "ShaderProgram.h"
 #include "VertexFormat.h"
@@ -25,11 +26,11 @@ public:
     void deleteShader();
     void finalizeShaderUniforms();
     void freeCompilerResources()
-    resetLastProgram();
+    void resetLastProgram();
     void createAndAttachPrograms();
     void linkShader();
     void bindVertexPointers(VertexFormat const&, void*);
-    void binsShader(RenderContext&, VertexFormat const&, void*, uint);
+    void bindShader(RenderContext&, VertexFormat const&, void*, uint);
     void reflectShaderUniforms();
     void reflectShaderAttributes();
     void reflectShader();

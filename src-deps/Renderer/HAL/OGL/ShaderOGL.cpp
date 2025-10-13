@@ -22,6 +22,17 @@ ShaderOGL::ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader,
     reflectShader();
 }
 
+void ShaderOGL::deleteShader()
+{
+    glDeleteProgram(m_shaderProgram);
+    m_shaderProgram = 0;
+}
+
+void ShaderOGL::resetLastProgram()
+{
+    RenderContextImmediate::get().m_lastShaderProgram = 0;
+}
+
 void ShaderOGL::createAndAttachPrograms()
 {
     GLuint program = glCreateProgram();
