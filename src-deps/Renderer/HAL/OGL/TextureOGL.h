@@ -5,38 +5,40 @@
 
 namespace mce
 {
+    class Texture;
 
-class TextureOGL : public TextureBase
-{
-private:
-    TextureDescription description;
-    bool m_created;
-    GLuint* m_glObj;
-    GLenum m_textureTarget;
-    GLint m_internalFormat;
-    GLenum m_format;
-    GLenum m_type;
+    class TextureOGL : public TextureBase
+    {
+    private:
+        GLuint* m_glObj;
+        GLenum m_textureTarget;
+        GLint m_internalFormat;
+        GLenum m_format;
+        GLenum m_type;
 
-public:
-    TextureOGL();
-    
-    void deleteTexture();
-    void bindTexture(RenderContext& context, GLuint texture, GLuint);
-    
-    void convertToMipmapedTexture(RenderContext& context, GLuint mipmaps);
+    public:
+        TextureOGL();
+        
+        void deleteTexture();
+        void bindTexture(RenderContext& context, unsigned int texture, unsigned int);
+        
+        GLenum getOpenGLTextureFormat(TextureFormat textureFormat);
+        GLint getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat textureFormat);
+        GLenum getOpenGLTextureTypeFromTextureFormat(TextureFormat textureFormat);
+        
+        void convertToMipmapedTexture(RenderContext& context, unsigned int mipmaps);
 
-    void subBuffer(RenderContext& context, GLvoid const* pixels, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLint level);
-    void subBuffer(RenderContext& context, GLvoid const* pixels);
+        void subBuffer(RenderContext& context, GLvoid const* pixels, unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, unsigned int level);
+        void subBuffer(RenderContext& context, GLvoid const* pixels);
 
-    void copyTexture(RenderContext& context, Texture* texture, uint_t, uint_t, uint_t, uint_t) { }
+        void copyTexture(RenderContext& context, Texture* texture, unsigned int, unsigned int, unsigned int, unsigned int) { }
 
-    void createMipMap(RenderContext& context, GLvoid const* pixels, Glsizei width, Glsizei height, GLint level);
-    void createTexture(RenderContext& context, TextureDescription const&);
+        void createMipMap(RenderContext& context, void const* pixels, unsigned int width, unsigned int height, unsigned int level);
+        void createTexture(RenderContext& context, TextureDescription const&);
 
-    void lock(RenderContext& context);
-    void unlock(RenderContext& context);
+        void lock(RenderContext& context);
+        void unlock(RenderContext& context);
 
-    bool supportsMipMaps();
-};
-
+        bool supportsMipMaps();
+    };
 }

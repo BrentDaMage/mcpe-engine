@@ -4,8 +4,9 @@
 #include "Interface/ShaderConstantWithData.h"
 #include "Core/Math/Color.h"
 
-Color currentShaderColor;
-Color currentShaderDarkColor;
+// couldn't find that these were even initialized
+static Color currentShaderColor;
+static Color currentShaderDarkColor;
 
 namespace mce
 {

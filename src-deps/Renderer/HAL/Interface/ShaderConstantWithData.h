@@ -4,13 +4,12 @@
 
 namespace mce
 {
-    template <mce::ShaderPrimitiveTypes T>
+    template <ShaderPrimitiveTypes T>
     class ShaderConstantWithData : public ShaderConstantWithDataOGL<T>
     {
     public:
-        ShaderConstantWithData() : ShaderConstant()
+        ShaderConstantWithData(): ShaderConstantWithDataOGL<T>(T)
         {
-            m_shaderPrimitiveType = T;
         }
 
         virtual void syncUniform(int value)

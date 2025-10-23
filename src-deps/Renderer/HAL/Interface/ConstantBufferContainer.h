@@ -8,7 +8,6 @@ namespace mce
     {
     public:
         ConstantBufferContainer();
-        ConstantBufferContainer(mce::ConstantBufferContainerBase& other);
 
         void bindConstantBuffer(mce::RenderContext& ctx, unsigned int, unsigned int);
 

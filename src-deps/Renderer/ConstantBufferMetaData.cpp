@@ -1,20 +1,22 @@
 #include "AlignmentHelper.h"
 #include "ConstantBufferMetaData.h"
 
-mce::ConstantBufferMetaData::ConstantBufferMetaData()
+using namespace mce;
+
+ConstantBufferMetaData::ConstantBufferMetaData()
 {
-    m_uniformMetaData = std::vector<mce::UniformMetaData>();
+    m_uniformMetaData = std::vector<UniformMetaData>();
     m_constantBufferName = "";
 }
 
-std::string mce::ConstantBufferMetaData::getConstantBufferName() const
+const std::string& ConstantBufferMetaData::getConstantBufferName() const
 {
-
+    return m_constantBufferName;
 }
 
-mce::UniformMetaData* mce::ConstantBufferMetaData::getUniformMetaData(const std::string& uniformName)
+UniformMetaData* ConstantBufferMetaData::getUniformMetaData(const std::string& uniformName)
 {
-    for (std::vector<mce::UniformMetaData>::iterator it = m_uniformMetaData.begin(); it != m_uniformMetaData.end(); it++)
+    for (std::vector<UniformMetaData>::iterator it = m_uniformMetaData.begin(); it != m_uniformMetaData.end(); it++)
     {
         if (it->m_uniformName == uniformName)
             return &*it; // solid
@@ -23,7 +25,7 @@ mce::UniformMetaData* mce::ConstantBufferMetaData::getUniformMetaData(const std:
     return nullptr;
 }
 
-unsigned int mce::ConstantBufferMetaData::getRequiredSpaceForUniforms() const
+unsigned int ConstantBufferMetaData::getRequiredSpaceForUniforms() const
 {
     if (m_uniformMetaData.empty())
         return 0;
@@ -31,5 +33,5 @@ unsigned int mce::ConstantBufferMetaData::getRequiredSpaceForUniforms() const
     const UniformMetaData& lastUniform = m_uniformMetaData.back();
     unsigned int unalignedSize = lastUniform.getSize() + lastUniform.m_byteOffset;
 
-    return mce::AlignmentHelper::getAlignedOffset(unalignedSize, 16);
+    return AlignmentHelper::getAlignedOffset(unalignedSize, 16);
 }

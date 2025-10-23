@@ -1,10 +1,10 @@
+#pragma once
+
 namespace mce
 {
-
-class ErrorHandler
-{
-public:
-    static void checkForErrors();
-};
-
+    class ErrorHandler
+    {
+    public:
+        static void checkForErrors();
+    };
 }

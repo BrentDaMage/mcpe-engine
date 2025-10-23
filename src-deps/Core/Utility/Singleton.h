@@ -38,7 +38,8 @@ namespace mce
         {
             if (instance == nullptr)
             {
-                LOG_E("The singleton instance doesn't exist");
+                //LOG_E("The singleton instance doesn't exist");
+                throw std::bad_cast();
             }
             
             return instance;
@@ -49,7 +50,7 @@ namespace mce
         {
             if (instance != nullptr)
             {
-                LOG_E("You attempted to create a singleton where one already exists");
+                //LOG_E("You attempted to create a singleton where one already exists");
                 throw std::bad_cast();
             }
         }

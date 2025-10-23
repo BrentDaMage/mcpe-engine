@@ -1,6 +1,7 @@
 #include <stdexcept>
 
 #include "ImmediateBufferOGL.h"
+#include "BufferOGL.h"
 
 using namespace mce;
 
@@ -24,7 +25,7 @@ void ImmediateBufferOGL::updateBuffer(RenderContext* context, unsigned int itemS
     context->m_buffers[m_bufferType] = GL_NONE;
 }
 
-bool ImmediateBufferOGL::isValid()
+bool ImmediateBufferOGL::isValid() const
 {
     return m_target != GL_NONE;
 }

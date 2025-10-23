@@ -2,10 +2,6 @@
 #include "RenderContextImmediate.h"
 #include "ShaderConstants.h"
 
-// couldn't find that these were even initialized
-Color currentShaderColor;
-Color currentShaderDarkColor;
-
 mce::ShaderConstants::ShaderConstants()
 {
     CURRENT_COLOR = nullptr;

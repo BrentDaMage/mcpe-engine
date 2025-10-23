@@ -9,14 +9,14 @@ namespace mce
     public:
         TextureDescription m_description;
 
-    private:
+    protected:
         bool m_created;
 
     public:
-        void getDescription() { }
-        void deleteTexture() { m_created = false; }
-        bool isLoaded() { return m_created; }
-        void createTexture(const TextureDescription& description) { m_description = description; }
+        const TextureDescription& getDescription() const;
+        void deleteTexture();
+        bool isLoaded() const;
+        void createTexture(const TextureDescription& description);
         void convertToMipmapedTexture(unsigned int mipmaps);
     };
 }

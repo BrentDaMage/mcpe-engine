@@ -5,7 +5,7 @@ bool mce::RasterizerStateOGL::bindRasterizerState(mce::RenderContext& ctx, bool 
 {
     mce::RasterizerStateDescription& ctxDesc = ctx.m_state.m_rasterizerStateDescription;
 
-    if (ctxDesc.cullMode != m_description.cullMode || forceBind)
+    if (forceBind || ctxDesc.cullMode != m_description.cullMode)
     {
         if (m_cullMode)
         {
@@ -17,46 +17,41 @@ bool mce::RasterizerStateOGL::bindRasterizerState(mce::RenderContext& ctx, bool 
             glDisable(GL_CULL_FACE);
         }
         ctxDesc.cullMode = m_description.cullMode;
-        
-        if (ctxDesc.enableScissorTest == m_description.enableScissorTest && !forceBind)
-        {
-LABEL_21:
-            if (ctxDesc.depthBias == m_description.depthBias)
-                return mce::RasterizerStateBase::bindRasterizerState(ctx);
-            goto LABEL_10;
-        }
     }
-    else if (ctxDesc.enableScissorTest == m_description.enableScissorTest)
+
+    if (forceBind || ctxDesc.enableScissorTest != m_description.enableScissorTest)
     {
-        goto LABEL_21;
+        if (m_enableScissorTest)
+        {
+            glEnable(GL_SCISSOR_TEST);
+        }
+        else
+        {
+            glDisable(GL_SCISSOR_TEST);
+        }
+        ctxDesc.enableScissorTest = m_description.enableScissorTest;
     }
 
-    if ( m_enableScissorTest )
-        glEnable(GL_SCISSOR_TEST);
-    else
-        glDisable(GL_SCISSOR_TEST);
-    ctxDesc.enableScissorTest = m_description.enableScissorTest;
-
-    if (ctxDesc.depthBias == m_description.depthBias && !forceBind)
-        return mce::RasterizerStateBase::bindRasterizerState(ctx);
-
-LABEL_10:
-    if (m_depthScale == 0.0f)
-        glDisable(GL_POLYGON_OFFSET_FILL);
-    else
-        glEnable(GL_POLYGON_OFFSET_FILL);
-    glPolygonOffset(m_depthScale * 5.0f, m_depthScale * 5.0f);
-    ctxDesc.depthBias = m_description.depthBias;
-
-    return mce::RasterizerStateBase::bindRasterizerState(ctx);
+    if (forceBind || ctxDesc.depthBias != m_description.depthBias)
+    {
+        if (m_depthScale == 0.0f)
+        {
+            glDisable(GL_POLYGON_OFFSET_FILL);
+        }
+        else
+        {
+            glEnable(GL_POLYGON_OFFSET_FILL);
+        }
+        glPolygonOffset(m_depthScale * 5.0f, m_depthScale * 5.0f);
+        ctxDesc.depthBias = m_description.depthBias;
+    }
 }
 
 void mce::RasterizerStateOGL::setRasterizerStateDescription(mce::RenderContext& ctx, const mce::RasterizerStateDescription& desc)
 {
     createRasterizerStateDescription(ctx, desc);
     m_enableScissorTest = desc.enableScissorTest;
-    m_cullMode = desc.cullMode;
-    switch (m_cullMode)
+    switch (desc.cullMode)
     {
         case CULL_NONE:
             break;
@@ -67,7 +62,7 @@ void mce::RasterizerStateOGL::setRasterizerStateDescription(mce::RenderContext& 
             m_cullFace = GL_BACK;
             break;
         default:
-            //LOG_E("Unknown cullMode: %d", m_cullMode);
+            //LOG_E("Unknown cullMode: %d", desc.cullMode);
             throw std::bad_cast();
     }
 

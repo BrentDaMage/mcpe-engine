@@ -9,6 +9,7 @@
 // Lifted from 17c3daef4a27018c34b4b1f14e865d1da52dbeed
 
 #include <limits>
+#include <math.h>
 
 #include "Random.h"
 

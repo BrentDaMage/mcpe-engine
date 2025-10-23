@@ -15,5 +15,8 @@ namespace mce
         bool m_bBoundBlendState;
         bool m_bBoundDepthStencilState;
         bool m_bBoundRasterizerState;
+
+    public:
+        RenderContextStateBase();
     };
 }

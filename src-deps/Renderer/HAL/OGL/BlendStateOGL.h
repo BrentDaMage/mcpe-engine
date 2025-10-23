@@ -1,6 +1,27 @@
-class BlendStateOGL
+#pragma once
+
+#include "API_OGL.h"
+#include "BlendStateBase.h"
+
+namespace mce
 {
-public:
-    bindBlendState(RenderContext&, bool);
-    createBlendState(RenderContext&, BlendStateDescription const&);
+    class BlendStateOGL : public BlendStateBase
+    {
+    public:
+        bool m_bBlend;
+        bool m_bRed;
+        bool m_bGreen;
+        bool m_bBlue;
+        bool m_bAlpha;
+        GLenum m_sfactor;
+        GLenum m_dfactor;
+
+    public:
+        BlendStateOGL();
+
+        GLenum translateBlendFunc(BlendTarget blendTarget);
+
+		void createBlendState(mce::RenderContext& ctx, const mce::BlendStateDescription& desc);
+        bool bindBlendState(mce::RenderContext& ctx, bool forceBind = false);
+    };
 }

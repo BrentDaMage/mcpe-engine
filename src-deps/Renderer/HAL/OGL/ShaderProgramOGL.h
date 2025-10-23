@@ -1,14 +1,13 @@
-#include "API_OGL.h"
+#pragma once
 
+#include "API_OGL.h"
 #include "ShaderProgramBase.h"
 
 namespace mce
 {
-
-class ShaderProgramOGL : ShaderProgramBase
-{
-public:
-    GLuint m_shaderObject;
-};
-
+    class ShaderProgramOGL : public ShaderProgramBase
+    {
+    public:
+        GLuint m_shaderObject;
+    };
 }

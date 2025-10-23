@@ -5,17 +5,12 @@
 using namespace mce;
 
 ShaderOGL::ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader)
+    : ShaderBase(vertexShader, fragmentShader, geometryShader)
 {
-    ShaderBase::ShaderBase(vertexShader, fragmentShader, geometryShader);
-
     m_shaderProgram = 0;
     m_vertexShaderObject = 0;
     m_fragmentShaderObject = 0;
     m_geometryShaderObject = 0;
-
-    m_attributeListIndex = 0;
-    m_vertexShader = 0;
-    m_fragmentShader = 0;
 
     createAndAttachPrograms();
     linkShader();
@@ -38,9 +33,9 @@ void ShaderOGL::createAndAttachPrograms()
     GLuint program = glCreateProgram();
     m_shaderProgram = program;
 
-    glAttachShader(program, m_vertexShader->m_shaderObject);
-    glAttachShader(m_shaderProgram, m_fragmentShader->m_shaderObject);
-    if (m_geometryShader->m_valid) glAttachShader(m_shaderProgram, m_geometryShader->m_shaderObject);
+    glAttachShader(program, m_vertexShader.m_shaderObject);
+    glAttachShader(m_shaderProgram, m_fragmentShader.m_shaderObject);
+    if (m_geometryShader.m_valid) glAttachShader(m_shaderProgram, m_geometryShader.m_shaderObject);
     
     ErrorHandler::checkForErrors();
 }
@@ -57,7 +52,7 @@ void ShaderOGL::linkShader()
     if (linkStatus == GL_TRUE)
         return;
 
-    if (m_geometryShader->m_valid)
+    if (m_geometryShader.m_valid)
     {
         //LOG_E("Failed to link " << m_vertexShader->m_shaderPath
         //    << " to " << m_fragmentShader->m_shaderPath

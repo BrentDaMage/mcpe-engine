@@ -1,11 +1,12 @@
 #include <vector>
 
+#include "API_OGL.h"
 #include "RenderContextBase.h"
 
 namespace mce
 {
 
-class RenderContextOGL : RenderContextBase
+class RenderContextOGL : public RenderContextBase
 {
 public:
     GLuint *m_buffers[2];

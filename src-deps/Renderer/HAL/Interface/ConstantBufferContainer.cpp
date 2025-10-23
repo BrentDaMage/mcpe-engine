@@ -1,41 +1,33 @@
 #include "ConstantBufferContainer.h"
 
-mce::ConstantBufferContainer::ConstantBufferContainer()
+using namespace mce;
+
+ConstantBufferContainer::ConstantBufferContainer()
+    : ConstantBufferContainerOGL()
 {
-    mce::ConstantBufferContainerOGL::ConstantBufferContainerOGL();
 }
 
-mce::ConstantBufferContainer::ConstantBufferContainer(mce::ConstantBufferContainer& other)
+ShaderConstant* ConstantBufferContainer::getUnspecializedShaderConstant(const std::string& name)
 {
-    mce::ConstantBufferContainerOGL::ConstantBufferContainerOGL(other);
+    return ConstantBufferContainerOGL::getUnspecializedShaderConstant(name);
 }
 
-mce::ConstantBufferContainer::~ConstantBufferContainer()
+void ConstantBufferContainer::registerReflectedShaderParameter(const UniformMetaData& uniMeta)
 {
-    mce::ConstantBufferContainerOGL::~ConstantBufferContainerOGL();
+    ConstantBufferContainerOGL::registerReflectedShaderParameter(uniMeta);
 }
 
-mce::ShaderConstant* mce::ConstantBufferContainer::getUnspecializedShaderConstant(const std::string& name)
+void ConstantBufferContainer::finalizeConstantBufferLayout()
 {
-    return mce::ConstantBufferContainerOGL::getUnspecializedShaderConstant(name);
+    ConstantBufferContainerOGL::finalizeConstantBufferLayout();
 }
 
-void mce::ConstantBufferContainer::registerReflectedShaderParameter(const mce::UniformMetaData& uniMeta)
+bool ConstantBufferContainer::isDirty() const
 {
-    mce::ConstantBufferContainerOGL::registerReflectedShaderParameter(uniMeta);
+    return ConstantBufferContainerOGL::isDirty();
 }
 
-void mce::ConstantBufferContainer::finalizeConstantBufferLayout()
+std::string ConstantBufferContainer::getConstantBufferName() const
 {
-    mce::ConstantBufferContainerOGL::finalizeConstantBufferLayout();
-}
-
-bool mce::ConstantBufferContainer::isDirty() const
-{
-    return mce::ConstantBufferContainerOGL::isDirty();
-}
-
-std::string mce::ConstantBufferContainer::getConstantBufferName() const
-{
-    return mce::ConstantBufferContainerOGL::getConstantBufferName();
+    return ConstantBufferContainerOGL::getConstantBufferName();
 }

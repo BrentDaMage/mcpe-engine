@@ -1,8 +1,15 @@
-class DepthStencilStateOGL
+#pragma once
+
+#include "DepthStencilStateBase.h"
+
+namespace mce
 {
-private:
-public:
-    DepthStencilStateOGL();
+    class DepthStencilStateOGL : public DepthStencilStateBase
+    {
+    private:
+    public:
+        DepthStencilStateOGL();
 
 
+    };
 }

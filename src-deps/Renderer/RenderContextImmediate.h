@@ -10,5 +10,5 @@ namespace mce
     public:
         static mce::RenderContext& get();
         static const mce::RenderContext& getAsConst();
-    }
+    };
 }

@@ -1,5 +1,13 @@
 #include "GPUEventsOGL.h"
 
-void GPUEventsOGL::beginProfileSection(char const* field_0) {}
+using namespace mce;
 
-void GPUEventsOGL::endProfileEvent() {}
+void GPUEventsOGL::beginProfileSection(char const* field_0)
+{
+
+}
+
+void GPUEventsOGL::endProfileEvent()
+{
+    
+}

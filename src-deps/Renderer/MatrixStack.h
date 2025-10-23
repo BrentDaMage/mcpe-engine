@@ -34,6 +34,7 @@ public:
 
 class MatrixStack
 {
+public:
     class Ref;
 
 public:
@@ -82,5 +83,5 @@ public:
         Matrix* operator*();
         void operator=(const Matrix& other);
         void operator=(Ref&& other);
-    }
+    };
 };

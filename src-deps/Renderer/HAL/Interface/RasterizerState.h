@@ -7,5 +7,5 @@ namespace mce
     class RasterizerState : public RasterizerStateOGL
     {
 
-    }
+    };
 }

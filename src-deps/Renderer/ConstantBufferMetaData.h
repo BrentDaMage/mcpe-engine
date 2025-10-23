@@ -16,7 +16,7 @@ namespace mce
         ConstantBufferMetaData();
 
     public:
-        std::string getConstantBufferName() const;
+        const std::string& getConstantBufferName() const;
         mce::UniformMetaData* getUniformMetaData(const std::string& uniformName);
         unsigned int getRequiredSpaceForUniforms() const;
     };
