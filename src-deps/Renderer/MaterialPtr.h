@@ -1,29 +1,34 @@
-namespace mce {
+#pragma once
 
-struct RenderMaterial;
-struct RenderMaterialGroup;
+#include <string>
 
-class MaterialPtr {
+namespace mce
+{
+    class RenderMaterial;
+    class RenderMaterialGroup;
 
-private:
-    RenderMaterialGroup* group;
-    RenerMaterial* material;
-    std::string name;
+    // @NOTE: Requires C++11 due to rvalues
+    class MaterialPtr
+    {
+    private:
+        RenderMaterialGroup* m_group;
+        RenderMaterial* m_material;
+        std::string m_name;
 
-public:
-    MaterialPtr(MaterialPtr&& value);
-    MaterialPtr(RenderMaterialGroup& group, std::string const& name);
-    MaterialPtr();
+    public:
+        static MaterialPtr NONE;
 
-    void _deref();
-    void _move(MaterialPtr&& value);
+    public:
+        MaterialPtr();
+        MaterialPtr(MaterialPtr&& other);
+        MaterialPtr(RenderMaterialGroup& group, std::string const& name);
+        ~MaterialPtr();
 
-    void onGroupReloaded();
+        void _deref();
+        void _move(MaterialPtr&& other);
 
-    MaterialPtr& operator=(MaterialPtr&& value);
+        void onGroupReloaded();
 
-    ~MaterialPtr();
-
-}
-
+        MaterialPtr& operator=(MaterialPtr&& other);
+    };
 }

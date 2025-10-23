@@ -1,54 +1,29 @@
-namespace mce {
+#include <typeinfo>
 
-MaterialPtr(MaterialPtr&& value)
-{
-    _move(value);
-}
+#include "MaterialPtr.h"
+#include "RenderMaterialGroup.h"
 
-MaterialPtr(RenderMaterialGroup& group, std::string const& name)
-    : group(group),
-    , material(nullptr),
-    , name(name)
-{
-    group->_addRef(this);
-    onGroupReloaded();
-}
+using namespace mce;
+
+MaterialPtr MaterialPtr::NONE = MaterialPtr();
 
 MaterialPtr::MaterialPtr()
-    : group(nullptr),
-    , name("")
-{}
-
-void MaterialPtr::_move(MaterialPtr&& value)
 {
-    group = value.group;
-    material = value.material;
-    std::swap(name, value.name);
-    _deref(value);
-    group->_addRef(this);
+    m_group = nullptr;
 }
 
-RenderMaterialGroup* MaterialPtr::_deref()
+MaterialPtr::MaterialPtr(MaterialPtr&& other)
 {
-    if (group != nullptr)
-    {
-        group->removeRef(this);
-        group = nullptr;
-    }
-    material = nullptr;
+    _move(std::move(other));
 }
 
-void onGroupReloaded()
+MaterialPtr::MaterialPtr(RenderMaterialGroup& group, const std::string& name)
+    : m_group(&group)
+    , m_material(nullptr)
+    , m_name(name)
 {
-    if (group == nullptr)
-    {
-
-    }
-}
-
-MaterialPtr& MaterialPtr::operator=(MaterialPtr&& value)
-{
-    return *_move(value);
+    m_group->_addRef(this);
+    onGroupReloaded();
 }
 
 MaterialPtr::~MaterialPtr()
@@ -56,4 +31,38 @@ MaterialPtr::~MaterialPtr()
     _deref();
 }
 
+void MaterialPtr::_move(MaterialPtr&& other)
+{
+    m_group = other.m_group;
+    m_material = other.m_material;
+    std::swap(m_name, other.m_name);
+    other._deref();
+    m_group->_addRef(this);
+}
+
+RenderMaterialGroup* MaterialPtr::_deref()
+{
+    if (m_group != nullptr)
+    {
+        m_group->removeRef(this);
+        m_group = nullptr;
+    }
+    m_material = nullptr;
+}
+
+void MaterialPtr::onGroupReloaded()
+{
+    if (m_group == nullptr)
+    {
+        //LOG_E("Null ptrs may never be registered!");
+        throw std::bad_cast();
+    }
+
+    m_material = m_group->_getMaterial(m_name);
+}
+
+MaterialPtr& MaterialPtr::operator=(MaterialPtr&& other)
+{
+    _move(std::move(other));
+    return *this;
 }
