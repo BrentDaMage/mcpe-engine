@@ -1,10 +1,11 @@
 #pragma once
 
 #include "BufferType.h"
-#include "RenderContext.h"
 
 namespace mce
 {
+	class RenderContext;
+	
 	class ImmediateBufferBase
 	{
 	public:
