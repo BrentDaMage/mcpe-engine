@@ -66,10 +66,8 @@ bool gl::supportsMipmaps()
     if (supportsMipmaps < 0)
     {
         std::string glExtensions = gl::getOpenGLExtensions();
-        if (isOpenGLES3())
+        if (isOpenGLES3() || glExtensions.find("GL_APPLE_texture_max_level") != std::string::npos)
             supportsMipmaps = 1;
-        else
-            supportsMipmaps = glExtensions.find("GL_APPLE_texture_max_level") != std::string::npos;
     }
     return supportsMipmaps == 1;
 }
