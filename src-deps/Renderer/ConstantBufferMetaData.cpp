@@ -14,12 +14,13 @@ const std::string& ConstantBufferMetaData::getConstantBufferName() const
     return m_constantBufferName;
 }
 
-UniformMetaData* ConstantBufferMetaData::getUniformMetaData(const std::string& uniformName)
+const UniformMetaData* ConstantBufferMetaData::getUniformMetaData(const std::string& uniformName) const
 {
-    for (std::vector<UniformMetaData>::iterator it = m_uniformMetaData.begin(); it != m_uniformMetaData.end(); it++)
+    for (int i = 0; i < m_uniformMetaData.size(); i++)
     {
-        if (it->m_uniformName == uniformName)
-            return &*it; // solid
+        const UniformMetaData& uniformMeta = m_uniformMetaData[i];
+        if (uniformMeta.m_uniformName == uniformName)
+            return &uniformMeta;
     }
 
     return nullptr;

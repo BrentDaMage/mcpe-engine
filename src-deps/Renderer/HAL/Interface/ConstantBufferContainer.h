@@ -8,14 +8,15 @@ namespace mce
     {
     public:
         ConstantBufferContainer();
+        ConstantBufferContainer(ConstantBufferContainer&& other);
 
-        void bindConstantBuffer(mce::RenderContext& ctx, unsigned int, unsigned int);
+        void bindConstantBuffer(RenderContext& ctx, unsigned int, unsigned int);
 
-        void sync(mce::RenderContext& ctx);
-        void allocateRenderContextBuffer(mce::RenderContext& ctx);
-        void registerReflectedShaderParameter(const mce::UniformMetaData& uniMeta);
+        void sync(RenderContext& ctx);
+        void allocateRenderContextBuffer(RenderContext& ctx);
+        void registerReflectedShaderParameter(const UniformMetaData& uniMeta);
         void finalizeConstantBufferLayout();
-        mce::ShaderConstant* getUnspecializedShaderConstant(const std::string& name);
+        ShaderConstant* getUnspecializedShaderConstant(const std::string& name);
         bool isDirty() const;
         std::string getConstantBufferName() const;
     };

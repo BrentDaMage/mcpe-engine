@@ -7,6 +7,11 @@ ConstantBufferContainer::ConstantBufferContainer()
 {
 }
 
+ConstantBufferContainer::ConstantBufferContainer(ConstantBufferContainer&& other)
+    : ConstantBufferContainerOGL(std::move(other))
+{
+}
+
 ShaderConstant* ConstantBufferContainer::getUnspecializedShaderConstant(const std::string& name)
 {
     return ConstantBufferContainerOGL::getUnspecializedShaderConstant(name);

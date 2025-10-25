@@ -12,10 +12,10 @@ namespace mce
     class ConstantBufferContainerBase
     {
     public:
-        // confirmed std::vector<mce::ShaderConstantBase>
-        std::vector<mce::ShaderConstantBase> m_reflectedShaderConstants;
-        // confirmed std::vector<std::unique_ptr<mce::ShaderConstant>>
-        std::vector<mce::ShaderConstant*> m_shaderConstants;
+        // confirmed std::vector<ShaderConstantBase>
+        std::vector<ShaderConstantBase> m_reflectedShaderConstants;
+        // confirmed std::vector<std::unique_ptr<ShaderConstant>>
+        std::vector<ShaderConstant*> m_shaderConstants;
         std::vector<uint8_t> m_constantBufferBytes;
         std::string m_constantBufferName;
         bool m_currentlyMapped;
@@ -24,20 +24,20 @@ namespace mce
         void _init();
     public:
         ConstantBufferContainerBase() { _init(); }
-        ConstantBufferContainerBase(mce::ConstantBufferContainerBase& other);
+        ConstantBufferContainerBase(ConstantBufferContainerBase&& other);
 
-        void bindConstantBuffer(mce::RenderContext& ctx, unsigned int, unsigned int) { }
+        void bindConstantBuffer(RenderContext& ctx, unsigned int, unsigned int) { }
 
-        void sync(mce::RenderContext& ctx) { }
-        void allocateRenderContextBuffer(mce::RenderContext& ctx) { }
+        void sync(RenderContext& ctx) { }
+        void allocateRenderContextBuffer(RenderContext& ctx) { }
         void reserveMemoryForShaderConstants(unsigned int shaderConstSize, unsigned int constBufferSize);
-        void registerReflectedShaderParameter(const mce::UniformMetaData& uniMeta);
-        void registerShaderParameter(const mce::ShaderConstantBase &shaderConst);
+        void registerReflectedShaderParameter(const UniformMetaData& uniMeta);
+        void registerShaderParameter(const ShaderConstantBase &shaderConst);
         void finalizeConstantBufferLayout();
-        // gets inlined in mce::ConstantBufferContainer::getUnspecializedShaderConstant
-        mce::ShaderConstant* getUnspecializedShaderConstant(const std::string& name)
+        // gets inlined in ConstantBufferContainer::getUnspecializedShaderConstant
+        ShaderConstant* getUnspecializedShaderConstant(const std::string& name)
         {
-            for (std::vector<mce::ShaderConstant*>::iterator it = m_shaderConstants.begin(); it != m_shaderConstants.end(); it++)
+            for (std::vector<ShaderConstant*>::iterator it = m_shaderConstants.begin(); it != m_shaderConstants.end(); it++)
             {
                 if ((*it)->getName() == name)
                 {

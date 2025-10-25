@@ -3,31 +3,33 @@
 #include "ShaderConstants.h"
 #include "GlobalConstantBufferManager.h"
 
-mce::GlobalConstantBufferManager::GlobalConstantBufferManager()
+using namespace mce;
+
+GlobalConstantBufferManager::GlobalConstantBufferManager()
 {
     // should call Singleton constructor automatically
     // should initialize m_constantBufferContainers automatically
 }
 
-void mce::GlobalConstantBufferManager::refreshWorldConstants()
+void GlobalConstantBufferManager::refreshWorldConstants()
 {
-    mce::GlobalConstantBuffers* pBuffers = mce::GlobalConstantBuffers::getInstance();
+    GlobalConstantBuffers* pBuffers = GlobalConstantBuffers::getInstance();
 
     pBuffers->m_worldConstants.refreshWorldConstants();
     pBuffers->m_shaderConstants.setShaderColors(currentShaderColor, currentShaderDarkColor);
 }
 
-void mce::GlobalConstantBufferManager::allocateAndSetupConstantBuffersFromMetadata(mce::RenderContext& ctx)
+void GlobalConstantBufferManager::allocateAndSetupConstantBuffersFromMetadata(RenderContext& ctx)
 {
-    for (std::vector<mce::ConstantBufferContainer>::iterator it = m_constantBufferContainers.begin(); it != m_constantBufferContainers.end(); it++)
+    for (std::vector<ConstantBufferContainer>::iterator it = m_constantBufferContainers.begin(); it != m_constantBufferContainers.end(); it++)
     {
         it->allocateRenderContextBuffer(ctx);
     }
 }
 
-mce::ConstantBufferContainer* mce::GlobalConstantBufferManager::findConstantBufferContainer(const std::string& bufferName)
+ConstantBufferContainer* GlobalConstantBufferManager::findConstantBufferContainer(const std::string& bufferName)
 {
-    for (std::vector<mce::ConstantBufferContainer>::iterator it = m_constantBufferContainers.begin(); it != m_constantBufferContainers.end(); it++)
+    for (std::vector<ConstantBufferContainer>::iterator it = m_constantBufferContainers.begin(); it != m_constantBufferContainers.end(); it++)
     {
         if (it->getConstantBufferName() == bufferName)
             return &*it; // solid

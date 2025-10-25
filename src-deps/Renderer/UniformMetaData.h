@@ -12,8 +12,8 @@ namespace mce
     public:
         unsigned int m_numberOfElements;
         unsigned int m_byteOffset;
-        mce::ShaderPrimitiveTypes m_shaderPrimitiveType;
-        mce::ConstantBufferMetaData* m_constantBufferMetaDataParent;
+        ShaderPrimitiveTypes m_shaderPrimitiveType;
+        ConstantBufferMetaData* m_constantBufferMetaDataParent;
         std::string m_uniformName;
 
     public:

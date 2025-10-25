@@ -10,14 +10,14 @@ namespace mce
     {
     public:
         std::string m_constantBufferName;
-        std::vector<mce::UniformMetaData> m_uniformMetaData;
+        std::vector<UniformMetaData> m_uniformMetaData;
 
     public:
         ConstantBufferMetaData();
 
     public:
         const std::string& getConstantBufferName() const;
-        mce::UniformMetaData* getUniformMetaData(const std::string& uniformName);
+        const UniformMetaData* getUniformMetaData(const std::string& uniformName) const;
         unsigned int getRequiredSpaceForUniforms() const;
     };
 }

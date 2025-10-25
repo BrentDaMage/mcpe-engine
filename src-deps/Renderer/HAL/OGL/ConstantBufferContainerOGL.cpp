@@ -7,6 +7,11 @@ ConstantBufferContainerOGL::ConstantBufferContainerOGL()
 {
 }
 
+ConstantBufferContainerOGL::ConstantBufferContainerOGL(ConstantBufferContainerOGL&& other)
+    : ConstantBufferContainerBase(std::move(other))
+{
+}
+
 void ConstantBufferContainerOGL::sync()
 {
     
