@@ -16,6 +16,9 @@ namespace mce
 		SHADER_PRIMITIVE_MATRIX2x2,
 		SHADER_PRIMITIVE_MATRIX3x3,
 		SHADER_PRIMITIVE_MATRIX4x4,
+		SHADER_PRIMITIVE_SAMPLER1D,
+		SHADER_PRIMITIVE_SAMPLER2D,
+		SHADER_PRIMITIVE_SAMPLER3D,
 
 		SHADER_PRIMITIVES_MIN = SHADER_PRIMITIVE_UNKNOWN,
 		SHADER_PRIMITIVES_MAX = SHADER_PRIMITIVE_MATRIX4x4
@@ -26,4 +29,6 @@ namespace mce
 	public:
 		static int sizeInBytesFromShaderPrimitiveType(mce::ShaderPrimitiveTypes shaderPrimitiveType);
 	};
+
+	const char* ShaderPrimitiveTypeToString[SHADER_PRIMITIVES_MAX + 1];
 }

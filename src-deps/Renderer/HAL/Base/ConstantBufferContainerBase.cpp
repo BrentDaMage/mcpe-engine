@@ -14,14 +14,15 @@ void ConstantBufferContainerBase::_init()
     m_currentlyMapped = false;
 }
 
-ConstantBufferContainerBase::ConstantBufferContainerBase(ConstantBufferContainerBase&& other)
+// causes more problems than it solves, only called in 0.12.1 in vector::reserve
+/*ConstantBufferContainerBase::ConstantBufferContainerBase(ConstantBufferContainerBase&& other)
 {
     _init();
     m_shaderConstants = other.m_shaderConstants;
     other.m_shaderConstants = std::vector<ShaderConstant*>();
     m_constantBufferBytes = other.m_constantBufferBytes;
     other.m_constantBufferBytes = std::vector<uint8_t>();
-}
+}*/
 
 void ConstantBufferContainerBase::reserveMemoryForShaderConstants(unsigned int shaderConstSize, unsigned int constBufferSize)
 {

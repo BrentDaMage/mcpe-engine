@@ -8,7 +8,6 @@ namespace mce
     {
     public:
         ConstantBufferContainerOGL();
-        ConstantBufferContainerOGL(ConstantBufferContainerOGL&& other);
 
         void sync();
     };

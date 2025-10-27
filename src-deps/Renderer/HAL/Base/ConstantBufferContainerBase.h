@@ -24,7 +24,7 @@ namespace mce
         void _init();
     public:
         ConstantBufferContainerBase() { _init(); }
-        ConstantBufferContainerBase(ConstantBufferContainerBase&& other);
+        //ConstantBufferContainerBase(ConstantBufferContainerBase&& other);
 
         void bindConstantBuffer(RenderContext& ctx, unsigned int, unsigned int) { }
 

@@ -17,6 +17,7 @@ namespace mce
 
     public:
         void allocateConstantBufferContainers();
+        void loadJsonFile(const std::string& document);
         const UniformMetaData& findUniformMetaData(const std::string& uniformName) const;
         const ConstantBufferMetaData& findConstantBuffer(const std::string& bufferName) const;
     };
