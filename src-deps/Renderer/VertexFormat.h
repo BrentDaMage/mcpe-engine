@@ -29,7 +29,7 @@ namespace mce
         void enableField(mce::VertexField vertexField);
 
         bool hasField(mce::VertexField vertexField) const;
-        unsigned int getFieldOffset(mce::VertexField vertexField, void *vertexData = nullptr) const { return (unsigned int)vertexData + m_fieldOffset[vertexField]; }
+        const void* getFieldOffset(mce::VertexField vertexField, void *vertexData = nullptr) const;
 
         unsigned int getID() const { return m_fieldMask; }
         unsigned int getVertexSize() const { return m_vertexSize; }

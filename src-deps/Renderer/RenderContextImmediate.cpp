@@ -1,12 +1,14 @@
 #include "HAL/Interface/RenderDevice.h"
 #include "RenderContextImmediate.h"
 
-mce::RenderContext& mce::RenderContextImmediate::get()
+using namespace mce;
+
+RenderContext& RenderContextImmediate::get()
 {
-    return *(mce::RenderDevice::getInstance()->getRenderContext());
+    return RenderDevice::getInstance()->getRenderContext();
 }
 
-const mce::RenderContext& mce::RenderContextImmediate::getAsConst()
+const RenderContext& RenderContextImmediate::getAsConst()
 {
-    return *(mce::RenderDevice::getInstance()->getRenderContextAsConst());
+    return RenderDevice::getInstance()->getRenderContextAsConst();
 }

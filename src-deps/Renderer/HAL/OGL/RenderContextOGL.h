@@ -10,6 +10,11 @@ namespace mce
     class RenderContextOGL : public RenderContextBase
     {
     public:
+        char m_activeTexture;
+        char field_65;
+        char field_66;
+        char field_67;
+        GLuint m_lastShaderProgram;
         GLuint *m_buffers[2];
         unsigned int m_uniformValue;
         unsigned int m_bSetUniformValue;

@@ -22,10 +22,10 @@ static GLVertexAttrInfo vertexAttrInfo[] = {
 ShaderOGL::ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader)
     : ShaderBase(vertexShader, fragmentShader, geometryShader)
 {
-    m_shaderProgram = 0;
-    m_vertexShaderObject = 0;
-    m_fragmentShaderObject = 0;
-    m_geometryShaderObject = 0;
+    m_shaderProgram = GL_NONE;
+    m_vertexShaderObject = GL_NONE;
+    m_fragmentShaderObject = GL_NONE;
+    m_geometryShaderObject = GL_NONE;
 
     createAndAttachPrograms();
     linkShader();
@@ -35,7 +35,7 @@ ShaderOGL::ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader,
 void ShaderOGL::deleteShader()
 {
     glDeleteProgram(m_shaderProgram);
-    m_shaderProgram = 0;
+    m_shaderProgram = GL_NONE;
 }
 
 void ShaderOGL::freeCompilerResources()
@@ -46,7 +46,7 @@ void ShaderOGL::freeCompilerResources()
 
 void ShaderOGL::resetLastProgram()
 {
-    RenderContextImmediate::get().m_lastShaderProgram = 0;
+    RenderContextImmediate::get().m_lastShaderProgram = GL_NONE;
 }
 
 void ShaderOGL::createAndAttachPrograms()
@@ -109,14 +109,15 @@ void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, void* verte
     RenderDevice* device = RenderDevice::getInstance();
     RenderDeviceBase::AttributeList attrList = device->getAttributeList(m_attributeListIndex);
 
-    for (Attribute* attr = attrList.begin(); attr != attrList.end(); attr++)
+    for (int i = 0; i < attrList.size(); i++)
     {
-        VertexField vertexField = attr->getVertexField();
+        const Attribute& attr = attrList[i];
+        VertexField vertexField = attr.getVertexField();
 
         if (!vertexFormat.hasField(vertexField))
             continue;
 
-        GLuint location = attr->getLocation();
+        GLuint location = attr.getLocation();
 
         const GLVertexAttrInfo& data = vertexAttrInfo[vertexField];
 
@@ -128,7 +129,7 @@ void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, void* verte
         GLint size = data.size;
 
         GLsizei stride = vertexFormat.getVertexSize();
-        const void* pointer = (const void*)vertexFormat.getFieldOffset(vertexField, vertexData);
+        const void* pointer = vertexFormat.getFieldOffset(vertexField, vertexData);
 
         glVertexAttribPointer(location, size, type, normalized, stride, pointer);
         ErrorHandler::checkForErrors();

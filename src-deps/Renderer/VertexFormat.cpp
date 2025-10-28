@@ -2,10 +2,12 @@
 
 #include "VertexFormat.h"
 
-const mce::VertexFormat mce::VertexFormat::EMPTY = mce::VertexFormat();
-const unsigned int mce::VertexFormat::FieldSize[8] = { 0xC, 4, 4, 4, 4, 0, 0, 0 };
+using namespace mce;
 
-mce::VertexFormat::VertexFormat()
+const VertexFormat VertexFormat::EMPTY = VertexFormat();
+const unsigned int VertexFormat::FieldSize[8] = { 0xC, 4, 4, 4, 4, 0, 0, 0 };
+
+VertexFormat::VertexFormat()
 {
     m_fieldMask = 0;
     m_vertexSize = 0;
@@ -13,12 +15,12 @@ mce::VertexFormat::VertexFormat()
         memset(m_fieldOffset, -1, sizeof(m_fieldOffset));
 }
 
-void mce::VertexFormat::enableField(mce::VertexField vertexField)
+void VertexFormat::enableField(VertexField vertexField)
 {
     if (hasField(vertexField)) return;
 
     m_fieldOffset[vertexField] = m_vertexSize;
-    uint8_t v6 = m_vertexSize + mce::VertexFormat::FieldSize[vertexField];
+    uint8_t v6 = m_vertexSize + VertexFormat::FieldSize[vertexField];
     uint8_t v8 = v6 & 3;
     m_vertexSize = v6;
     if (v8)
@@ -26,24 +28,29 @@ void mce::VertexFormat::enableField(mce::VertexField vertexField)
     m_fieldMask = (1 << vertexField) | m_fieldMask;
 }
 
-bool mce::VertexFormat::hasField(mce::VertexField vertexField) const
+bool VertexFormat::hasField(VertexField vertexField) const
 {
     return ((int)m_fieldMask >> vertexField) & 1;
 }
 
-bool mce::VertexFormat::operator==(const mce::VertexFormat &other) const
+const void* VertexFormat::getFieldOffset(VertexField vertexField, void *vertexData = nullptr) const
+{
+    return (uint8_t*)vertexData + m_fieldOffset[vertexField];
+}
+
+bool VertexFormat::operator==(const VertexFormat &other) const
 {
     return m_fieldMask == other.m_fieldMask
         && m_vertexSize == other.m_vertexSize
         && memcmp(m_fieldOffset, other.m_fieldOffset, sizeof(m_fieldOffset)) == 0;
 }
 
-bool mce::VertexFormat::operator!=(const mce::VertexFormat &other) const
+bool VertexFormat::operator!=(const VertexFormat &other) const
 {
     return !(*this == other);
 }
 
-bool mce::VertexFormat::operator<(const mce::VertexFormat &other) const
+bool VertexFormat::operator<(const VertexFormat &other) const
 {
-    return (unsigned int)memcmp(this, &other, sizeof(mce::VertexFormat)) >> 31;
+    return (unsigned int)memcmp(this, &other, sizeof(VertexFormat)) >> 31;
 }
