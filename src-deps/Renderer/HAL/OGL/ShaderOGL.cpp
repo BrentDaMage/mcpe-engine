@@ -4,6 +4,21 @@
 
 using namespace mce;
 
+struct GLVertexAttrInfo
+{
+    GLenum type;
+    GLint size;
+    GLboolean normalized;
+};
+
+static GLVertexAttrInfo vertexAttrInfo[] = {
+    { GL_FLOAT,          3, GL_FALSE },
+    { GL_UNSIGNED_BYTE,  4, GL_TRUE },
+    { GL_BYTE,           4, GL_FALSE },
+    { GL_UNSIGNED_SHORT, 2, GL_TRUE },
+    { GL_UNSIGNED_SHORT, 2, GL_TRUE }
+};
+
 ShaderOGL::ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader)
     : ShaderBase(vertexShader, fragmentShader, geometryShader)
 {
@@ -21,6 +36,12 @@ void ShaderOGL::deleteShader()
 {
     glDeleteProgram(m_shaderProgram);
     m_shaderProgram = 0;
+}
+
+void ShaderOGL::freeCompilerResources()
+{
+    glReleaseShaderCompiler();
+    glGetError();
 }
 
 void ShaderOGL::resetLastProgram()
@@ -81,6 +102,37 @@ void ShaderOGL::linkShader()
 
     glDeleteProgram(m_shaderProgram);
     m_shaderProgram = 0;
+}
+
+void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, void* vertexData)
+{
+    RenderDevice* device = RenderDevice::getInstance();
+    RenderDeviceBase::AttributeList attrList = device->getAttributeList(m_attributeListIndex);
+
+    for (Attribute* attr = attrList.begin(); attr != attrList.end(); attr++)
+    {
+        VertexField vertexField = attr->getVertexField();
+
+        if (!vertexFormat.hasField(vertexField))
+            continue;
+
+        GLuint location = attr->getLocation();
+
+        const GLVertexAttrInfo& data = vertexAttrInfo[vertexField];
+
+        //ErrorHandler::checkForErrors();
+        //ErrorHandler::checkForErrors();
+
+        GLboolean normalized = data.normalized;
+        GLenum type = data.type;
+        GLint size = data.size;
+
+        GLsizei stride = vertexFormat.getVertexSize();
+        const void* pointer = (const void*)vertexFormat.getFieldOffset(vertexField, vertexData);
+
+        glVertexAttribPointer(location, size, type, normalized, stride, pointer);
+        ErrorHandler::checkForErrors();
+    }
 }
 
 void ShaderOGL::reflectShader()

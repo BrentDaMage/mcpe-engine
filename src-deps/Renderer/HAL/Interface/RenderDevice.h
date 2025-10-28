@@ -5,7 +5,7 @@
 
 namespace mce
 {
-    class RenderDevice : public RenderDeviceOGL, Singleton<RenderDevice>
+    class RenderDevice : public RenderDeviceOGL, public Singleton<RenderDevice>
     {
     public:
         RenderContext *m_immediateContext;

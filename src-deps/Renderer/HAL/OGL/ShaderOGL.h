@@ -25,11 +25,11 @@ public:
 
     void deleteShader();
     void finalizeShaderUniforms(); // @TODO
-    void freeCompilerResources(); // @TODO
+    void freeCompilerResources();
     void resetLastProgram();
     void createAndAttachPrograms();
     void linkShader();
-    void bindVertexPointers(VertexFormat const&, void*); // @TODO
+    void bindVertexPointers(VertexFormat const&, void*);
     void bindShader(RenderContext&, VertexFormat const&, void*, unsigned int); // @TODO
     void reflectShaderUniforms(); // @TODO
     void reflectShaderAttributes(); // @TODO
