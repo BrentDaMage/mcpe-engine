@@ -23,13 +23,18 @@ ShaderOGL::ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader,
     : ShaderBase(vertexShader, fragmentShader, geometryShader)
 {
     m_shaderProgram = GL_NONE;
-    m_vertexShaderObject = GL_NONE;
-    m_fragmentShaderObject = GL_NONE;
-    m_geometryShaderObject = GL_NONE;
+    m_vertexShaderUniform = nullptr;
+    m_fragmentShaderUniform = nullptr;
+    m_geometryShaderUniform = nullptr;
 
     createAndAttachPrograms();
     linkShader();
     reflectShader();
+}
+
+ShaderOGL::~ShaderOGL()
+{
+    deleteShader();
 }
 
 void ShaderOGL::deleteShader()
@@ -133,6 +138,36 @@ void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, void* verte
 
         glVertexAttribPointer(location, size, type, normalized, stride, pointer);
         ErrorHandler::checkForErrors();
+    }
+}
+
+void ShaderOGL::bindShader(RenderContext* context, const VertexFormat& vertexFormat, void* vertexData, unsigned int)
+{
+    bool shaderChanged = context->m_lastShaderProgram != m_shaderProgram;
+
+    if (shaderChanged)
+    {
+        glUseProgram(m_shaderProgram);
+        context->m_lastShaderProgram = m_shaderProgram;
+        bindVertexPointers(vertexFormat, vertexData);
+    }
+
+    for (size_t i = 0; i < m_uniforms.size(); i++)
+    {
+        ShaderUniformOGL* uniform = m_uniforms[i];
+        if (uniform->byte9 && context->m_bSetUniformValue)
+        {
+            glUniform1i(uniform->m_location, context->m_uniformValue);
+            context->m_bSetUniformValue = false;
+        }
+    }
+
+    // i don't think this is how it was done, but i'm not sure
+    // how else to write it
+    while (m_vertexShaderUniform != m_fragmentShaderUniform)
+    {
+        m_vertexShaderUniform->bind(shaderChanged);
+        m_vertexShaderUniform++;
     }
 }
 

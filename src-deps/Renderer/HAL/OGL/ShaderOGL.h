@@ -1,7 +1,10 @@
 #pragma once
 
+#include <vector>
+
 #include "API_OGL.h"
 #include "../../RenderContextImmediate.h"
+#include "ShaderUniformOGL.h"
 #include "ShaderBase.h"
 #include "ShaderProgram.h"
 #include "VertexFormat.h"
@@ -14,10 +17,10 @@ class ShaderOGL : public ShaderBase
 {
 private:
     GLuint m_shaderProgram;
-    GLuint m_vertexShaderObject;
-    GLuint m_fragmentShaderObject;
-    GLuint m_geometryShaderObject;
-    GLint m_uniformLocations[8]; // technically an std::array
+    ShaderUniformOGL* m_vertexShadefinalizeShaderUniformsrUniform;
+    ShaderUniformOGL* m_fragmentShaderUniform;
+    ShaderUniformOGL* m_geometryShaderUniform;
+    std::vector<ShaderUniformOGL*> m_uniforms;
 
 public:
     ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader);
@@ -30,7 +33,7 @@ public:
     void createAndAttachPrograms();
     void linkShader();
     void bindVertexPointers(VertexFormat const&, void*);
-    void bindShader(RenderContext&, VertexFormat const&, void*, unsigned int); // @TODO
+    void bindShader(RenderContext&, VertexFormat const&, void*, unsigned int);
     void reflectShaderUniforms(); // @TODO
     void reflectShaderAttributes(); // @TODO
     void reflectShader();

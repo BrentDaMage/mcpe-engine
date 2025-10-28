@@ -17,7 +17,7 @@ namespace mce
         GLuint m_lastShaderProgram;
         GLuint *m_buffers[2];
         unsigned int m_uniformValue;
-        unsigned int m_bSetUniformValue;
+        bool m_bSetUniformValue;
 
         // need to confirm the rest
         unsigned int field_6C;
