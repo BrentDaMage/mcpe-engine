@@ -13,36 +13,36 @@
 
 namespace mce
 {
-class ShaderOGL : public ShaderBase
-{
-public:
-    struct VertexFieldFormat
+    class ShaderOGL : public ShaderBase
     {
-        unsigned int componentsType;
-        int components;
-        bool normalized;
+    public:
+        struct VertexFieldFormat
+        {
+            unsigned int componentsType;
+            int components;
+            bool normalized;
+        };
+
+    private:
+        GLuint m_shaderProgram;
+        std::vector<ShaderUniformOGL> m_uniformList;
+        unsigned int m_vertexArrayObjectName;
+        VertexFieldFormat m_vffmap[10];
+
+    public:
+        ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader);
+        ~ShaderOGL();
+
+        void deleteShader();
+        void finalizeShaderUniforms(); // @TODO
+        void freeCompilerResources();
+        void resetLastProgram();
+        void createAndAttachPrograms();
+        void linkShader();
+        void bindVertexPointers(const VertexFormat&, const void*);
+        void bindShader(RenderContext& context, const VertexFormat& format, const void *dataBasePtr, unsigned int shaderStageBits);
+        void reflectShaderUniforms(); // @TODO
+        void reflectShaderAttributes(); // @TODO
+        void reflectShader();
     };
-
-private:
-    GLuint m_shaderProgram;
-    std::vector<ShaderUniformOGL, std::allocator<ShaderUniformOGL>> uniformList;
-    unsigned int vertexArrayObjectName;
-    VertexFieldFormat vffmap[10];
-
-public:
-    ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader);
-    ~ShaderOGL();
-
-    void deleteShader();
-    void finalizeShaderUniforms(); // @TODO
-    void freeCompilerResources();
-    void resetLastProgram();
-    void createAndAttachPrograms();
-    void linkShader();
-    void bindVertexPointers(VertexFormat const&, void*);
-    void bindShader(RenderContext&, VertexFormat const&, void*, unsigned int);
-    void reflectShaderUniforms(); // @TODO
-    void reflectShaderAttributes(); // @TODO
-    void reflectShader();
-};
 }

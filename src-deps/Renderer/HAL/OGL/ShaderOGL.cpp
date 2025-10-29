@@ -1,4 +1,5 @@
 #include <typeinfo>
+#include <stdexcept>
 
 #include "ShaderOGL.h"
 
@@ -41,7 +42,7 @@ void ShaderOGL::freeCompilerResources()
 
 void ShaderOGL::resetLastProgram()
 {
-    RenderContextImmediate::get().m_lastShaderProgram = GL_NONE;
+    RenderContextImmediate::get().m_activeShaderProgram = GL_NONE;
 }
 
 void ShaderOGL::createAndAttachPrograms()
@@ -99,13 +100,15 @@ void ShaderOGL::linkShader()
     m_shaderProgram = 0;
 }
 
-void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, void* vertexData)
+void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, const void* vertexData)
 {
     RenderDevice* device = RenderDevice::getInstance();
     RenderDeviceBase::AttributeList attrList = device->getAttributeList(m_attributeListIndex);
 
-    for (Attribute& attr : attrList)
+    for (int i = 0; i < attrList.size(); i++)
     {
+        const Attribute& attr = attrList[i];
+        
         VertexField vertexField = attr.getVertexField();
         if (!vertexFormat.hasField(vertexField))
             continue;
@@ -125,29 +128,34 @@ void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, void* verte
     }
 }
 
-void ShaderOGL::bindShader(RenderContext* context, const VertexFormat& vertexFormat, void* vertexData, unsigned int)
+void ShaderOGL::bindShader(RenderContext& context, const VertexFormat& format, const void *dataBasePtr, unsigned int shaderStageBits)
 {
-    bool shaderChanged = context->m_lastShaderProgram != m_shaderProgram;
+    bool shaderChanged = context.m_activeShaderProgram != m_shaderProgram;
 
     if (shaderChanged)
     {
         glUseProgram(m_shaderProgram);
-        context->m_lastShaderProgram = m_shaderProgram;
+        context.m_activeShaderProgram = m_shaderProgram;
     }
 
-    bindVertexPointers(vertexFormat, vertexData);
+    bindVertexPointers(format, dataBasePtr);
 
-    for (ShaderUniformOGL& shaderUniform : uniformList)
+    for (int i = 0; i < m_uniformList.size(); i++)
     {
-        if ((shaderChanged && shaderUniform.byte9) || context->m_bSetUniformValue)
+        if (i >= 8)
+            throw std::out_of_range("context->m_activeTextureUnits[]");
+        const ShaderUniformOGL& shaderUniform = m_uniformList[i];
+        RenderContextOGL::ActiveTextureUnit& activeTextureUnit = context.m_activeTextureUnits[i];
+        if ((shaderChanged && shaderUniform.byte9) || activeTextureUnit.m_bIsShaderUniformDirty)
         {
-            glUniform1i(shaderUniform.m_location, context->m_uniformValue);
-            context->m_bSetUniformValue = false;
+            glUniform1i(shaderUniform.m_location, activeTextureUnit.m_textureUnit);
+            activeTextureUnit.m_bIsShaderUniformDirty = false;
         }
     }
 
-    for (ShaderUniformOGL& shaderUniform : uniformList)
+    for (int i = 0; i < m_uniformList.size(); i++)
     {
+        ShaderUniformOGL& shaderUniform = m_uniformList[i];
         shaderUniform.bind(shaderChanged);
     }
 }

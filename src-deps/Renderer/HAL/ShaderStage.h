@@ -7,7 +7,7 @@ namespace mce
     class ShaderStage
     {
     public:
-        mce::ShaderStagesBits m_shaderStageBitsEnum;
+        ShaderStagesBits m_shaderStageBitsEnum;
         unsigned int m_shaderStageBits;
     };
 }
