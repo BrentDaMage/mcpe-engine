@@ -15,12 +15,19 @@ namespace mce
 {
 class ShaderOGL : public ShaderBase
 {
+public:
+    struct VertexFieldFormat
+    {
+        unsigned int componentsType;
+        int components;
+        bool normalized;
+    };
+
 private:
     GLuint m_shaderProgram;
-    ShaderUniformOGL* m_vertexShadefinalizeShaderUniformsrUniform;
-    ShaderUniformOGL* m_fragmentShaderUniform;
-    ShaderUniformOGL* m_geometryShaderUniform;
-    std::vector<ShaderUniformOGL*> m_uniforms;
+    std::vector<ShaderUniformOGL, std::allocator<ShaderUniformOGL>> uniformList;
+    unsigned int vertexArrayObjectName;
+    VertexFieldFormat vffmap[10];
 
 public:
     ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader);

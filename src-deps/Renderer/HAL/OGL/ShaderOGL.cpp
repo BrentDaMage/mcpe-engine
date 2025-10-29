@@ -4,28 +4,18 @@
 
 using namespace mce;
 
-struct GLVertexAttrInfo
-{
-    GLenum type;
-    GLint size;
-    GLboolean normalized;
-};
-
-static GLVertexAttrInfo vertexAttrInfo[] = {
-    { GL_FLOAT,          3, GL_FALSE },
-    { GL_UNSIGNED_BYTE,  4, GL_TRUE },
-    { GL_BYTE,           4, GL_FALSE },
-    { GL_UNSIGNED_SHORT, 2, GL_TRUE },
-    { GL_UNSIGNED_SHORT, 2, GL_TRUE }
+static ShaderOGL::VertexFieldFormat vertexFieldFormats[] = {
+    { GL_FLOAT,          3, GL_FALSE }, // VERTEX_FIELD_POSITION
+    { GL_UNSIGNED_BYTE,  4, GL_TRUE  }, // VERTEX_FIELD_COLOR
+    { GL_BYTE,           4, GL_FALSE }, // VERTEX_FIELD_NORMAL
+    { GL_UNSIGNED_SHORT, 2, GL_TRUE  }, // VERTEX_FIELD_TEXCOORD_0
+    { GL_UNSIGNED_SHORT, 2, GL_TRUE  }  // VERTEX_FIELD_TEXCOORD_1
 };
 
 ShaderOGL::ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader)
     : ShaderBase(vertexShader, fragmentShader, geometryShader)
 {
     m_shaderProgram = GL_NONE;
-    m_vertexShaderUniform = nullptr;
-    m_fragmentShaderUniform = nullptr;
-    m_geometryShaderUniform = nullptr;
 
     createAndAttachPrograms();
     linkShader();
@@ -114,29 +104,23 @@ void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, void* verte
     RenderDevice* device = RenderDevice::getInstance();
     RenderDeviceBase::AttributeList attrList = device->getAttributeList(m_attributeListIndex);
 
-    for (int i = 0; i < attrList.size(); i++)
+    for (Attribute& attr : attrList)
     {
-        const Attribute& attr = attrList[i];
         VertexField vertexField = attr.getVertexField();
-
         if (!vertexFormat.hasField(vertexField))
             continue;
 
         GLuint location = attr.getLocation();
+        const VertexFieldFormat& format = vertexFieldFormats[vertexField];
+        glVertexAttribPointer(
+            location,
+            format.components,
+            format.componentsType,
+            format.normalized,
+            vertexFormat.getVertexSize(),
+            vertexFormat.getFieldOffset(vertexField, vertexData)
+        );
 
-        const GLVertexAttrInfo& data = vertexAttrInfo[vertexField];
-
-        //ErrorHandler::checkForErrors();
-        //ErrorHandler::checkForErrors();
-
-        GLboolean normalized = data.normalized;
-        GLenum type = data.type;
-        GLint size = data.size;
-
-        GLsizei stride = vertexFormat.getVertexSize();
-        const void* pointer = vertexFormat.getFieldOffset(vertexField, vertexData);
-
-        glVertexAttribPointer(location, size, type, normalized, stride, pointer);
         ErrorHandler::checkForErrors();
     }
 }
@@ -149,25 +133,22 @@ void ShaderOGL::bindShader(RenderContext* context, const VertexFormat& vertexFor
     {
         glUseProgram(m_shaderProgram);
         context->m_lastShaderProgram = m_shaderProgram;
-        bindVertexPointers(vertexFormat, vertexData);
     }
 
-    for (size_t i = 0; i < m_uniforms.size(); i++)
+    bindVertexPointers(vertexFormat, vertexData);
+
+    for (ShaderUniformOGL& shaderUniform : uniformList)
     {
-        ShaderUniformOGL* uniform = m_uniforms[i];
-        if (uniform->byte9 && context->m_bSetUniformValue)
+        if ((shaderChanged && shaderUniform.byte9) || context->m_bSetUniformValue)
         {
-            glUniform1i(uniform->m_location, context->m_uniformValue);
+            glUniform1i(shaderUniform.m_location, context->m_uniformValue);
             context->m_bSetUniformValue = false;
         }
     }
 
-    // i don't think this is how it was done, but i'm not sure
-    // how else to write it
-    while (m_vertexShaderUniform != m_fragmentShaderUniform)
+    for (ShaderUniformOGL& shaderUniform : uniformList)
     {
-        m_vertexShaderUniform->bind(shaderChanged);
-        m_vertexShaderUniform++;
+        shaderUniform.bind(shaderChanged);
     }
 }
 
