@@ -155,12 +155,12 @@ void TextureOGL::createTexture(RenderContext& context, TextureDescription const&
 
 void TextureOGL::lock(RenderContext& ctx)
 {
-    // todo
+    // @TODO
 }
 
 void TextureOGL::unlock(RenderContext& ctx)
 {
-    // todo
+    // @TODO
 }
 
 bool TextureOGL::supportsMipMaps()

@@ -34,7 +34,7 @@ namespace mce
         TextureOGL();
         
         void deleteTexture();
-        void bindTexture(RenderContext& context, unsigned int texture, unsigned int);
+        void bindTexture(RenderContext& context, unsigned int texture, unsigned int); // @TODO
         
         GLenum getOpenGLTextureFormat(TextureFormat textureFormat);
         GLint getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat textureFormat);
@@ -50,8 +50,8 @@ namespace mce
         void createMipMap(RenderContext& context, void const* pixels, unsigned int width, unsigned int height, unsigned int level);
         void createTexture(RenderContext& context, TextureDescription const&);
 
-        void lock(RenderContext& context);
-        void unlock(RenderContext& context);
+        void lock(RenderContext& context); // @TODO
+        void unlock(RenderContext& context); // @TODO
 
         bool supportsMipMaps();
     };
