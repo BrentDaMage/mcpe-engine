@@ -10,7 +10,7 @@ namespace mce
         TextureDescription m_description;
 
     protected:
-        bool m_created;
+        bool m_bCreated;
 
     public:
         const TextureDescription& getDescription() const;

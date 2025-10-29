@@ -10,11 +10,25 @@ namespace mce
     class TextureOGL : public TextureBase
     {
     private:
-        GLuint* m_glObj;
-        GLenum m_textureTarget;
-        GLint m_internalFormat;
-        GLenum m_format;
-        GLenum m_type;
+        struct State
+        {
+            GLuint* m_textureArray;
+            GLenum m_textureTarget;
+            GLenum m_internalTextureFormat;
+            GLenum m_textureFormat;
+            GLenum m_textureType;
+
+            State()
+            {
+                m_textureArray = nullptr;
+                m_textureTarget = GL_TEXTURE_2D;
+                m_internalTextureFormat = GL_NONE;
+                m_textureFormat = GL_NONE;
+                m_textureType = GL_NONE;
+            }
+        };
+    private:
+        State m_state;
 
     public:
         TextureOGL();

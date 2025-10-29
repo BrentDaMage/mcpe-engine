@@ -11,12 +11,12 @@ const TextureDescription& TextureBase::getDescription() const
 
 void TextureBase::deleteTexture()
 {
-    m_created = false;
+    m_bCreated = false;
 }
 
 bool TextureBase::isLoaded() const
 {
-    return m_created;
+    return m_bCreated;
 }
 
 void TextureBase::createTexture(const TextureDescription& description)
