@@ -10,13 +10,25 @@ QuadIndexBuffer::QuadIndexBuffer()
     m_indexSize = 0;
 }
 
+void QuadIndexBuffer::onAppTerminated()
+{
+    onAppSuspended();
+}
+
+void QuadIndexBuffer::onAppSuspended()
+{
+    m_capacity = 1;
+    m_globalBuffer.release();
+    m_indexSize = 0;
+}
+
 template <typename T>
-void QuadIndexBuffer::_makeIndexBuffer(std::vector<T>& indices, unsigned int numQuads)
+void _makeIndexBuffer(std::vector<T>& indices, unsigned int numQuads)
 {
         indices.resize(numQuads * 6);
         for (unsigned int i = 0; i < numQuads; i++)
         {
-            auto baseVertex = static_cast<T>(i * 4);
+            T baseVertex = static_cast<T>(i * 4);
             size_t baseIndex = i * 6;
 
             // The index pattern creates two triangles for each quad (v, v+1, v+2, v+3):
@@ -30,18 +42,6 @@ void QuadIndexBuffer::_makeIndexBuffer(std::vector<T>& indices, unsigned int num
             indices[baseIndex + 4] = baseVertex + 2;
             indices[baseIndex + 5] = baseVertex + 3;
         }
-    }
-
-void QuadIndexBuffer::onAppTerminated()
-{
-    onAppSuspended();
-}
-
-void QuadIndexBuffer::onAppSuspended()
-{
-    m_capacity = 1;
-    m_globalBuffer.release();
-    m_indexSize = 0;
 }
 
 Buffer& QuadIndexBuffer::getGlobalQuadBuffer(RenderContext& context, unsigned int requiredCapacity, uint8_t& outIndexSize)
@@ -93,4 +93,21 @@ Buffer& QuadIndexBuffer::getGlobalQuadBuffer(RenderContext& context, unsigned in
 
     outIndexSize = m_indexSize;
     return m_globalBuffer;
+}
+
+Buffer& QuadIndexBuffer::get(RenderContext& context, unsigned int requiredCapacity, uint8_t& outIndexSize)
+{
+    if (!instance)
+    {
+        instance = new QuadIndexBuffer();
+        instance->m_capacity = 1;
+    }
+
+    return instance->getGlobalQuadBuffer(context, requiredCapacity, outIndexSize);
+}
+
+void QuadIndexBuffer::release()
+{
+    delete instance;
+    instance = nullptr;
 }

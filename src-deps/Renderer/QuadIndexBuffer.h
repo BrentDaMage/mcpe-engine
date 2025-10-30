@@ -18,14 +18,13 @@ namespace mce
     public:
         QuadIndexBuffer();
 
-    private:
-        template <typename T>
-        void _makeIndexBuffer(std::vector<T>& indices, unsigned int numQuads);
-
     public:
         void onAppTerminated() override;
         void onAppSuspended() override;
 
         Buffer& getGlobalQuadBuffer(RenderContext& context, unsigned int requiredCapacity, uint8_t& outIndexSize);
+        
+        static Buffer& get(RenderContext& context, unsigned int requiredCapacity, uint8_t& outIndexSize);
+        static void release();
     };
 }
