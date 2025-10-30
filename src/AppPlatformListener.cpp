@@ -1,4 +1,4 @@
-#include "AppPlatformListener.h"
+#include "AppPlatformListener.hpp"
 
 AppPlatformListener::AppPlatformListener(bool doInit)
 {

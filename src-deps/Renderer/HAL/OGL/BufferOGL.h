@@ -6,4 +6,9 @@
 namespace mce
 {
     GLenum glTargetFromBufferType(BufferType bufferType);
+
+    class BufferOGL : public BufferBase
+    {
+
+    };
 }

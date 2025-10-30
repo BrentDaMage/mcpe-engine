@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AppPlatform.h"
+#include "AppPlatform.hpp"
 
 class AppPlatformListener
 {
