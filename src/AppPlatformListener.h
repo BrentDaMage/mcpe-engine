@@ -1,15 +1,11 @@
 #pragma once
 
+#include "AppPlatform.h"
+
 class AppPlatformListener
 {
-private:
-    bool m_listenerRegistered = false;
-
 public:
-    AppPlatformListener()
-    {
-        initListener(1.0f);
-    }
+    AppPlatformListener(bool doInit = true);
 
     virtual void onLowMemory() {}
     virtual void onAppResumed() {}
@@ -18,14 +14,9 @@ public:
     virtual void onAppTerminated() {}
     virtual void onAppSuspended() {}
 
-    void initListener(float unknown)
-    {
-        // todo
-    }
+    void initListener(float priority);
+    void terminate();
 
-    void terminate()
-    {
-        onAppFocusLost();
-        m_listenerRegistered = false;
-    }
+private:
+    AppPlatform* m_pPlatform;
 };
