@@ -44,7 +44,7 @@ namespace mce
     public:
         GLuint m_activeTexture;
         GLuint m_activeShaderProgram;
-        GLuint m_activeBuffer[2];
+        GLuint m_activeBuffer[2]; // indexed by BufferType
         ActiveTextureUnit m_activeTextureUnits[8];
         std::vector<const GLvoid *> field_A4;
 
