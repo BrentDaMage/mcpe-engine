@@ -13,8 +13,8 @@ static ShaderOGL::VertexFieldFormat vertexFieldFormats[] = {
     { GL_UNSIGNED_SHORT, 2, GL_TRUE  }  // VERTEX_FIELD_TEXCOORD_1
 };
 
-ShaderOGL::ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader)
-    : ShaderBase(vertexShader, fragmentShader, geometryShader)
+ShaderOGL::ShaderOGL(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry)
+    : ShaderBase(vertex, fragment, geometry)
 {
     m_shaderProgram = GL_NONE;
 

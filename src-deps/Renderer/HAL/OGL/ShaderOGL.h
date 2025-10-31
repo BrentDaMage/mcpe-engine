@@ -30,13 +30,13 @@ namespace mce
         VertexFieldFormat m_vffmap[10];
 
     public:
-        ShaderOGL(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader);
+        ShaderOGL(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry);
         ~ShaderOGL();
 
         void deleteShader();
         void finalizeShaderUniforms(); // @TODO
         void freeCompilerResources();
-        void resetLastProgram();
+        static void resetLastProgram();
         void createAndAttachPrograms();
         void linkShader();
         void bindVertexPointers(const VertexFormat&, const void*);

@@ -1,25 +1,42 @@
 #include <sstream>
 
 #include "ShaderBase.h"
+#include "RenderContextImmediate.h"
 
 using namespace mce;
 
-ShaderBase::ShaderBase(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader)
-    : m_vertexShader(vertexShader)
-    , m_fragmentShader(fragmentShader)
-    , m_geometryShader(geometryShader)
+ShaderBase::ShaderBase(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry)
+    : m_vertexShader(vertex)
+    , m_fragmentShader(fragment)
+    , m_geometryShader(geometry)
 {
     m_attributeListIndex = 0;
+}
+
+void ShaderBase::finalizeShaderUniforms()
+{
+}
+
+void ShaderBase::freeCompilerResources()
+{
+}
+
+void ShaderBase::resetLastProgram()
+{
 }
 
 bool ShaderBase::isBuiltFrom(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath, const std::string& geometryPath) const
 {
     return m_vertexShader.m_header == (shaderName + vertexPath) &&
            m_fragmentShader.m_header == (shaderName + fragmentPath) &&
-          (m_geometryShader.m_header == (shaderName + geometryPath) || !m_geometryShader.m_valid);
+          (m_geometryShader.m_header == (shaderName + geometryPath) || !m_geometryShader.isValid());
 }
 
 void ShaderBase::validateVertexFormat(const VertexFormat& vertexFormat)
+{
+}
+
+void ShaderBase::bindShader(RenderContext& context, const VertexFormat& format, const void *dataBasePtr, unsigned int shaderStageBits) 
 {
 }
 

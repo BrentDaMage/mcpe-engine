@@ -20,10 +20,14 @@ namespace mce
 
         static std::map<std::string, VertexField> builtinAttributeMap;
 
-        ShaderBase(ShaderProgram& vertexShader, ShaderProgram& fragmentShader, ShaderProgram& geometryShader);
+        ShaderBase(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry);
 
+        void finalizeShaderUniforms();
+        void freeCompilerResources();
+        static void resetLastProgram();
         bool isBuiltFrom(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath, const std::string& geometryPath) const;
         void validateVertexFormat(const VertexFormat& vertexFormat);
+        void bindShader(RenderContext& context, const VertexFormat& format, const void *dataBasePtr, unsigned int shaderStageBits);
         void reflectShader(RenderDevice& renderDevice);
         const mce::VertexField& getAttributeForName(const std::string& name, unsigned int id) const;
     };
