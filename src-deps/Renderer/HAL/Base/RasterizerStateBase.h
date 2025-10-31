@@ -8,11 +8,13 @@ namespace mce
 	class RasterizerStateBase
 	{
 	public:
-        mce::RasterizerStateDescription m_description;
+        RasterizerStateDescription m_description;
 		
 		RasterizerStateBase();
 		
-		void createRasterizerStateDescription(mce::RenderContext& ctx, const mce::RasterizerStateDescription& desc);
-        bool bindRasterizerState(mce::RenderContext& ctx);
+		void createRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc);
+		void setRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc);
+        bool bindRasterizerState(RenderContext& ctx);
+		void setScissorRect(RenderContext &context, int x, int y, int width, int height) {}
 	};
 }

@@ -1,16 +1,23 @@
 #include "RasterizerStateBase.h"
 
-mce::RasterizerStateBase::RasterizerStateBase()
+using namespace mce;
+
+RasterizerStateBase::RasterizerStateBase()
 {
-    m_description = mce::RasterizerStateDescription();
+    m_description = RasterizerStateDescription();
 }
 
-void mce::RasterizerStateBase::createRasterizerStateDescription(mce::RenderContext& ctx, const mce::RasterizerStateDescription& desc)
+void RasterizerStateBase::createRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc)
+{
+    setRasterizerStateDescription(ctx, desc);
+}
+
+void RasterizerStateBase::setRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc)
 {
     m_description = desc;
 }
 
-bool mce::RasterizerStateBase::bindRasterizerState(mce::RenderContext& ctx)
+bool RasterizerStateBase::bindRasterizerState(RenderContext& ctx)
 {
-    return ctx.m_state.m_rasterizerStateDescription == m_description;
+    return ctx.m_currentState.m_rasterizerStateDescription == m_description;
 }

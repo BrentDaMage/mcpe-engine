@@ -7,12 +7,15 @@ namespace mce
 {
     class ShaderProgramBase
     {
+    protected:
+        bool m_bValid;
     public:
         const std::string m_header;
         const std::string m_shaderPath;
-        const mce::ShaderType m_shaderType;
-        bool m_valid;
+        const ShaderType m_shaderType;
 
-        ShaderProgramBase(const std::string& header, const std::string& shaderPath, mce::ShaderType shaderType);
+        ShaderProgramBase(const std::string& header, const std::string& shaderPath, ShaderType shaderType);
+
+        bool isValid() const { return m_bValid; }
     };
 }

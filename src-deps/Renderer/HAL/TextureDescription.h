@@ -11,7 +11,7 @@ namespace mce
 	public:
         unsigned int unknown1;
         unsigned int m_mipCount;
-        bool unknown2;
+        bool m_bUnknown2;
         TextureFiltering m_filteringLevel;
         uint8_t unknown3;
 		

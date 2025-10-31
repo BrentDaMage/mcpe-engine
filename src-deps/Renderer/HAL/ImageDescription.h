@@ -15,6 +15,6 @@ namespace mce
 		
 		ImageDescription();
 		
-		unsigned int getSizeInBytes();
+		unsigned int getSizeInBytes() const;
 	};
 }

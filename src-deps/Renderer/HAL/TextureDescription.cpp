@@ -2,9 +2,9 @@
 
 mce::TextureDescription::TextureDescription()
 {
-    unknown1 = 1;
+    unknown1 = 0;
     m_mipCount = 1;
-    unknown2 = 0;
+    m_bUnknown2 = false;
     m_filteringLevel = TEXTURE_FILTERING_POINT;
     unknown3 = 0;
 }
