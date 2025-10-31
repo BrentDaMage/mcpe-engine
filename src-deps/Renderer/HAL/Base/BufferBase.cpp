@@ -25,9 +25,9 @@ BufferBase::BufferBase(const BufferBase& other)
     m_internalSize = other.m_internalSize;
 }
 
-BufferBase::BufferBase(BufferBase& other)
+BufferBase::BufferBase(BufferBase&& other)
 {
-    *this = other;
+    *this = std::move(other);
     release();
 }
 
@@ -60,21 +60,21 @@ void BufferBase::updateBuffer(RenderContext& context, unsigned int stride, const
     m_count = count;
 }
 
-void BufferBase::operator=(BufferBase& other)
+void BufferBase::operator=(BufferBase&& other)
 {
     unsigned int stride = m_stride;
-    m_stride = other.m_stride;
+    this->m_stride = other.m_stride;
     other.m_stride = stride;
 
     BufferType bufferType = m_bufferType;
-    m_bufferType = other.m_bufferType;
+    this->m_bufferType = other.m_bufferType;
     other.m_bufferType = bufferType;
     
     unsigned int internalSize = m_internalSize;
-    m_internalSize = other.m_internalSize;
+    this->m_internalSize = other.m_internalSize;
     other.m_internalSize = internalSize;
 
     unsigned int count = m_count;
-    m_count = other.m_count;
+    this->m_count = other.m_count;
     other.m_count = count;
 }

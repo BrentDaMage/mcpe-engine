@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "RenderContextOGL.h"
 
 using namespace mce;
@@ -72,4 +73,20 @@ void RenderContextOGL::lostContext()
 int RenderContextOGL::getMaxVertexCount() const
 {
     return gl::getMaxVertexCount();
+}
+
+GLuint& RenderContextOGL::getActiveBuffer(BufferType bufferType)
+{
+    if (bufferType >= 2)
+        throw std::out_of_range("m_activeBuffer[]");
+    
+    return m_activeBuffer[bufferType];
+}
+
+GLuint RenderContextOGL::getActiveBuffer(BufferType bufferType) const
+{
+    if (bufferType >= 2)
+        throw std::out_of_range("m_activeBuffer[]");
+    
+    return m_activeBuffer[bufferType];
 }

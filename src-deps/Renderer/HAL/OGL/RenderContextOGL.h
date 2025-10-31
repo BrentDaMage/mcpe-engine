@@ -41,10 +41,13 @@ namespace mce
             }
         };
 
+    private:
+        GLuint m_activeBuffer[2]; // indexed by BufferType
+
     public:
         GLuint m_activeTexture;
         GLuint m_activeShaderProgram;
-        GLuint m_activeBuffer[2]; // indexed by BufferType
+        //GLuint m_activeBuffer[2];
         ActiveTextureUnit m_activeTextureUnits[8];
         std::vector<const GLvoid *> field_A4;
 
@@ -64,5 +67,8 @@ namespace mce
         void swapBuffers();
         void lostContext();
         int getMaxVertexCount() const;
+
+        GLuint& getActiveBuffer(BufferType bufferType);
+        GLuint getActiveBuffer(BufferType bufferType) const;
     };
 }
