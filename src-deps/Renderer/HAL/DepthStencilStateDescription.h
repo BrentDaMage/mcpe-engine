@@ -12,18 +12,18 @@ namespace mce
 	public:
         bool depthTestEnabled;
         bool stencilTestEnabled;
-        mce::ComparisonFunc depthFunc;
-        mce::StencilFaceDescription frontFace;
-        mce::StencilFaceDescription backFace;
-        mce::DepthWriteMask depthWriteMask;
+        ComparisonFunc depthFunc;
+        StencilFaceDescription frontFace;
+        StencilFaceDescription backFace;
+        DepthWriteMask depthWriteMask;
         unsigned int stencilReadMask;
         unsigned int stencilWriteMask;
-        mce::StencilRefObject stencilRef;
+        StencilRefObject stencilRef;
         bool overwroteStencilRef;
 		
 		DepthStencilStateDescription();
 
-		bool operator==(const mce::DepthStencilStateDescription& other) const;
-		bool operator!=(const mce::DepthStencilStateDescription& other) const;
+		bool operator==(const DepthStencilStateDescription& other) const;
+		bool operator!=(const DepthStencilStateDescription& other) const;
 	};
 }
