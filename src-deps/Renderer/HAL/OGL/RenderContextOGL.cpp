@@ -77,7 +77,7 @@ int RenderContextOGL::getMaxVertexCount() const
 
 GLuint& RenderContextOGL::getActiveBuffer(BufferType bufferType)
 {
-    if (bufferType >= 2)
+    if (bufferType > BUFFER_TYPES_MAX)
         throw std::out_of_range("m_activeBuffer[]");
     
     return m_activeBuffer[bufferType];
@@ -85,7 +85,7 @@ GLuint& RenderContextOGL::getActiveBuffer(BufferType bufferType)
 
 GLuint RenderContextOGL::getActiveBuffer(BufferType bufferType) const
 {
-    if (bufferType >= 2)
+    if (bufferType > BUFFER_TYPES_MAX)
         throw std::out_of_range("m_activeBuffer[]");
     
     return m_activeBuffer[bufferType];

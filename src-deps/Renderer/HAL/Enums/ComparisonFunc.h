@@ -2,6 +2,7 @@
 
 namespace mce
 {
+    // Previously called DepthStencilFunc
     enum ComparisonFunc
     {
         COMPARISON_FUNC_EQUAL,

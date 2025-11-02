@@ -4,6 +4,9 @@
 #include <string>
 #include <stdint.h>
 
+#include "rapidjson/document.h"
+
+#include "HAL/Enums/RenderState.h"
 #include "HAL/Interface/Shader.h"
 #include "HAL/Interface/BlendState.h"
 #include "HAL/Interface/DepthStencilState.h"
@@ -20,16 +23,28 @@ namespace mce
         std::string m_fragmentShader;
         std::string m_geometryShader;
         float m_polygonOffsetLevel;
-        mce::Shader *m_shader;
-        mce::BlendState m_blendState;
-        mce::BlendStateDescription m_blendStateDescription;
-        mce::DepthStencilState m_depthStencilState;
-        mce::DepthStencilStateDescription m_depthStencilStateDescription;
-        mce::RasterizerState m_rasterizerState;
-        const mce::RasterizerStateDescription m_rasterizerStateDescription;
+        Shader *m_shader;
+        BlendState m_blendState;
+        BlendStateDescription m_blendStateDescription;
+        DepthStencilState m_depthStencilState;
+        DepthStencilStateDescription m_depthStencilStateDescription;
+        RasterizerState m_rasterizerState;
+        const RasterizerStateDescription m_rasterizerStateDescription;
 
     public:
         RenderMaterial();
         RenderMaterial(const RenderMaterial& other);
+        RenderMaterial(const rapidjson::Value& root, const RenderMaterial& other);
+
+    protected:
+        RenderState _parseStateName(const std::string& stateName) const;
+        void _parseRuntimeStates(const rapidjson::Value& root);
+        void _parseDepthStencilFace(const rapidjson::Value& root, const char* depthStencilFaceName, StencilFaceDescription& faceDescription) const;
+        void _parseDepthStencilState(const rapidjson::Value& root);
+        void _parseBlendState(const rapidjson::Value& root);
+        std::string _buildHeader(const rapidjson::Value& root);
+
+    public:
+        void addState(RenderState state);
     };
 }

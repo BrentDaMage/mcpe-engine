@@ -9,8 +9,8 @@ static ShaderOGL::VertexFieldFormat vertexFieldFormats[] = {
     { GL_FLOAT,          3, GL_FALSE }, // VERTEX_FIELD_POSITION
     { GL_UNSIGNED_BYTE,  4, GL_TRUE  }, // VERTEX_FIELD_COLOR
     { GL_BYTE,           4, GL_FALSE }, // VERTEX_FIELD_NORMAL
-    { GL_UNSIGNED_SHORT, 2, GL_TRUE  }, // VERTEX_FIELD_TEXCOORD_0
-    { GL_UNSIGNED_SHORT, 2, GL_TRUE  }  // VERTEX_FIELD_TEXCOORD_1
+    { GL_UNSIGNED_SHORT, 2, GL_TRUE  }, // VERTEX_FIELD_UV0
+    { GL_UNSIGNED_SHORT, 2, GL_TRUE  }  // VERTEX_FIELD_UV1
 };
 
 ShaderOGL::ShaderOGL(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry)
@@ -50,9 +50,9 @@ void ShaderOGL::createAndAttachPrograms()
     GLuint program = glCreateProgram();
     m_shaderProgram = program;
 
-    glAttachShader(program, m_vertexShader.m_shaderObject);
-    glAttachShader(m_shaderProgram, m_fragmentShader.m_shaderObject);
-    if (m_geometryShader.m_valid) glAttachShader(m_shaderProgram, m_geometryShader.m_shaderObject);
+    glAttachShader(program, m_vertexShader.m_shaderName);
+    glAttachShader(m_shaderProgram, m_fragmentShader.m_shaderName);
+    if (m_geometryShader.isValid()) glAttachShader(m_shaderProgram, m_geometryShader.m_shaderName);
     
     ErrorHandler::checkForErrors();
 }
@@ -69,7 +69,7 @@ void ShaderOGL::linkShader()
     if (linkStatus == GL_TRUE)
         return;
 
-    if (m_geometryShader.m_valid)
+    if (m_geometryShader.isValid())
     {
         //LOG_E("Failed to link " << m_vertexShader->m_shaderPath
         //    << " to " << m_fragmentShader->m_shaderPath

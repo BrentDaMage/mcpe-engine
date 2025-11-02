@@ -11,3 +11,12 @@ void ImmediateBufferBase::createDynamicBuffer(RenderContext& context, unsigned i
 {
     m_bufferType = bufferType;
 }
+
+void ImmediateBufferBase::updateBuffer(RenderContext& context, unsigned int itemSize, void const* data, unsigned int bufferSize)
+{
+}
+
+bool ImmediateBufferBase::isValid() const
+{
+    return false;
+}

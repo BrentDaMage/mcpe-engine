@@ -5,6 +5,8 @@
 #include <windows.h>
 #include <gl/GL.h>
 
+// This file is actually titled "gl_header.h", but I like "API_OGL.h" better
+
 namespace gl
 {
     extern bool hardwareOverideOpenGLES3;

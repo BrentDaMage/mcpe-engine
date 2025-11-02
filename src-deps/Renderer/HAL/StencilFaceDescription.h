@@ -8,14 +8,14 @@ namespace mce
 	class StencilFaceDescription
 	{
 	public:
-        mce::ComparisonFunc stencilFunc;
-        mce::StencilOp stencilFailOp;
-        mce::StencilOp stencilDepthFailOp;
-        mce::StencilOp stencilPassOp;
+		ComparisonFunc stencilFunc;
+		StencilOp stencilDepthFailOp;
+		StencilOp stencilPassOp;
+		StencilOp stencilFailOp;
 		
 		StencilFaceDescription();
 
-		bool operator==(const mce::StencilFaceDescription& other) const;
-		bool operator!=(const mce::StencilFaceDescription& other) const;
+		bool operator==(const StencilFaceDescription& other) const;
+		bool operator!=(const StencilFaceDescription& other) const;
 	};
 }

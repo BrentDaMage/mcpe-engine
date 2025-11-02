@@ -1,5 +1,6 @@
 #include <typeinfo>
 
+#include "ErrorHandler.h"
 #include "API_OGL.h"
 #include "TextureOGL.h"
 
@@ -17,7 +18,7 @@ void TextureOGL::deleteTexture()
 
     *this = TextureOGL();
 
-    //ErrorHandler::checkForErrors();
+    ErrorHandler::checkForErrors();
 }
 
 void TextureOGL::bindTexture(RenderContext& context, unsigned int var1, unsigned int var2)
@@ -76,13 +77,13 @@ void TextureOGL::convertToMipmapedTexture(RenderContext& ctx, unsigned int mipma
      // @NOTE: Need GL 1.2 for GL_TEXTURE_MAX_LEVEL
     glTexParameteri(m_state.m_textureTarget, GL_TEXTURE_MAX_LEVEL, mipmaps - 1);
 
-    //ErrorHandler::checkForErrors();
+    ErrorHandler::checkForErrors();
 }
 
 void TextureOGL::subBuffer(RenderContext& ctx, void const* pixels, unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, unsigned int level)
 {
     bindTexture(ctx, GL_FALSE, GL_LINE_LOOP);
-    //ErrorHandler::checkForErrors();
+    ErrorHandler::checkForErrors();
 
     if (m_state.m_textureTarget != GL_TEXTURE_2D)
     {
@@ -91,7 +92,7 @@ void TextureOGL::subBuffer(RenderContext& ctx, void const* pixels, unsigned int 
     }
 
     glTexSubImage2D(GL_TEXTURE_2D, level, xoffset, yoffset, width, height, m_state.m_internalTextureFormat, m_state.m_textureType, pixels);
-    //ErrorHandler::checkForErrors();
+    ErrorHandler::checkForErrors();
 }
 
 void TextureOGL::subBuffer(RenderContext& ctx, void const* pixels)
@@ -115,14 +116,14 @@ void TextureOGL::createTexture(RenderContext& context, TextureDescription const&
 {
     TextureBase::createTexture(description);
     glGenTextures(1, m_state.m_textureArray);
-    //ErrorHandler::checkForErrors();
+    ErrorHandler::checkForErrors();
     
     m_state.m_internalTextureFormat = getOpenGLInternalTextureFormatFromTextureFormat(description.m_textureFormat);
     m_state.m_textureFormat = getOpenGLTextureFormat(description.m_textureFormat);
     m_state.m_textureType = getOpenGLTextureTypeFromTextureFormat(description.m_textureFormat);
 
     bindTexture(context, 0, 2);
-    //ErrorHandler::checkForErrors();
+    ErrorHandler::checkForErrors();
     createMipMap(context, 0, description.m_width, description.m_height, 0);
 
     switch (description.m_filteringLevel)
@@ -150,7 +151,7 @@ void TextureOGL::createTexture(RenderContext& context, TextureDescription const&
         break;
     }
 
-    //mce::ErrorHandler::checkForErrors();
+    mce::ErrorHandler::checkForErrors();
 }
 
 void TextureOGL::lock(RenderContext& ctx)
