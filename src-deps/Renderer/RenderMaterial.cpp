@@ -1,8 +1,13 @@
 #include "RenderMaterial.h"
+
 #include "PlatformDefinitions.h"
+
 #include "HAL/Enums/RenderState_JsonParser.h"
 #include "HAL/Enums/ComparisonFunc_JsonParser.h"
 #include "HAL/Enums/StencilOp_JsonParser.h"
+#include "HAL/Enums/ShaderStagesBits.h"
+
+#include "EnableScissorTest.h"
 
 #if MCE_GFX_API_OGL
 #include "Platform/OGL/ShaderPrecision.h"
@@ -14,10 +19,36 @@ RenderMaterial::RenderMaterial()
 {
     m_stateMask = 0;
     m_polygonOffsetLevel = -2.0f;
+    m_pShader = nullptr;
 }
 
 RenderMaterial::RenderMaterial(const rapidjson::Value& root, const RenderMaterial& other)
     : RenderMaterial(other)
+{
+    _parseRenderStates(root);
+    _parseRuntimeStates(root);
+    _parseShaderPaths(root);
+
+    if (!m_vertexShader.empty() && !m_fragmentShader.empty())
+    {
+        _parseDefines(root);
+        _loadShader(*ShaderGroup::singleton());
+    }
+
+    _applyRenderStates();
+
+    RenderContext& renderContext = RenderContextImmediate::get();
+    m_blendState.createBlendState(renderContext, m_blendStateDescription);
+    m_depthStencilState.createDepthState(renderContext, m_depthStencilStateDescription);
+    m_rasterizerState.createRasterizerStateDescription(renderContext, m_rasterizerStateDescription);
+}
+
+RenderState RenderMaterial::_parseStateName(const std::string& stateName) const
+{
+    return _renderStateMap.at(stateName);
+}
+
+void RenderMaterial::_parseRenderStates(const rapidjson::Value& root)
 {
     const rapidjson::Value& statesValue = root["states"];
     for (rapidjson::Value::ConstValueIterator it = statesValue.Begin(); it != statesValue.End(); it++)
@@ -26,31 +57,6 @@ RenderMaterial::RenderMaterial(const rapidjson::Value& root, const RenderMateria
         RenderState state = _parseStateName(stateName);
         addState(state);
     }
-
-    _parseRuntimeStates(root);
-
-    {
-        const rapidjson::Value& pathValue = root["vertexShader"];
-        if (!pathValue.IsNull())
-            m_vertexShader = pathValue.GetString();
-    }
-    {
-        const rapidjson::Value& pathValue = root["fragmentShader"];
-        if (!pathValue.IsNull())
-            m_fragmentShader = pathValue.GetString();
-    }
-    {
-        const rapidjson::Value& pathValue = root["geometryShader"];
-        if (!pathValue.IsNull())
-            m_geometryShader = pathValue.GetString();
-    }
-
-    _buildHeader(root);
-}
-
-RenderState RenderMaterial::_parseStateName(const std::string& stateName) const
-{
-    return _renderStateMap.at(stateName);
 }
 
 void RenderMaterial::_parseRuntimeStates(const rapidjson::Value& root)
@@ -107,21 +113,123 @@ void RenderMaterial::_parseBlendState(const rapidjson::Value& root)
     parse(root, "blendDst", m_blendStateDescription.blendDestination);
 }
 
-std::string RenderMaterial::_buildHeader(const rapidjson::Value& root)
+void RenderMaterial::_parseDefines(const rapidjson::Value& root)
 {
     const rapidjson::Value& definesValue = root["defines"];
     for (rapidjson::Value::ConstValueIterator it = definesValue.Begin(); it != definesValue.End(); it++)
     {
         std::string defineStr = it->GetString();
-        m_defines.insert("#define " + defineStr + "\n");
+        m_defines.insert(defineStr);
+    }
+}
+
+std::string RenderMaterial::_buildHeader()
+{
+    std::string result;
+
+    for (std::set<std::string>::const_iterator it = m_defines.begin(); it != m_defines.end(); it++)
+    {
+        result += "#define " + *it + "\n";
     }
 
 #if MCE_GFX_API_OGL
-    // Platform::OGL::Precision::buildHeader(); or some shit
+    result += Platform::OGL::Precision::buildHeader();
 #endif
+}
+
+void RenderMaterial::_parseShaderPaths(const rapidjson::Value& root)
+{
+    {
+        const rapidjson::Value& pathValue = root["vertexShader"];
+        if (!pathValue.IsNull())
+            m_vertexShader = pathValue.GetString();
+    }
+    {
+        const rapidjson::Value& pathValue = root["fragmentShader"];
+        if (!pathValue.IsNull())
+            m_fragmentShader = pathValue.GetString();
+    }
+    {
+        const rapidjson::Value& pathValue = root["geometryShader"];
+        if (!pathValue.IsNull())
+            m_geometryShader = pathValue.GetString();
+    }
+}
+
+void RenderMaterial::_loadShader(ShaderGroup& shaderGroup)
+{
+    std::string header = _buildHeader();
+    m_pShader = &shaderGroup.loadShader(header, m_vertexShader, m_fragmentShader, m_geometryShader);
+}
+
+void RenderMaterial::_applyRenderStates()
+{
+    ColorWriteMask colorWriteMask;
+    if (hasState(RS_DISABLE_COLOR_WRITE))
+        colorWriteMask = COLOR_WRITE_MASK_NONE;
+    else
+        colorWriteMask = COLOR_WRITE_MASK_ALL;
+
+    CullMode cullMode;
+    if (hasState(RS_INVERT_CULLING))
+        cullMode = CULL_FRONT;
+    else
+        cullMode = CULL_BACK;
+    
+    if (hasState(RS_DISABLE_CULLING))
+        cullMode = CULL_NONE;
+
+    m_depthStencilStateDescription.depthTestEnabled = !hasState(RS_DISABLE_DEPTH_TEST);
+    m_depthStencilStateDescription.depthWriteMask = hasState(RS_DISABLE_DEPTH_WRITE) ? DEPTH_WRITE_MASK_NONE : DEPTH_WRITE_MASK_ALL;
+    m_depthStencilStateDescription.stencilTestEnabled = hasState(RS_ENABLE_STENCIL_TEST);
+    m_blendStateDescription.enableBlend = hasState(RS_BLENDING);
+
+    float polygonOffsetLevel = 0.0f;
+    if (hasState(RS_POLYGON_OFFSET))
+        polygonOffsetLevel = m_polygonOffsetLevel;
+
+    m_blendStateDescription.colorWriteMask = colorWriteMask;
+    m_rasterizerStateDescription.cullMode = cullMode;
+    m_rasterizerStateDescription.depthBias = polygonOffsetLevel;
+}
+
+void RenderMaterial::useWith(RenderContext& context, const VertexFormat& vertexFormat, const void *basePtr)
+{
+    m_blendState.bindBlendState(context);
+
+    if (EnableScissorTest::scissorTestEnabled)
+    {
+        RasterizerStateDescription rasterizerDesc;
+        rasterizerDesc = m_rasterizerStateDescription;
+        rasterizerDesc.enableScissorTest = true;
+        
+        RasterizerState rasterizerState;
+        rasterizerState.createRasterizerStateDescription(context, rasterizerDesc);
+        rasterizerState.bindRasterizerState(context);
+        rasterizerState.setScissorRect(
+            context,
+            EnableScissorTest::activeScissorBox[0], EnableScissorTest::activeScissorBox[1],
+            EnableScissorTest::activeScissorBox[2], EnableScissorTest::activeScissorBox[3]
+        );
+    }
+    else
+    {
+        m_rasterizerState.bindRasterizerState(context);
+    }
+
+    m_depthStencilState.bindDepthStencilState(context);
+
+    lastUsedMaterial = this;
+
+    m_pShader->bindShader(context, vertexFormat, basePtr, SHADER_STAGE_BITS_ALL);
 }
 
 void RenderMaterial::addState(RenderState state)
 {
     m_stateMask |= 1 << (state & 0x1F);
+}
+
+void RenderMaterial::initContext()
+{
+    lastUsedMaterial = nullptr;
 }

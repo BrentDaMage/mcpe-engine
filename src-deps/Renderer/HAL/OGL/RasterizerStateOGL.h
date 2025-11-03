@@ -16,7 +16,7 @@ namespace mce
 
     public:
         bool bindRasterizerState(RenderContext& context, bool forceBind = false);
-        void setRasterizerStateDescription(RenderContext& context, const RasterizerStateDescription& desc);
+        void createRasterizerStateDescription(RenderContext& context, const RasterizerStateDescription& desc);
         void setScissorRect(RenderContext &context, int x, int y, int width, int height);
     };
 }

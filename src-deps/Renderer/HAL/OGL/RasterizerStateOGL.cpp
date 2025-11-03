@@ -49,7 +49,7 @@ bool RasterizerStateOGL::bindRasterizerState(RenderContext& ctx, bool forceBind)
     }
 }
 
-void RasterizerStateOGL::setRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc)
+void RasterizerStateOGL::createRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc)
 {
     createRasterizerStateDescription(ctx, desc);
     m_enableScissorTest = desc.enableScissorTest;

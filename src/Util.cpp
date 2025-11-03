@@ -1,4 +1,6 @@
-#include "Util.h"
+#include "Util.hpp"
+
+const std::string Util::EMPTY_STRING = "";
 
 bool Util::isValidPath(const std::string& path)
 {

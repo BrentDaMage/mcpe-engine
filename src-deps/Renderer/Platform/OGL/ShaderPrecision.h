@@ -9,7 +9,8 @@ namespace mce::Platform::OGL
     class Precision
     {
     public:
-        static const std::string name, typeName;
+        static const std::string name[3];
+        static const std::string typeName[3];
 
     private:
         GLint m_precision[3];
@@ -17,11 +18,11 @@ namespace mce::Platform::OGL
     public:
         Precision(GLenum shaderType);
         
-    protected:
+    private:
         GLint _getPrecision(GLenum shaderType, GLenum precisionType);
 
     public:
-        const std::string& atLeast(int atleast);
-        void buildHeader(std::string& headerStream);
+        static const std::string& atLeast(int atleast);
+        static std::string buildHeader();
     };
 }

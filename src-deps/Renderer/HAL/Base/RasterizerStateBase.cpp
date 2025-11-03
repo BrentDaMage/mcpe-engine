@@ -9,11 +9,6 @@ RasterizerStateBase::RasterizerStateBase()
 
 void RasterizerStateBase::createRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc)
 {
-    setRasterizerStateDescription(ctx, desc);
-}
-
-void RasterizerStateBase::setRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc)
-{
     m_description = desc;
 }
 
