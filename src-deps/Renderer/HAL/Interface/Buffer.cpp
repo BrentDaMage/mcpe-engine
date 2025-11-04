@@ -21,3 +21,9 @@ void Buffer::createDynamicIndexBuffer(RenderContext& context, unsigned int size)
 {
     createDynamicBuffer(context, size, BUFFER_TYPE_VERTEX, nullptr);
 }
+
+Buffer& Buffer::operator=(Buffer&& other)
+{
+    this->BufferOGL::operator=(std::move(other));
+    return *this;
+}

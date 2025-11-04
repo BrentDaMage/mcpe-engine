@@ -4,13 +4,15 @@
 #include "RenderContextImmediate.h"
 #include "WorldConstants.h"
 
-mce::WorldConstants::WorldConstants()
+using namespace mce;
+
+WorldConstants::WorldConstants()
 {
     WORLDVIEWPROJ = nullptr;
     WORLD = nullptr;
 }
 
-void mce::WorldConstants::refreshWorldConstants()
+void WorldConstants::refreshWorldConstants()
 {
     if (!MatrixStack::Projection.isDirty() &&
         !MatrixStack::View.isDirty() &&
@@ -41,21 +43,21 @@ void mce::WorldConstants::refreshWorldConstants()
     MatrixStack::World.makeClean();
 
     // Sync the updated constant buffer data to the GPU.
-    mce::RenderContext& renderContext = mce::RenderContextImmediate::get();
+    RenderContext& renderContext = RenderContextImmediate::get();
     m_constantBuffer->sync(renderContext);
 }
 
-void mce::WorldConstants::init()
+void WorldConstants::init()
 {
-    mce::GlobalConstantBufferManager* pBufferManager = mce::GlobalConstantBufferManager::getInstance();
-    m_constantBuffer = pBufferManager->findConstantBufferContainer("WorldConstants");
+    GlobalConstantBufferManager& bufferManager = GlobalConstantBufferManager::getInstance();
+    m_constantBuffer = bufferManager.findConstantBufferContainer("WorldConstants");
 
-    mce::ShaderConstantBase* pWorldViewProj = m_constantBuffer->getUnspecializedShaderConstant("WORLDVIEWPROJ");
+    ShaderConstantBase* pWorldViewProj = m_constantBuffer->getUnspecializedShaderConstant("WORLDVIEWPROJ");
     if (pWorldViewProj)
     {
         if (pWorldViewProj->getType() == SHADER_PRIMITIVE_MATRIX4x4)
         {
-            WORLDVIEWPROJ = (mce::ShaderConstantMatrix4x4*)pWorldViewProj;
+            WORLDVIEWPROJ = (ShaderConstantMatrix4x4*)pWorldViewProj;
         }
         else
         {
@@ -63,12 +65,12 @@ void mce::WorldConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pWorld = m_constantBuffer->getUnspecializedShaderConstant("WORLD");
+    ShaderConstantBase* pWorld = m_constantBuffer->getUnspecializedShaderConstant("WORLD");
     if (pWorld)
     {
         if (pWorld->getType() == SHADER_PRIMITIVE_MATRIX4x4)
         {
-            WORLD = (mce::ShaderConstantMatrix4x4*)pWorld;
+            WORLD = (ShaderConstantMatrix4x4*)pWorld;
         }
         else
         {

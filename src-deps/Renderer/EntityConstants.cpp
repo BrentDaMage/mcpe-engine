@@ -1,7 +1,9 @@
 #include "EntityConstants.h"
 #include "GlobalConstantBufferManager.h"
 
-mce::EntityConstants::EntityConstants()
+using namespace mce;
+
+EntityConstants::EntityConstants()
 {
     OVERLAY_COLOR = nullptr;
     TILE_LIGHT_COLOR = nullptr;
@@ -10,17 +12,17 @@ mce::EntityConstants::EntityConstants()
     // I guess everything else can go fuck itself
 }
 
-void mce::EntityConstants::init()
+void EntityConstants::init()
 {
-    mce::GlobalConstantBufferManager* pBufferManager = mce::GlobalConstantBufferManager::getInstance();
-    m_constantBuffer = pBufferManager->findConstantBufferContainer("EntityConstants");
+    GlobalConstantBufferManager& bufferManager = GlobalConstantBufferManager::getInstance();
+    m_constantBuffer = bufferManager.findConstantBufferContainer("EntityConstants");
 
-    mce::ShaderConstantBase* pOverlayColor = m_constantBuffer->getUnspecializedShaderConstant("OVERLAY_COLOR");
+    ShaderConstantBase* pOverlayColor = m_constantBuffer->getUnspecializedShaderConstant("OVERLAY_COLOR");
     if (pOverlayColor)
     {
         if (pOverlayColor->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            OVERLAY_COLOR = (mce::ShaderConstantFloat4*)pOverlayColor;
+            OVERLAY_COLOR = (ShaderConstantFloat4*)pOverlayColor;
         }
         else
         {
@@ -28,12 +30,12 @@ void mce::EntityConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pTileLightColor = m_constantBuffer->getUnspecializedShaderConstant("TILE_LIGHT_COLOR");
+    ShaderConstantBase* pTileLightColor = m_constantBuffer->getUnspecializedShaderConstant("TILE_LIGHT_COLOR");
     if (pTileLightColor)
     {
         if (pTileLightColor->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            TILE_LIGHT_COLOR = (mce::ShaderConstantFloat4*)pTileLightColor;
+            TILE_LIGHT_COLOR = (ShaderConstantFloat4*)pTileLightColor;
         }
         else
         {
@@ -41,12 +43,12 @@ void mce::EntityConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pChangeColor = m_constantBuffer->getUnspecializedShaderConstant("CHANGE_COLOR");
+    ShaderConstantBase* pChangeColor = m_constantBuffer->getUnspecializedShaderConstant("CHANGE_COLOR");
     if (pChangeColor)
     {
         if (pChangeColor->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            CHANGE_COLOR = (mce::ShaderConstantFloat4*)pChangeColor;
+            CHANGE_COLOR = (ShaderConstantFloat4*)pChangeColor;
         }
         else
         {
@@ -54,12 +56,12 @@ void mce::EntityConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pUvAnim = m_constantBuffer->getUnspecializedShaderConstant("UV_ANIM");
+    ShaderConstantBase* pUvAnim = m_constantBuffer->getUnspecializedShaderConstant("UV_ANIM");
     if (pUvAnim)
     {
         if (pUvAnim->getType() == SHADER_PRIMITIVE_FLOAT2)
         {
-            UV_ANIM = (mce::ShaderConstantFloat2*)pUvAnim;
+            UV_ANIM = (ShaderConstantFloat2*)pUvAnim;
         }
         else
         {
@@ -67,12 +69,12 @@ void mce::EntityConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pUvOffset = m_constantBuffer->getUnspecializedShaderConstant("UV_OFFSET");
+    ShaderConstantBase* pUvOffset = m_constantBuffer->getUnspecializedShaderConstant("UV_OFFSET");
     if (pUvOffset)
     {
         if (pUvOffset->getType() == SHADER_PRIMITIVE_FLOAT2)
         {
-            UV_OFFSET = (mce::ShaderConstantFloat2*)pUvOffset;
+            UV_OFFSET = (ShaderConstantFloat2*)pUvOffset;
         }
         else
         {
@@ -80,12 +82,12 @@ void mce::EntityConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pUvRotation = m_constantBuffer->getUnspecializedShaderConstant("UV_ROTATION");
+    ShaderConstantBase* pUvRotation = m_constantBuffer->getUnspecializedShaderConstant("UV_ROTATION");
     if (pUvRotation)
     {
         if (pUvRotation->getType() == SHADER_PRIMITIVE_FLOAT2)
         {
-            UV_ROTATION = (mce::ShaderConstantFloat2*)pUvRotation;
+            UV_ROTATION = (ShaderConstantFloat2*)pUvRotation;
         }
         else
         {
@@ -93,12 +95,12 @@ void mce::EntityConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pGlintUvScale = m_constantBuffer->getUnspecializedShaderConstant("GLINT_UV_SCALE");
+    ShaderConstantBase* pGlintUvScale = m_constantBuffer->getUnspecializedShaderConstant("GLINT_UV_SCALE");
     if (pGlintUvScale)
     {
         if (pGlintUvScale->getType() == SHADER_PRIMITIVE_FLOAT2)
         {
-            GLINT_UV_SCALE = (mce::ShaderConstantFloat2*)pGlintUvScale;
+            GLINT_UV_SCALE = (ShaderConstantFloat2*)pGlintUvScale;
         }
         else
         {

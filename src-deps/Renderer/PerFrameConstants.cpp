@@ -1,7 +1,9 @@
 #include "PerFrameConstants.h"
 #include "GlobalConstantBufferManager.h"
 
-mce::PerFrameConstants::PerFrameConstants()
+using namespace mce;
+
+PerFrameConstants::PerFrameConstants()
 {
     VIEW_DIRECTION = nullptr;
     TIME = nullptr;
@@ -12,17 +14,17 @@ mce::PerFrameConstants::PerFrameConstants()
     RENDER_DISTANCE = nullptr;
 }
 
-void mce::PerFrameConstants::init()
+void PerFrameConstants::init()
 {
-    mce::GlobalConstantBufferManager* pBufferManager = mce::GlobalConstantBufferManager::getInstance();
-    m_constantBuffer = pBufferManager->findConstantBufferContainer("PerFrameConstants");
+    GlobalConstantBufferManager& bufferManager = GlobalConstantBufferManager::getInstance();
+    m_constantBuffer = bufferManager.findConstantBufferContainer("PerFrameConstants");
 
-    mce::ShaderConstantBase* pViewDirection = m_constantBuffer->getUnspecializedShaderConstant("VIEW_DIRECTION");
+    ShaderConstantBase* pViewDirection = m_constantBuffer->getUnspecializedShaderConstant("VIEW_DIRECTION");
     if (pViewDirection)
     {
         if (pViewDirection->getType() == SHADER_PRIMITIVE_FLOAT3)
         {
-            VIEW_DIRECTION = (mce::ShaderConstantFloat3*)pViewDirection;
+            VIEW_DIRECTION = (ShaderConstantFloat3*)pViewDirection;
         }
         else
         {
@@ -30,12 +32,12 @@ void mce::PerFrameConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pTime = m_constantBuffer->getUnspecializedShaderConstant("TIME");
+    ShaderConstantBase* pTime = m_constantBuffer->getUnspecializedShaderConstant("TIME");
     if (pTime)
     {
         if (pTime->getType() == SHADER_PRIMITIVE_FLOAT1)
         {
-            TIME = (mce::ShaderConstantFloat1*)pTime;
+            TIME = (ShaderConstantFloat1*)pTime;
         }
         else
         {
@@ -43,12 +45,12 @@ void mce::PerFrameConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pViewPos = m_constantBuffer->getUnspecializedShaderConstant("VIEW_POS");
+    ShaderConstantBase* pViewPos = m_constantBuffer->getUnspecializedShaderConstant("VIEW_POS");
     if (pViewPos)
     {
         if (pViewPos->getType() == SHADER_PRIMITIVE_FLOAT3)
         {
-            VIEW_POS = (mce::ShaderConstantFloat3*)pViewPos;
+            VIEW_POS = (ShaderConstantFloat3*)pViewPos;
         }
         else
         {
@@ -56,12 +58,12 @@ void mce::PerFrameConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pFarChunksDistance = m_constantBuffer->getUnspecializedShaderConstant("FAR_CHUNKS_DISTANCE");
+    ShaderConstantBase* pFarChunksDistance = m_constantBuffer->getUnspecializedShaderConstant("FAR_CHUNKS_DISTANCE");
     if (pFarChunksDistance)
     {
         if (pFarChunksDistance->getType() == SHADER_PRIMITIVE_FLOAT1)
         {
-            FAR_CHUNKS_DISTANCE = (mce::ShaderConstantFloat1*)pFarChunksDistance;
+            FAR_CHUNKS_DISTANCE = (ShaderConstantFloat1*)pFarChunksDistance;
         }
         else
         {
@@ -69,12 +71,12 @@ void mce::PerFrameConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pFogColor = m_constantBuffer->getUnspecializedShaderConstant("FOG_COLOR");
+    ShaderConstantBase* pFogColor = m_constantBuffer->getUnspecializedShaderConstant("FOG_COLOR");
     if (pFogColor)
     {
         if (pFogColor->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            FOG_COLOR = (mce::ShaderConstantFloat4*)pFogColor;
+            FOG_COLOR = (ShaderConstantFloat4*)pFogColor;
         }
         else
         {
@@ -82,12 +84,12 @@ void mce::PerFrameConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pFogControl = m_constantBuffer->getUnspecializedShaderConstant("FOG_CONTROL");
+    ShaderConstantBase* pFogControl = m_constantBuffer->getUnspecializedShaderConstant("FOG_CONTROL");
     if (pFogControl)
     {
         if (pFogControl->getType() == SHADER_PRIMITIVE_FLOAT2)
         {
-            FOG_CONTROL = (mce::ShaderConstantFloat2*)pFogControl;
+            FOG_CONTROL = (ShaderConstantFloat2*)pFogControl;
         }
         else
         {
@@ -95,12 +97,12 @@ void mce::PerFrameConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pRenderDistance = m_constantBuffer->getUnspecializedShaderConstant("RENDER_DISTANCE");
+    ShaderConstantBase* pRenderDistance = m_constantBuffer->getUnspecializedShaderConstant("RENDER_DISTANCE");
     if (pRenderDistance)
     {
         if (pRenderDistance->getType() == SHADER_PRIMITIVE_FLOAT1)
         {
-            RENDER_DISTANCE = (mce::ShaderConstantFloat1*)pRenderDistance;
+            RENDER_DISTANCE = (ShaderConstantFloat1*)pRenderDistance;
         }
         else
         {

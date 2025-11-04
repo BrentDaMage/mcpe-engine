@@ -12,8 +12,8 @@ ConstantBufferMetaDataManager::ConstantBufferMetaDataManager()
 
 void ConstantBufferMetaDataManager::allocateConstantBufferContainers()
 {
-    GlobalConstantBufferManager* bufferManager = GlobalConstantBufferManager::getInstance();
-    bufferManager->m_constantBufferContainers.reserve(m_constantBufferMetaDataList.size());
+    GlobalConstantBufferManager& bufferManager = GlobalConstantBufferManager::getInstance();
+    bufferManager.m_constantBufferContainers.reserve(m_constantBufferMetaDataList.size());
     
     for (int i = 0; i < m_constantBufferMetaDataList.size(); i++)
     {
@@ -33,7 +33,7 @@ void ConstantBufferMetaDataManager::allocateConstantBufferContainers()
         }
 
         buffer.finalizeConstantBufferLayout();
-        bufferManager->m_constantBufferContainers.push_back(buffer);
+        bufferManager.m_constantBufferContainers.push_back(buffer);
     }
 }
 

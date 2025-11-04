@@ -1,7 +1,9 @@
 #include "WeatherConstants.h"
 #include "GlobalConstantBufferManager.h"
 
-mce::WeatherConstants::WeatherConstants()
+using namespace mce;
+
+WeatherConstants::WeatherConstants()
 {
     POSITION_OFFSET = nullptr;
     VELOCITY = nullptr;
@@ -13,17 +15,17 @@ mce::WeatherConstants::WeatherConstants()
     PARTICLE_BOX = nullptr;
 }
 
-void mce::WeatherConstants::init()
+void WeatherConstants::init()
 {
-    mce::GlobalConstantBufferManager* pBufferManager = mce::GlobalConstantBufferManager::getInstance();
-    m_constantBuffer = pBufferManager->findConstantBufferContainer("WeatherConstants");
+    GlobalConstantBufferManager& bufferManager = GlobalConstantBufferManager::getInstance();
+    m_constantBuffer = bufferManager.findConstantBufferContainer("WeatherConstants");
 
-    mce::ShaderConstantBase* pPositionOffset = m_constantBuffer->getUnspecializedShaderConstant("POSITION_OFFSET");
+    ShaderConstantBase* pPositionOffset = m_constantBuffer->getUnspecializedShaderConstant("POSITION_OFFSET");
     if (pPositionOffset)
     {
         if (pPositionOffset->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            POSITION_OFFSET = (mce::ShaderConstantFloat4*)pPositionOffset;
+            POSITION_OFFSET = (ShaderConstantFloat4*)pPositionOffset;
         }
         else
         {
@@ -31,12 +33,12 @@ void mce::WeatherConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pVelocity = m_constantBuffer->getUnspecializedShaderConstant("VELOCITY");
+    ShaderConstantBase* pVelocity = m_constantBuffer->getUnspecializedShaderConstant("VELOCITY");
     if (pVelocity)
     {
         if (pVelocity->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            VELOCITY = (mce::ShaderConstantFloat4*)pVelocity;
+            VELOCITY = (ShaderConstantFloat4*)pVelocity;
         }
         else
         {
@@ -44,12 +46,12 @@ void mce::WeatherConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pAlpha = m_constantBuffer->getUnspecializedShaderConstant("ALPHA");
+    ShaderConstantBase* pAlpha = m_constantBuffer->getUnspecializedShaderConstant("ALPHA");
     if (pAlpha)
     {
         if (pAlpha->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            ALPHA = (mce::ShaderConstantFloat4*)pAlpha;
+            ALPHA = (ShaderConstantFloat4*)pAlpha;
         }
         else
         {
@@ -57,12 +59,12 @@ void mce::WeatherConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pViewPosition = m_constantBuffer->getUnspecializedShaderConstant("VIEW_POSITION");
+    ShaderConstantBase* pViewPosition = m_constantBuffer->getUnspecializedShaderConstant("VIEW_POSITION");
     if (pViewPosition)
     {
         if (pViewPosition->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            VIEW_POSITION = (mce::ShaderConstantFloat4*)pViewPosition;
+            VIEW_POSITION = (ShaderConstantFloat4*)pViewPosition;
         }
         else
         {
@@ -70,12 +72,12 @@ void mce::WeatherConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pSizeScale = m_constantBuffer->getUnspecializedShaderConstant("SIZE_SCALE");
+    ShaderConstantBase* pSizeScale = m_constantBuffer->getUnspecializedShaderConstant("SIZE_SCALE");
     if (pSizeScale)
     {
         if (pSizeScale->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            SIZE_SCALE = (mce::ShaderConstantFloat4*)pSizeScale;
+            SIZE_SCALE = (ShaderConstantFloat4*)pSizeScale;
         }
         else
         {
@@ -83,12 +85,12 @@ void mce::WeatherConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pForward = m_constantBuffer->getUnspecializedShaderConstant("FORWARD");
+    ShaderConstantBase* pForward = m_constantBuffer->getUnspecializedShaderConstant("FORWARD");
     if (pForward)
     {
         if (pForward->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            FORWARD = (mce::ShaderConstantFloat4*)pForward;
+            FORWARD = (ShaderConstantFloat4*)pForward;
         }
         else
         {
@@ -96,12 +98,12 @@ void mce::WeatherConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pUvInfo = m_constantBuffer->getUnspecializedShaderConstant("UV_INFO");
+    ShaderConstantBase* pUvInfo = m_constantBuffer->getUnspecializedShaderConstant("UV_INFO");
     if (pUvInfo)
     {
         if (pUvInfo->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            UV_INFO = (mce::ShaderConstantFloat4*)pUvInfo;
+            UV_INFO = (ShaderConstantFloat4*)pUvInfo;
         }
         else
         {
@@ -109,12 +111,12 @@ void mce::WeatherConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pParticleBox = m_constantBuffer->getUnspecializedShaderConstant("PARTICLE_BOX");
+    ShaderConstantBase* pParticleBox = m_constantBuffer->getUnspecializedShaderConstant("PARTICLE_BOX");
     if (pParticleBox)
     {
         if (pParticleBox->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            PARTICLE_BOX = (mce::ShaderConstantFloat4*)pParticleBox;
+            PARTICLE_BOX = (ShaderConstantFloat4*)pParticleBox;
         }
         else
         {

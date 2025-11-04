@@ -2,21 +2,23 @@
 #include "RenderContextImmediate.h"
 #include "ShaderConstants.h"
 
-mce::ShaderConstants::ShaderConstants()
+using namespace mce;
+
+ShaderConstants::ShaderConstants()
 {
     CURRENT_COLOR = nullptr;
     DARKEN = nullptr;
 }
 
-void mce::ShaderConstants::setShaderColor(const Color& shaderColor)
+void ShaderConstants::setShaderColor(const Color& shaderColor)
 {
     CURRENT_COLOR->m_data = (uint8_t*)&shaderColor;
     CURRENT_COLOR->m_dirty = true;
     
-    m_constantBuffer->sync(mce::RenderContextImmediate::get());
+    m_constantBuffer->sync(RenderContextImmediate::get());
 }
 
-void mce::ShaderConstants::setShaderColors(const Color& shaderColor, const Color& shaderDarkenColor)
+void ShaderConstants::setShaderColors(const Color& shaderColor, const Color& shaderDarkenColor)
 {
     Color* pCurrentColor = (Color*)CURRENT_COLOR->m_data;
     *pCurrentColor = shaderColor;
@@ -26,20 +28,20 @@ void mce::ShaderConstants::setShaderColors(const Color& shaderColor, const Color
     *pDarkenColor = shaderDarkenColor;
     DARKEN->m_dirty = true;
 
-    m_constantBuffer->sync(mce::RenderContextImmediate::get());
+    m_constantBuffer->sync(RenderContextImmediate::get());
 }
 
-void mce::ShaderConstants::init()
+void ShaderConstants::init()
 {
-    mce::GlobalConstantBufferManager* pBufferManager = mce::GlobalConstantBufferManager::getInstance();
-    m_constantBuffer = pBufferManager->findConstantBufferContainer("ShaderConstants");
+    GlobalConstantBufferManager& bufferManager = GlobalConstantBufferManager::getInstance();
+    m_constantBuffer = bufferManager.findConstantBufferContainer("ShaderConstants");
 
-    mce::ShaderConstantBase* pCurrentColor = m_constantBuffer->getUnspecializedShaderConstant("CURRENT_COLOR");
+    ShaderConstantBase* pCurrentColor = m_constantBuffer->getUnspecializedShaderConstant("CURRENT_COLOR");
     if (pCurrentColor)
     {
         if (pCurrentColor->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            CURRENT_COLOR = (mce::ShaderConstantFloat4*)pCurrentColor;
+            CURRENT_COLOR = (ShaderConstantFloat4*)pCurrentColor;
         }
         else
         {
@@ -47,12 +49,12 @@ void mce::ShaderConstants::init()
         }
     }
 
-    mce::ShaderConstantBase* pDarkenColor = m_constantBuffer->getUnspecializedShaderConstant("DARKEN");
+    ShaderConstantBase* pDarkenColor = m_constantBuffer->getUnspecializedShaderConstant("DARKEN");
     if (pDarkenColor)
     {
         if (pDarkenColor->getType() == SHADER_PRIMITIVE_FLOAT4)
         {
-            DARKEN = (mce::ShaderConstantFloat4*)pDarkenColor;
+            DARKEN = (ShaderConstantFloat4*)pDarkenColor;
         }
         else
         {

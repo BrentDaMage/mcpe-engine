@@ -27,6 +27,6 @@ namespace mce
         unsigned int getInternalBufferSize() const { return m_internalSize; }
         bool isValid() const { return false; }
 
-        void operator=(BufferBase&& other);
+        BufferBase& operator=(BufferBase&& other);
 	};
 }

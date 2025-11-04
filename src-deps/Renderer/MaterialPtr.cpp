@@ -40,7 +40,7 @@ void MaterialPtr::_move(MaterialPtr&& other)
     m_group->_addRef(this);
 }
 
-RenderMaterialGroup* MaterialPtr::_deref()
+void MaterialPtr::_deref()
 {
     if (m_group != nullptr)
     {

@@ -10,13 +10,13 @@ namespace mce
     // @NOTE: Requires C++11 due to rvalues
     class MaterialPtr
     {
-    private:
+    public:
+        static MaterialPtr NONE;
+
+    public:
         RenderMaterialGroup* m_group;
         RenderMaterial* m_material;
         std::string m_name;
-
-    public:
-        static MaterialPtr NONE;
 
     public:
         MaterialPtr();

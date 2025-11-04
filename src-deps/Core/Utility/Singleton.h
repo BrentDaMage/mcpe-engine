@@ -34,7 +34,7 @@ namespace mce
             return false;
         }
         
-        static T* getInstance()
+        static T& getInstance()
         {
             if (instance == nullptr)
             {
@@ -42,7 +42,7 @@ namespace mce
                 throw std::bad_cast();
             }
             
-            return instance;
+            return *instance;
         }
 
     public:

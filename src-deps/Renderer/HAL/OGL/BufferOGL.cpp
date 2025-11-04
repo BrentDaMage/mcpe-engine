@@ -104,7 +104,7 @@ void BufferOGL::updateBuffer(RenderContext& context, unsigned int stride, const 
     BufferBase::updateBuffer(context, stride, data, count);
 }
 
-void BufferOGL::operator=(BufferOGL&& other)
+BufferOGL& BufferOGL::operator=(BufferOGL&& other)
 {
     this->m_bufferType = other.m_bufferType;
     this->m_stride = other.m_stride;
@@ -117,4 +117,6 @@ void BufferOGL::operator=(BufferOGL&& other)
     other.m_stride = 0;
     other.m_target = GL_NONE;
     other.m_bufferName = GL_NONE;
+
+    return *this
 }

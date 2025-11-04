@@ -25,6 +25,6 @@ namespace mce
         void updateBuffer(RenderContext& context, unsigned int stride, const void *data, unsigned int count);
         bool isValid() const { return m_bufferName != GL_NONE; }
 
-        void operator=(BufferOGL&& other);
+        BufferOGL& operator=(BufferOGL&& other);
     };
 }

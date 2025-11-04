@@ -60,7 +60,7 @@ void BufferBase::updateBuffer(RenderContext& context, unsigned int stride, const
     m_count = count;
 }
 
-void BufferBase::operator=(BufferBase&& other)
+BufferBase& BufferBase::operator=(BufferBase&& other)
 {
     unsigned int stride = m_stride;
     this->m_stride = other.m_stride;
@@ -77,4 +77,6 @@ void BufferBase::operator=(BufferBase&& other)
     unsigned int count = m_count;
     this->m_count = other.m_count;
     other.m_count = count;
+
+    return *this;
 }

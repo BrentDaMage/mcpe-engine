@@ -102,8 +102,8 @@ void ShaderOGL::linkShader()
 
 void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, const void* vertexData)
 {
-    RenderDevice* device = RenderDevice::getInstance();
-    RenderDeviceBase::AttributeList attrList = device->getAttributeList(m_attributeListIndex);
+    RenderDevice& device = RenderDevice::getInstance();
+    RenderDeviceBase::AttributeList attrList = device.getAttributeList(m_attributeListIndex);
 
     for (int i = 0; i < attrList.size(); i++)
     {

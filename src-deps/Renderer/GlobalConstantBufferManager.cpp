@@ -13,10 +13,10 @@ GlobalConstantBufferManager::GlobalConstantBufferManager()
 
 void GlobalConstantBufferManager::refreshWorldConstants()
 {
-    GlobalConstantBuffers* pBuffers = GlobalConstantBuffers::getInstance();
+    GlobalConstantBuffers& buffers = GlobalConstantBuffers::getInstance();
 
-    pBuffers->m_worldConstants.refreshWorldConstants();
-    pBuffers->m_shaderConstants.setShaderColors(currentShaderColor, currentShaderDarkColor);
+    buffers.m_worldConstants.refreshWorldConstants();
+    buffers.m_shaderConstants.setShaderColors(currentShaderColor, currentShaderDarkColor);
 }
 
 void GlobalConstantBufferManager::allocateAndSetupConstantBuffersFromMetadata(RenderContext& ctx)

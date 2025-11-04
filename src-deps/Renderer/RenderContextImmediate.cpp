@@ -5,10 +5,10 @@ using namespace mce;
 
 RenderContext& RenderContextImmediate::get()
 {
-    return RenderDevice::getInstance()->getRenderContext();
+    return RenderDevice::getInstance().getRenderContext();
 }
 
 const RenderContext& RenderContextImmediate::getAsConst()
 {
-    return RenderDevice::getInstance()->getRenderContextAsConst();
+    return RenderDevice::getInstance().getRenderContextAsConst();
 }

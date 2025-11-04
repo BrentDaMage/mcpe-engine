@@ -11,5 +11,8 @@ namespace mce
         void createVertexBuffer(RenderContext& context, unsigned int vertexStride, const void *vertices, unsigned int numberOfVertices);
         void createDynamicIndexBuffer(RenderContext& context, unsigned int size);
         void createDynamicVertexBuffer(RenderContext& context, unsigned int size);
+
+    public:
+        Buffer& operator=(Buffer&& other);
     };
 }
