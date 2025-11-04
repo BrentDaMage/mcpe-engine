@@ -160,6 +160,45 @@ void ShaderOGL::bindShader(RenderContext& context, const VertexFormat& format, c
     }
 }
 
+void ShaderOGL::reflectShaderAttributes()
+{
+    RenderDeviceBase::AttributeList* attrList = nullptr;
+
+    GLint attrCount;
+    glGetProgramiv(m_shaderProgram, GL_ACTIVE_ATTRIBUTES, &attrCount);
+
+    if (attrCount)
+    {
+        char name[1024];
+        GLsizei nameLen;
+        GLint size;
+        GLenum type;
+
+        for (GLint i = 0; i < attrCount; i++)
+        {
+            glGetActiveAttrib(m_shaderProgram, i, sizeof(name), &nameLen, &size, &type, name);
+            GLint location = glGetAttribLocation(this->m_shaderProgram, name);
+            if (location < 0)
+                continue;
+
+            std::string attrName(name);
+            const VertexField vertexField = getAttributeForName(attrName, 0);
+
+            if (attrList == nullptr)
+            {
+                attrList = new mce::RenderDeviceBase::AttributeList();
+            }
+
+            attrList->emplace_back(location, size, static_cast<VertexField>(vertexField));
+
+            glEnableVertexAttribArray(location);
+            glVertexAttribPointer(0, 1, GL_UNSIGNED_BYTE, 0, 1, this);
+        }
+    }
+
+    m_attributeListIndex = RenderDevice::getInstance()->registerOrGetAttributeListIndex(*attrList);
+}
+
 void ShaderOGL::reflectShader()
 {
     reflectShaderUniforms();

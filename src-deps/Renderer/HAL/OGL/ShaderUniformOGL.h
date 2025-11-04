@@ -2,11 +2,12 @@
 
 #include "../Enums/ShaderPrimitiveTypes.h"
 #include "../Base/ShaderConstantBase.h"
+#include "ShaderConstantOGL.h"
 
 namespace mce
 {
 
-class ShaderUniformOGL
+class ShaderUniformOGL : public ShaderConstantBase
 {
 public:
     int m_location;
@@ -14,8 +15,7 @@ public:
     ShaderPrimitiveTypes m_shaderPrimitiveType;
     unsigned char byte9; // @TODO
     std::string m_name;
-    ShaderConstantBase* m_shaderConstant;
-    int dword14; // @TODO
+    ShaderConstantOGL* m_shaderConstant;
 
 public:
     ShaderUniformOGL(std::string name, int location, int size, ShaderPrimitiveTypes shaderPrimitiveType)
@@ -24,7 +24,6 @@ public:
         , byte9(0)
         , m_shaderConstant(0)
         , m_name(name)
-        , dword14(0)
         , m_shaderPrimitiveType(shaderPrimitiveType)
     {}
 
