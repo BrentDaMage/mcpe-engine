@@ -19,11 +19,11 @@ void GlobalConstantBufferManager::refreshWorldConstants()
     buffers.m_shaderConstants.setShaderColors(currentShaderColor, currentShaderDarkColor);
 }
 
-void GlobalConstantBufferManager::allocateAndSetupConstantBuffersFromMetadata(RenderContext& ctx)
+void GlobalConstantBufferManager::allocateAndSetupConstantBuffersFromMetadata(RenderContext& context)
 {
     for (std::vector<ConstantBufferContainer>::iterator it = m_constantBufferContainers.begin(); it != m_constantBufferContainers.end(); it++)
     {
-        it->allocateRenderContextBuffer(ctx);
+        it->allocateRenderContextBuffer(context);
     }
 }
 

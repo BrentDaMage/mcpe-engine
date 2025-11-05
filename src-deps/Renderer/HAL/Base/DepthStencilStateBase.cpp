@@ -5,12 +5,12 @@ mce::DepthStencilStateBase::DepthStencilStateBase()
     m_description = mce::DepthStencilStateDescription();
 }
 
-void mce::DepthStencilStateBase::createDepthState(mce::RenderContext& ctx, const mce::DepthStencilStateDescription& desc)
+void mce::DepthStencilStateBase::createDepthState(mce::RenderContext& context, const mce::DepthStencilStateDescription& desc)
 {
     m_description = desc;
 }
 
-bool mce::DepthStencilStateBase::bindDepthStencilState(mce::RenderContext& ctx)
+bool mce::DepthStencilStateBase::bindDepthStencilState(mce::RenderContext& context)
 {
-    return ctx.m_state.m_depthStencilStateDescription == m_description;
+    return context.m_currentState.m_depthStencilStateDescription == m_description;
 }

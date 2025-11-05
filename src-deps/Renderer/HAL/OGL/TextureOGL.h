@@ -34,7 +34,7 @@ namespace mce
         TextureOGL();
         
         void deleteTexture();
-        void bindTexture(RenderContext& context, unsigned int texture, unsigned int); // @TODO
+        void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits); // @TODO
         
         GLenum getOpenGLTextureFormat(TextureFormat textureFormat);
         GLint getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat textureFormat);
@@ -42,12 +42,10 @@ namespace mce
         
         void convertToMipmapedTexture(RenderContext& context, unsigned int mipmaps);
 
-        void subBuffer(RenderContext& context, GLvoid const* pixels, unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, unsigned int level);
-        void subBuffer(RenderContext& context, GLvoid const* pixels);
+        void subBuffer(RenderContext& context, const void* pixels, unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, unsigned int level);
+        void subBuffer(RenderContext& context, const void* pixels);
 
-        void copyTexture(RenderContext& context, Texture* texture, unsigned int, unsigned int, unsigned int, unsigned int) { }
-
-        void createMipMap(RenderContext& context, void const* pixels, unsigned int width, unsigned int height, unsigned int level);
+        void createMipMap(RenderContext& context, const void* pixels, unsigned int width, unsigned int height, unsigned int level);
         void createTexture(RenderContext& context, TextureDescription const&);
 
         void lock(RenderContext& context); // @TODO

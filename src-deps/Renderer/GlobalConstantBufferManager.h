@@ -17,7 +17,7 @@ namespace mce
 
     public:
         void refreshWorldConstants();
-        void allocateAndSetupConstantBuffersFromMetadata(mce::RenderContext& ctx);
+        void allocateAndSetupConstantBuffersFromMetadata(mce::RenderContext& context);
         mce::ConstantBufferContainer* findConstantBufferContainer(const std::string& bufferName);
     };
 }

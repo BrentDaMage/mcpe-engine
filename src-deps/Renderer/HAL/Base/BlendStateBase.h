@@ -12,7 +12,7 @@ namespace mce
 		
 		BlendStateBase();
 		
-		void createBlendState(mce::RenderContext& ctx, const mce::BlendStateDescription& desc);
-        bool bindBlendState(mce::RenderContext& ctx);
+		void createBlendState(mce::RenderContext& context, const mce::BlendStateDescription& desc);
+        bool bindBlendState(mce::RenderContext& context);
 	};
 }

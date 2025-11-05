@@ -32,11 +32,10 @@ namespace mce
     class RenderContextOGL : public RenderContextBase
     {
     public:
-        class ActiveTextureUnit
+        struct ActiveTextureUnit
         {
-            public:
-                GLuint m_textureUnit;
-                bool m_bIsShaderUniformDirty;
+            GLuint m_textureUnit;
+            bool m_bIsShaderUniformDirty;
 
             ActiveTextureUnit()
             {
@@ -47,13 +46,14 @@ namespace mce
 
     private:
         GLuint m_activeBuffer[2]; // indexed by BufferType
+        ActiveTextureUnit m_activeTextureUnits[8];
 
     public:
         GLuint m_activeTexture;
         GLuint m_activeShaderProgram;
         //GLuint m_activeBuffer[2];
-        ActiveTextureUnit m_activeTextureUnits[8];
-        std::vector<const GLvoid *> field_A4;
+        //ActiveTextureUnit m_activeTextureUnits[8];
+        std::vector<const GLvoid *> m_activePixels;
 
     public:
         RenderContextOGL();
@@ -74,5 +74,8 @@ namespace mce
 
         GLuint& getActiveBuffer(BufferType bufferType);
         GLuint getActiveBuffer(BufferType bufferType) const;
+
+        ActiveTextureUnit& getActiveTextureUnit(unsigned int index);
+        const ActiveTextureUnit& getActiveTextureUnit(unsigned int index) const;
     };
 }

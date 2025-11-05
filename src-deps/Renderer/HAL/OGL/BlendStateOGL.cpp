@@ -1,4 +1,5 @@
 #include <typeinfo>
+
 #include "BlendStateOGL.h"
 
 using namespace mce;
@@ -32,9 +33,9 @@ GLenum BlendStateOGL::translateBlendFunc(BlendTarget blendTarget)
     }
 }
 
-void BlendStateOGL::createBlendState(mce::RenderContext& ctx, const mce::BlendStateDescription& desc)
+void BlendStateOGL::createBlendState(RenderContext& context, const BlendStateDescription& desc)
 {
-    mce::BlendStateBase::createBlendState(ctx, desc);
+    BlendStateBase::createBlendState(context, desc);
     m_bBlend  = desc.enableBlend;
     m_bRed    = (desc.colorWriteMask & 1) != 0;
     m_bGreen  = (desc.colorWriteMask & 2) != 0;
@@ -43,17 +44,17 @@ void BlendStateOGL::createBlendState(mce::RenderContext& ctx, const mce::BlendSt
     m_sfactor = translateBlendFunc(desc.blendSource);
     m_dfactor = translateBlendFunc(desc.blendDestination);
 
-    if (!ctx.m_state.m_bBoundBlendState)
+    if (!context.m_currentState.m_bBoundBlendState)
     {
-        mce::BlendStateOGL::bindBlendState(ctx, true);
-        ctx.m_state.m_bBoundBlendState = true;
-        ctx.m_state.m_blendStateDescription = desc;
+        bindBlendState(context, true);
+        context.m_currentState.m_bBoundBlendState = true;
+        context.m_currentState.m_blendStateDescription = desc;
     }
 }
 
-bool BlendStateOGL::bindBlendState(mce::RenderContext& ctx, bool forceBind)
+bool BlendStateOGL::bindBlendState(RenderContext& context, bool forceBind)
 {
-    BlendStateDescription& ctxDesc = ctx.m_state.m_blendStateDescription;
+    BlendStateDescription& ctxDesc = context.m_currentState.m_blendStateDescription;
 
     if (forceBind || ctxDesc.enableBlend != m_description.enableBlend)
     {
@@ -75,5 +76,5 @@ bool BlendStateOGL::bindBlendState(mce::RenderContext& ctx, bool forceBind)
         ctxDesc.blendDestination = m_description.blendDestination;
     }
 
-    return mce::BlendStateBase::bindBlendState(ctx); 
+    return BlendStateBase::bindBlendState(context); 
 }

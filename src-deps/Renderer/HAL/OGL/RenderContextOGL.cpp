@@ -90,3 +90,19 @@ GLuint RenderContextOGL::getActiveBuffer(BufferType bufferType) const
     
     return m_activeBuffer[bufferType];
 }
+
+RenderContextOGL::ActiveTextureUnit& RenderContextOGL::getActiveTextureUnit(unsigned int index)
+{
+    if (index >= 8)
+        throw std::out_of_range("m_activeTextureUnits[]");
+    
+    return m_activeTextureUnits[index];
+}
+
+const RenderContextOGL::ActiveTextureUnit& RenderContextOGL::getActiveTextureUnit(unsigned int index) const
+{
+    if (index >= 8)
+        throw std::out_of_range("m_activeTextureUnits[]");
+    
+    return m_activeTextureUnits[index];
+}

@@ -26,10 +26,10 @@ namespace mce
         ConstantBufferContainerBase() { _init(); }
         //ConstantBufferContainerBase(ConstantBufferContainerBase&& other);
 
-        void bindConstantBuffer(RenderContext& ctx, unsigned int, unsigned int) { }
+        void bindConstantBuffer(RenderContext& context, unsigned int, unsigned int) { }
 
-        void sync(RenderContext& ctx) { }
-        void allocateRenderContextBuffer(RenderContext& ctx) { }
+        void sync(RenderContext& context) { }
+        void allocateRenderContextBuffer(RenderContext& context) { }
         void reserveMemoryForShaderConstants(unsigned int shaderConstSize, unsigned int constBufferSize);
         void registerReflectedShaderParameter(const UniformMetaData& uniMeta);
         void registerShaderParameter(const ShaderConstantBase &shaderConst);

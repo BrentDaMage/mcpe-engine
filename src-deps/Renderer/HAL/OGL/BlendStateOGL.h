@@ -21,7 +21,7 @@ namespace mce
 
         GLenum translateBlendFunc(BlendTarget blendTarget);
 
-		void createBlendState(mce::RenderContext& ctx, const mce::BlendStateDescription& desc);
-        bool bindBlendState(mce::RenderContext& ctx, bool forceBind = false);
+		void createBlendState(mce::RenderContext& context, const mce::BlendStateDescription& desc);
+        bool bindBlendState(mce::RenderContext& context, bool forceBind = false);
     };
 }

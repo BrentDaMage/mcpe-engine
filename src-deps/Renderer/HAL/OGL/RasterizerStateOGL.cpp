@@ -3,9 +3,9 @@
 
 using namespace mce;
 
-bool RasterizerStateOGL::bindRasterizerState(RenderContext& ctx, bool forceBind)
+bool RasterizerStateOGL::bindRasterizerState(RenderContext& context, bool forceBind)
 {
-    RasterizerStateDescription& ctxDesc = ctx.m_currentState.m_rasterizerStateDescription;
+    RasterizerStateDescription& ctxDesc = context.m_currentState.m_rasterizerStateDescription;
 
     if (forceBind || ctxDesc.cullMode != m_description.cullMode)
     {
@@ -49,9 +49,9 @@ bool RasterizerStateOGL::bindRasterizerState(RenderContext& ctx, bool forceBind)
     }
 }
 
-void RasterizerStateOGL::createRasterizerStateDescription(RenderContext& ctx, const RasterizerStateDescription& desc)
+void RasterizerStateOGL::createRasterizerStateDescription(RenderContext& context, const RasterizerStateDescription& desc)
 {
-    createRasterizerStateDescription(ctx, desc);
+    createRasterizerStateDescription(context, desc);
     m_enableScissorTest = desc.enableScissorTest;
     switch (desc.cullMode)
     {
@@ -69,15 +69,15 @@ void RasterizerStateOGL::createRasterizerStateDescription(RenderContext& ctx, co
     }
 
     m_depthScale = desc.depthBias;
-    if ( !ctx.m_currentState.m_bBoundRasterizerState )
+    if ( !context.m_currentState.m_bBoundRasterizerState )
     {
-        bindRasterizerState(ctx, true);
-        ctx.m_currentState.m_rasterizerStateDescription = desc;
-        ctx.m_currentState.m_bBoundRasterizerState = 1;
+        bindRasterizerState(context, true);
+        context.m_currentState.m_rasterizerStateDescription = desc;
+        context.m_currentState.m_bBoundRasterizerState = 1;
     }
 }
 
-void RasterizerStateOGL::setScissorRect(RenderContext& ctx, int x, int y, int width, int height)
+void RasterizerStateOGL::setScissorRect(RenderContext& context, int x, int y, int width, int height)
 {
     if (m_enableScissorTest)
         glScissor(x, y, width, height);

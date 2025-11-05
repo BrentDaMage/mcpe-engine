@@ -9,10 +9,10 @@ namespace mce
     public:
         ConstantBufferContainer();
 
-        void bindConstantBuffer(RenderContext& ctx, unsigned int, unsigned int);
+        void bindConstantBuffer(RenderContext& context, unsigned int, unsigned int);
 
-        void sync(RenderContext& ctx);
-        void allocateRenderContextBuffer(RenderContext& ctx);
+        void sync(RenderContext& context);
+        void allocateRenderContextBuffer(RenderContext& context);
         void registerReflectedShaderParameter(const UniformMetaData& uniMeta);
         void finalizeConstantBufferLayout();
         ShaderConstant* getUnspecializedShaderConstant(const std::string& name);
