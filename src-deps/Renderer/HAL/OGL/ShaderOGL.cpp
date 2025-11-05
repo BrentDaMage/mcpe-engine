@@ -189,7 +189,8 @@ void ShaderOGL::reflectShaderAttributes()
                 attrList = new mce::RenderDeviceBase::AttributeList();
             }
 
-            attrList->emplace_back(location, size, static_cast<VertexField>(vertexField));
+            Attribute attr(location, size, static_cast<VertexField>(vertexField));
+            attrList->push_back(attr);
 
             glEnableVertexAttribArray(location);
             glVertexAttribPointer(0, 1, GL_UNSIGNED_BYTE, 0, 1, this);
