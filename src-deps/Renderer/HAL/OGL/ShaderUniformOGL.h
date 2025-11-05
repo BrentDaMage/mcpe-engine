@@ -1,10 +1,11 @@
 #include <string>
 
-#include "../Enums/ShaderPrimitiveTypes.h"
+#include "ShaderPrimitiveTypes.h"
 #include "ShaderConstantOGL.h"
 
 namespace mce
 {
+    // ShaderUniform is specific to OpenGL
     class ShaderUniformOGL
     {
     public:
