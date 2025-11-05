@@ -14,7 +14,7 @@ public:
     virtual void onAppTerminated() {}
     virtual void onAppSuspended() {}
 
-    void initListener(float priority);
+    void initListener(float priority = 1.0f);
     void terminate();
 
 private:

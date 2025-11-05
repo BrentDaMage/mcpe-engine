@@ -4,8 +4,7 @@ AppPlatformListener::AppPlatformListener(bool doInit)
 {
     m_pPlatform = nullptr;
 
-    if (doInit)
-        initListener(1.0f);
+    if (doInit) initListener();
 }
 
 void AppPlatformListener::initListener(float priority)

@@ -22,7 +22,7 @@ MaterialPtr::MaterialPtr(RenderMaterialGroup& group, const std::string& name)
     , m_material(nullptr)
     , m_name(name)
 {
-    m_group->_addRef(this);
+    m_group->_addRef(*this);
     onGroupReloaded();
 }
 
@@ -37,14 +37,14 @@ void MaterialPtr::_move(MaterialPtr&& other)
     m_material = other.m_material;
     std::swap(m_name, other.m_name);
     other._deref();
-    m_group->_addRef(this);
+    m_group->_addRef(*this);
 }
 
 void MaterialPtr::_deref()
 {
     if (m_group != nullptr)
     {
-        m_group->removeRef(this);
+        m_group->_removeRef(*this);
         m_group = nullptr;
     }
     m_material = nullptr;
