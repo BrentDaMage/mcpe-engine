@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <deque>
 
 template <typename T>
 class InheritanceTree
@@ -13,7 +14,10 @@ public:
         std::string name;
         T val;
         std::vector<Node*> child;
-        bool isVisited;
+
+        Node()
+        {
+        }
 
         Node(const std::string& name)
         {
@@ -43,7 +47,8 @@ public:
         }
     }
 
-    void visitBFS(void (*callback)(const std::string&, const T&))
+    template <class TVisitor>
+    void visitBFS(TVisitor& visitor)
     {
         std::deque<Node*> queue;
 
@@ -57,10 +62,7 @@ public:
             // Skip root node
             if (!currentNode->name.empty())
             {
-                if (!callback)
-                    throw std::bad_cast();
-
-                callback(currentNode->name, currentNode->val);
+                visitor(currentNode->name, currentNode->val);
             }
 
             // Queue child nodes

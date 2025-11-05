@@ -9,4 +9,6 @@ public:
 
 public:
     static bool isValidPath(const std::string& path);
+    // Returns the name of a file, without its extension
+    static std::string getFileName(const std::string& path);
 };

@@ -16,3 +16,19 @@ bool Util::isValidPath(const std::string& path)
 
     return true;
 }
+
+std::string Util::getFileName(const std::string& path)
+{
+    size_t namePos = 0;
+    size_t nameSize = std::string::npos;
+
+    size_t lastOf = path.find_last_of("/\\");
+    if (lastOf != std::string::npos)
+        namePos = lastOf + 1;
+    
+    size_t dotPos = path.rfind('.');
+    if (dotPos != std::string::npos && dotPos > namePos)
+        nameSize = dotPos - namePos;
+
+    return path.substr(namePos, nameSize);
+}

@@ -35,7 +35,7 @@ namespace mce
 
         void deleteShader();
         void finalizeShaderUniforms(); // @TODO
-        void freeCompilerResources();
+        static void freeCompilerResources();
         static void resetLastProgram();
         void createAndAttachPrograms();
         void linkShader();

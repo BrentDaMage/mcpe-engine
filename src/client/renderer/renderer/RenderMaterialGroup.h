@@ -4,6 +4,8 @@
 #include <set>
 #include <string>
 
+#include "rapidjson/document.h"
+
 #include "AppPlatformListener.hpp"
 #include "MaterialPtr.h"
 
@@ -15,7 +17,7 @@ namespace mce
         static RenderMaterialGroup common, switchable;
 
     public:
-        std::map<const std::string, RenderMaterial*> m_materials;
+        std::map<const std::string, RenderMaterial> m_materials;
         std::set<MaterialPtr*> m_references;
         std::string m_listPath;
 
@@ -26,7 +28,9 @@ namespace mce
     protected:
         void _fireGroupReloaded();
         void _fireGroupDestroyed();
-        RenderMaterial*& _material(const std::string& fileName, const std::string& tag);
+        RenderMaterial& _material(const std::string& fileName, const std::string& tag);
+        void _loadMaterialSet(const rapidjson::Value& root, RenderMaterial& groupBaseParent, const std::string& materialIdentifier);
+        void _loadList();
 
     // These are public despite being prefixed with underscores
     public:

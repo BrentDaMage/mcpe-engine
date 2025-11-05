@@ -22,8 +22,8 @@ RenderMaterial::RenderMaterial()
     m_pShader = nullptr;
 }
 
-RenderMaterial::RenderMaterial(const rapidjson::Value& root, const RenderMaterial& other)
-    : RenderMaterial(other)
+RenderMaterial::RenderMaterial(const rapidjson::Value& root, const RenderMaterial& parent)
+    : RenderMaterial(parent)
 {
     _parseRenderStates(root);
     _parseRuntimeStates(root);

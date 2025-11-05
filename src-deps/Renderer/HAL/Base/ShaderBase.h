@@ -23,7 +23,7 @@ namespace mce
         ShaderBase(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry);
 
         void finalizeShaderUniforms();
-        void freeCompilerResources();
+        static void freeCompilerResources();
         static void resetLastProgram();
         bool isBuiltFrom(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath, const std::string& geometryPath) const;
         void validateVertexFormat(const VertexFormat& vertexFormat);

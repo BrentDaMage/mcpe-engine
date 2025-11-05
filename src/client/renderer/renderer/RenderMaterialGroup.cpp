@@ -1,8 +1,20 @@
 #include "RenderMaterialGroup.h"
 
+#include "Util.hpp"
+
+#include "Core/Utility/InheritanceTree.h"
+
 #include "RenderMaterial.h"
 
 using namespace mce;
+
+struct MaterialParent
+{
+    std::string parentName;
+    const rapidjson::Value* json;
+};
+
+typedef InheritanceTree<MaterialParent> MaterialTree;
 
 RenderMaterialGroup::RenderMaterialGroup()
     : AppPlatformListener(false)
@@ -27,9 +39,116 @@ void RenderMaterialGroup::_fireGroupDestroyed()
     m_references.clear();
 }
 
-RenderMaterial*& RenderMaterialGroup::_material(const std::string& fileName, const std::string& tag)
+RenderMaterial& RenderMaterialGroup::_material(const std::string& fileName, const std::string& tag)
 {
     return m_materials[fileName + tag];
+}
+
+std::string _getParent(const std::string& name, const std::string& materialIdentifier)
+{
+    size_t separatorPos = name.find_last_of(":");
+
+    if (separatorPos == std::string::npos)
+        return Util::EMPTY_STRING;
+
+    return name.substr(separatorPos + 1) + materialIdentifier;
+}
+
+struct MaterialTreePopulator
+{
+    RenderMaterial& groupBaseParent;
+    RenderMaterialGroup& group;
+
+    MaterialTreePopulator(RenderMaterialGroup& group, RenderMaterial& groupBaseParent)
+        : groupBaseParent(groupBaseParent)
+        , group(group)
+    {
+    }
+
+	void operator()(const std::string& materialName, MaterialParent& materialParent)
+	{
+        // Construct material with parent and place in group
+        RenderMaterial& parentMaterial = group._getMaterialOrDefault(materialParent.parentName, groupBaseParent);
+        group.m_materials[materialName] = RenderMaterial(*materialParent.json, parentMaterial);
+	}
+};
+
+void RenderMaterialGroup::_loadMaterialSet(const rapidjson::Value& root, RenderMaterial& groupBaseParent, const std::string& materialIdentifier)
+{
+    MaterialTree familyTree;
+
+    for (rapidjson::Value::ConstMemberIterator it = root.MemberBegin(); it != root.MemberEnd(); it++)
+    {
+        std::string parentName = _getParent(it->name.GetString(), materialIdentifier);
+        MaterialTree::Node& rootNode = familyTree._node(Util::EMPTY_STRING);
+        MaterialTree::Node& parentNode = familyTree._node(parentName);
+        parentNode.name = Util::EMPTY_STRING;
+        // @TODO: don't know the lifetime of this rapidjson value
+        parentNode.val.json = &it->value;
+
+        rootNode.child.push_back(&parentNode);
+    }
+
+    // Construct all materials from the tree in order
+    MaterialTreePopulator visitor(*this, groupBaseParent);
+    familyTree.visitBFS(visitor);
+}
+
+bool _isMaterialGroup(const rapidjson::Value& root)
+{
+    return !root["vertexShader"].IsString();
+}
+
+void RenderMaterialGroup::_loadList()
+{
+    std::string fileContents = AppPlatform::singleton()->readAssetFile(m_listPath);
+    rapidjson::Document document;
+    document.Parse(fileContents.c_str());
+    const rapidjson::Value& root = document.GetObj();
+
+    for (rapidjson::Value::ConstValueIterator it = root.Begin(); it != root.End(); it++)
+    {
+        const rapidjson::Value& value = *it;
+        std::string path = value["path"].GetString();
+
+        RenderMaterial material;
+
+        const rapidjson::Value& defines = value["defines"];
+        for (rapidjson::Value::ConstValueIterator it = root.Begin(); it != root.End(); it++)
+        {
+            material.m_defines.insert(it->GetString());
+        }
+
+        std::string tag = value["tag"].GetString();
+
+        fileContents = AppPlatform::singleton()->readAssetFile(path);
+        rapidjson::Document doc;
+        doc.Parse(fileContents.c_str());
+        if (!doc.HasParseError())
+        {
+            const rapidjson::Value& root = document.GetObj();
+            if (_isMaterialGroup(root))
+            {
+                _loadMaterialSet(root, material, tag);
+            }
+            else
+            {
+                RenderMaterial& materialRef = _material(Util::getFileName(path), tag);
+                materialRef = RenderMaterial(root, materialRef);
+            }
+        }
+    }
+
+    for (std::map<const std::string, RenderMaterial>::iterator it = m_materials.begin(); it != m_materials.end(); it++)
+    {
+        RenderMaterial& material = it->second;
+        if (material.m_pShader)
+        {
+            material.m_pShader->finalizeShaderUniforms();
+        }
+    }
+
+    Shader::freeCompilerResources();
 }
 
 void RenderMaterialGroup::_addRef(MaterialPtr& reference)
@@ -44,9 +163,9 @@ void RenderMaterialGroup::_removeRef(MaterialPtr& reference)
 
 RenderMaterial* RenderMaterialGroup::_getMaterialPtr(const std::string& name)
 {
-    std::map<const std::string, RenderMaterial*>::iterator it = m_materials.find(name);
+    std::map<const std::string, RenderMaterial>::iterator it = m_materials.find(name);
     if (it != m_materials.end())
-        return it->second;
+        return &it->second;
 
     return nullptr;
 }
@@ -97,8 +216,8 @@ void RenderMaterialGroup::onAppResumed()
 
 void RenderMaterialGroup::onAppSuspended()
 {
-    for (std::map<const std::string, RenderMaterial*>::iterator it = m_materials.begin(); it != m_materials.end(); it++)
+    for (std::map<const std::string, RenderMaterial>::iterator it = m_materials.begin(); it != m_materials.end(); it++)
     {
-        *(it->second) = RenderMaterial();
+        it->second = RenderMaterial();
     }
 }
