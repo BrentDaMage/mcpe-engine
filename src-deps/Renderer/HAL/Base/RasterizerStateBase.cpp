@@ -4,7 +4,6 @@ using namespace mce;
 
 RasterizerStateBase::RasterizerStateBase()
 {
-    m_description = RasterizerStateDescription();
 }
 
 void RasterizerStateBase::createRasterizerStateDescription(RenderContext& context, const RasterizerStateDescription& desc)

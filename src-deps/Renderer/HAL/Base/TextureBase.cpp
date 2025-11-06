@@ -25,16 +25,16 @@ bool TextureBase::isLoaded() const
 
 void TextureBase::convertToMipmapedTexture(unsigned int mipmaps)
 {
-    if (m_description.m_mipCount == mipmaps)
+    if (m_description.mipCount == mipmaps)
         return;
     
-    if (m_description.m_filteringLevel == TEXTURE_FILTERING_BILINEAR)
+    if (m_description.filteringLevel == TEXTURE_FILTERING_BILINEAR)
     {
-        //LOG_E("Unsupported filtering level for mip maps, please add the correct filtering case: %d", m_description.m_filteringLevel);
+        //LOG_E("Unsupported filtering level for mip maps, please add the correct filtering case: %d", m_description.filteringLevel);
         throw std::bad_cast();
     }
 
-    m_description.m_filteringLevel = TEXTURE_FILTERING_MIPMAP_BILINEAR;
+    m_description.filteringLevel = TEXTURE_FILTERING_MIPMAP_BILINEAR;
 }
 
 void TextureBase::convertToMipmapedTexture(RenderContext& context, unsigned int mipmaps)

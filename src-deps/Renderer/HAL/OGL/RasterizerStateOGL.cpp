@@ -3,6 +3,15 @@
 
 using namespace mce;
 
+RasterizerStateOGL::RasterizerStateOGL()
+    : RasterizerStateBase()
+{
+    m_cullMode = true;
+    m_depthBias = 0.0f;
+    m_cullFace = GL_NONE;
+    m_enableScissorTest = false;
+}
+
 bool RasterizerStateOGL::bindRasterizerState(RenderContext& context, bool forceBind)
 {
     RasterizerStateDescription& ctxDesc = context.m_currentState.m_rasterizerStateDescription;
@@ -36,7 +45,7 @@ bool RasterizerStateOGL::bindRasterizerState(RenderContext& context, bool forceB
 
     if (forceBind || ctxDesc.depthBias != m_description.depthBias)
     {
-        if (m_depthScale == 0.0f)
+        if (m_depthBias == 0.0f)
         {
             glDisable(GL_POLYGON_OFFSET_FILL);
         }
@@ -44,7 +53,7 @@ bool RasterizerStateOGL::bindRasterizerState(RenderContext& context, bool forceB
         {
             glEnable(GL_POLYGON_OFFSET_FILL);
         }
-        glPolygonOffset(m_depthScale * 5.0f, m_depthScale * 5.0f);
+        glPolygonOffset(m_depthBias * 5.0f, m_depthBias * 5.0f);
         ctxDesc.depthBias = m_description.depthBias;
     }
 }
@@ -68,7 +77,7 @@ void RasterizerStateOGL::createRasterizerStateDescription(RenderContext& context
             throw std::bad_cast();
     }
 
-    m_depthScale = desc.depthBias;
+    m_depthBias = desc.depthBias;
     if ( !context.m_currentState.m_bBoundRasterizerState )
     {
         bindRasterizerState(context, true);

@@ -1,6 +1,8 @@
 #include "BlendStateDescription.h"
 
-mce::BlendStateDescription::BlendStateDescription()
+using namespace mce;
+
+BlendStateDescription::BlendStateDescription()
 {
 	blendSource = BLEND_TARGET_SOURCE_ALPHA;
 	blendDestination = BLEND_TARGET_ONE_MINUS_SRC_ALPHA;
@@ -8,7 +10,7 @@ mce::BlendStateDescription::BlendStateDescription()
 	enableBlend = false;
 }
 
-bool mce::BlendStateDescription::operator==(const mce::BlendStateDescription& other) const
+bool BlendStateDescription::operator==(const BlendStateDescription& other) const
 {
 	return blendSource == other.blendSource &&
 		   blendDestination == other.blendDestination &&
@@ -16,7 +18,7 @@ bool mce::BlendStateDescription::operator==(const mce::BlendStateDescription& ot
 		   enableBlend == other.enableBlend;
 }
 
-bool mce::BlendStateDescription::operator!=(const mce::BlendStateDescription& other) const
+bool BlendStateDescription::operator!=(const BlendStateDescription& other) const
 {
 	return !(*this == other);
 }

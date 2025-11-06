@@ -5,9 +5,8 @@
 
 namespace mce
 {
-	class StencilFaceDescription
+	struct StencilFaceDescription
 	{
-	public:
 		ComparisonFunc stencilFunc;
 		StencilOp stencilDepthFailOp;
 		StencilOp stencilPassOp;

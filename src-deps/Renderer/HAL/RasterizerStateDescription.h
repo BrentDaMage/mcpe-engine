@@ -4,16 +4,15 @@
 
 namespace mce
 {
-	class RasterizerStateDescription
+	struct RasterizerStateDescription
 	{
-	public:
         float depthBias;
-        mce::CullMode cullMode;
+        CullMode cullMode;
         bool enableScissorTest;
-		
+	
 		RasterizerStateDescription();
 
-		bool operator==(const mce::RasterizerStateDescription& other) const;
-		bool operator!=(const mce::RasterizerStateDescription& other) const;
+		bool operator==(const RasterizerStateDescription& other) const;
+		bool operator!=(const RasterizerStateDescription& other) const;
 	};
 }

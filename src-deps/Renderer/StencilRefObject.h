@@ -4,12 +4,20 @@ namespace mce
 {
     class StencilRefObject
     {
-    public:
+    private:
         unsigned int stencilRef;
 
+    public:
         StencilRefObject(unsigned int ref = 0);
 
-        bool operator==(const mce::StencilRefObject& other) const;
-        bool operator!=(const mce::StencilRefObject& other) const;
+        unsigned int operator=(unsigned int value)
+        {
+            return stencilRef = value;
+        }
+
+        bool operator==(const StencilRefObject& other) const;
+        bool operator!=(const StencilRefObject& other) const;
+
+        operator unsigned int() const { return stencilRef; }
     };
 }

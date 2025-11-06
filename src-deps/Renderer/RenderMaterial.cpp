@@ -94,7 +94,7 @@ void RenderMaterial::_parseDepthStencilState(const rapidjson::Value& root)
         if (!stencilRefValue.IsNull())
         {
             desc.overwroteStencilRef = true;
-            desc.stencilRef.stencilRef = stencilRefValue.GetUint();
+            desc.stencilRef = stencilRefValue.GetUint();
         }
     }
 

@@ -6,6 +6,7 @@ namespace mce
 {
     class RasterizerState : public RasterizerStateOGL
     {
-
+    public:
+        RasterizerState();
     };
 }

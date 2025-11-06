@@ -1,19 +1,21 @@
 #include "RasterizerStateDescription.h"
 
-mce::RasterizerStateDescription::RasterizerStateDescription()
+using namespace mce;
+
+RasterizerStateDescription::RasterizerStateDescription()
 {
-    depthBias = 0.0;
+    depthBias = 0.0f;
     cullMode = CULL_BACK;
     enableScissorTest = 0;
 }
 
-bool mce::RasterizerStateDescription::operator==(const mce::RasterizerStateDescription& other) const
+bool RasterizerStateDescription::operator==(const RasterizerStateDescription& other) const
 {
-	return depthBias == other.depthBias &&
-		   cullMode == other.cullMode;
+	return this->depthBias == other.depthBias &&
+		   this->cullMode == other.cullMode;
 }
 
-bool mce::RasterizerStateDescription::operator!=(const mce::RasterizerStateDescription& other) const
+bool RasterizerStateDescription::operator!=(const RasterizerStateDescription& other) const
 {
 	return !(*this == other);
 }

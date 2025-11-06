@@ -114,7 +114,7 @@ void TextureOGL::subBuffer(RenderContext& context, const void* pixels, unsigned 
 
 void TextureOGL::subBuffer(RenderContext& context, const void* pixels)
 {
-    subBuffer(context, pixels, 0, 0, m_description.m_width, m_description.m_height, 0);
+    subBuffer(context, pixels, 0, 0, m_description.width, m_description.height, 0);
 }
 
 void TextureOGL::createMipMap(RenderContext& context, const void* pixels, unsigned int width, unsigned int height, unsigned int level)
@@ -135,15 +135,15 @@ void TextureOGL::createTexture(RenderContext& context, TextureDescription const&
     glGenTextures(1, m_state.m_textureArray);
     ErrorHandler::checkForErrors();
     
-    m_state.m_internalTextureFormat = getOpenGLInternalTextureFormatFromTextureFormat(description.m_textureFormat);
-    m_state.m_textureFormat = getOpenGLTextureFormat(description.m_textureFormat);
-    m_state.m_textureType = getOpenGLTextureTypeFromTextureFormat(description.m_textureFormat);
+    m_state.m_internalTextureFormat = getOpenGLInternalTextureFormatFromTextureFormat(description.textureFormat);
+    m_state.m_textureFormat = getOpenGLTextureFormat(description.textureFormat);
+    m_state.m_textureType = getOpenGLTextureTypeFromTextureFormat(description.textureFormat);
 
     bindTexture(context, 0, 2);
     ErrorHandler::checkForErrors();
-    createMipMap(context, 0, description.m_width, description.m_height, 0);
+    createMipMap(context, 0, description.width, description.height, 0);
 
-    switch (description.m_filteringLevel)
+    switch (description.filteringLevel)
     {
     case TEXTURE_FILTERING_BILINEAR:
         // @NOTE: Need GL 1.2 for GL_CLAMP_TO_EDGE

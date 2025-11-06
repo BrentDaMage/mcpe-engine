@@ -7,9 +7,8 @@
 
 namespace mce
 {
-	class DepthStencilStateDescription
+	struct DepthStencilStateDescription
 	{
-	public:
         bool depthTestEnabled;
         bool stencilTestEnabled;
         ComparisonFunc depthFunc;

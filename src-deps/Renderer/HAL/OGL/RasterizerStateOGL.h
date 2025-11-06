@@ -12,7 +12,10 @@ namespace mce
         GLenum m_cullFace;
         bool m_enableScissorTest;
         bool m_cullMode;
-        GLfloat m_depthScale;
+        GLfloat m_depthBias;
+
+    public:
+        RasterizerStateOGL();
 
     public:
         bool bindRasterizerState(RenderContext& context, bool forceBind = false);

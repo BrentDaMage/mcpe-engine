@@ -1,16 +1,18 @@
 #include "BlendStateBase.h"
 
-mce::BlendStateBase::BlendStateBase()
+using namespace mce;
+
+BlendStateBase::BlendStateBase()
 {
-    m_description = mce::BlendStateDescription();
+    m_description = BlendStateDescription();
 }
 
-void mce::BlendStateBase::createBlendState(mce::RenderContext& context, const mce::BlendStateDescription& desc)
+void BlendStateBase::createBlendState(RenderContext& context, const BlendStateDescription& desc)
 {
     m_description = desc;
 }
 
-bool mce::BlendStateBase::bindBlendState(mce::RenderContext& context)
+bool BlendStateBase::bindBlendState(RenderContext& context)
 {
     return context.m_currentState.m_blendStateDescription == m_description;
 }

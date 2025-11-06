@@ -5,13 +5,12 @@
 
 namespace mce
 {
-	class ImageDescription
+	struct ImageDescription
 	{
-	public:
-        uint32_t m_width;
-        uint32_t m_height;
-        char *m_pixels;
-        TextureFormat m_textureFormat;
+        uint32_t width;
+        uint32_t height;
+        char *pixels;
+        TextureFormat textureFormat;
 		
 		ImageDescription();
 		

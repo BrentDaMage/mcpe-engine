@@ -8,11 +8,13 @@ namespace mce
 	class DepthStencilStateBase
 	{
 	public:
-        mce::DepthStencilStateDescription m_description;
+        DepthStencilStateDescription m_description;
 		
+	public:
 		DepthStencilStateBase();
 		
-		void createDepthState(mce::RenderContext& context, const mce::DepthStencilStateDescription& desc);
-        bool bindDepthStencilState(mce::RenderContext& context);
+	public:
+		void createDepthState(RenderContext& context, const DepthStencilStateDescription& description);
+        bool bindDepthStencilState(RenderContext& context);
 	};
 }

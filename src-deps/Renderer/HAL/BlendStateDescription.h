@@ -5,17 +5,16 @@
 
 namespace mce
 {
-	class BlendStateDescription
+	struct BlendStateDescription
 	{
-	public:
-		mce::BlendTarget blendSource;
-		mce::BlendTarget blendDestination;
-		mce::ColorWriteMask colorWriteMask;
+		BlendTarget blendSource;
+		BlendTarget blendDestination;
+		ColorWriteMask colorWriteMask;
 		bool enableBlend;
 		
 		BlendStateDescription();
 		
-		bool operator==(const mce::BlendStateDescription& other) const;
-		bool operator!=(const mce::BlendStateDescription& other) const;
+		bool operator==(const BlendStateDescription& other) const;
+		bool operator!=(const BlendStateDescription& other) const;
 	};
 }

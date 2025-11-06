@@ -19,9 +19,10 @@ namespace mce
     public:
         BlendStateOGL();
 
+    public:
         GLenum translateBlendFunc(BlendTarget blendTarget);
 
-		void createBlendState(mce::RenderContext& context, const mce::BlendStateDescription& desc);
-        bool bindBlendState(mce::RenderContext& context, bool forceBind = false);
+		void createBlendState(RenderContext& context, const BlendStateDescription& desc);
+        bool bindBlendState(RenderContext& context, bool forceBind = false);
     };
 }
