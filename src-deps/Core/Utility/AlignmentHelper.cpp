@@ -1,6 +1,8 @@
 #include "AlignmentHelper.h"
 
-unsigned int mce::AlignmentHelper::getAlignedOffset(unsigned int size, unsigned int a2)
+using namespace mce;
+
+unsigned int AlignmentHelper::getAlignedOffset(unsigned int size, unsigned int a2)
 {
     unsigned int v2; // r3
     bool v3; // cf

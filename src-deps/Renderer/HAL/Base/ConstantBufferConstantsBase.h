@@ -6,10 +6,10 @@ namespace mce
 {
     class ConstantBufferConstantsBase
     {
+    protected:
+        ConstantBufferContainer *m_constantBuffer;
+            
     public:
-        // might be private
-        mce::ConstantBufferContainer *m_constantBuffer;
-                    
         ConstantBufferConstantsBase();
         virtual ~ConstantBufferConstantsBase() {};
     

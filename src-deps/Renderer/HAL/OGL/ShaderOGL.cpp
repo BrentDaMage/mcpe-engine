@@ -186,7 +186,7 @@ void ShaderOGL::reflectShaderAttributes()
 
             if (attrList == nullptr)
             {
-                attrList = new mce::RenderDeviceBase::AttributeList();
+                attrList = new RenderDeviceBase::AttributeList();
             }
 
             Attribute attr(location, size, static_cast<VertexField>(vertexField));
@@ -197,7 +197,7 @@ void ShaderOGL::reflectShaderAttributes()
         }
     }
 
-    m_attributeListIndex = RenderDevice::getInstance()->registerOrGetAttributeListIndex(*attrList);
+    m_attributeListIndex = RenderDevice::getInstance().registerOrGetAttributeListIndex(*attrList);
 }
 
 void ShaderOGL::reflectShader()

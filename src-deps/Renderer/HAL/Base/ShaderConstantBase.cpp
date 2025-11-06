@@ -2,7 +2,9 @@
 
 #include "ShaderConstantBase.h"
 
-void mce::ShaderConstantBase::_init()
+using namespace mce;
+
+void ShaderConstantBase::_init()
 {
     m_numberOfElements = 0;
     m_byteOffset = 0;
@@ -10,7 +12,7 @@ void mce::ShaderConstantBase::_init()
     m_dirty = false;
 }
 
-mce::ShaderConstantBase::ShaderConstantBase(const mce::UniformMetaData& uniMeta)
+ShaderConstantBase::ShaderConstantBase(const UniformMetaData& uniMeta)
 {
     _init();
     m_name = uniMeta.m_uniformName;
@@ -19,12 +21,12 @@ mce::ShaderConstantBase::ShaderConstantBase(const mce::UniformMetaData& uniMeta)
     m_byteOffset = uniMeta.m_byteOffset;
 }
 
-mce::ShaderConstantBase::~ShaderConstantBase()
+ShaderConstantBase::~ShaderConstantBase()
 {
 
 }
 
-bool mce::ShaderConstantBase::operator==(const mce::ShaderConstantBase& other) const
+bool ShaderConstantBase::operator==(const ShaderConstantBase& other) const
 {
     return getName() == other.getName() &&
            m_numberOfElements == other.m_numberOfElements &&

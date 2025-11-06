@@ -8,13 +8,13 @@ namespace mce
     class PerFrameConstants : public ConstantBufferConstants
     {
     public:
-        mce::ShaderConstantFloat3 *VIEW_DIRECTION;
-        mce::ShaderConstantFloat1 *TIME;
-        mce::ShaderConstantFloat3 *VIEW_POS;
-        mce::ShaderConstantFloat1 *FAR_CHUNKS_DISTANCE;
-        mce::ShaderConstantFloat4 *FOG_COLOR;
-        mce::ShaderConstantFloat2 *FOG_CONTROL;
-        mce::ShaderConstantFloat1 *RENDER_DISTANCE;
+        ShaderConstantFloat3 *VIEW_DIRECTION;
+        ShaderConstantFloat1 *TIME;
+        ShaderConstantFloat3 *VIEW_POS;
+        ShaderConstantFloat1 *FAR_CHUNKS_DISTANCE;
+        ShaderConstantFloat4 *FOG_COLOR;
+        ShaderConstantFloat2 *FOG_CONTROL;
+        ShaderConstantFloat1 *RENDER_DISTANCE;
 
     public:
         PerFrameConstants();

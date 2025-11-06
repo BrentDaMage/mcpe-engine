@@ -1,7 +1,9 @@
 #include <typeinfo>
 #include "ShaderPrimitiveTypes.h"
 
-const char* mce::ShaderPrimitiveTypeToString[] = {
+using namespace mce;
+
+const char* ShaderPrimitiveTypeToString[] = {
     "UnknownPrimitiveType",
     "Float1",
     "Float2",
@@ -16,7 +18,7 @@ const char* mce::ShaderPrimitiveTypeToString[] = {
     "Matrix4x4"
 };
 
-int mce::ShaderPrimitiveTypeHelper::sizeInBytesFromShaderPrimitiveType(mce::ShaderPrimitiveTypes shaderPrimitiveType)
+int ShaderPrimitiveTypeHelper::sizeInBytesFromShaderPrimitiveType(ShaderPrimitiveTypes shaderPrimitiveType)
 {
     switch (shaderPrimitiveType)
     {

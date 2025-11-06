@@ -1,6 +1,8 @@
 #include "GlobalConstantBuffers.h"
 
-void mce::GlobalConstantBuffers::init()
+using namespace mce;
+
+void GlobalConstantBuffers::init()
 {
     m_worldConstants.init();
     m_renderChunkConstants.init();

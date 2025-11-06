@@ -13,8 +13,8 @@ namespace mce
     class ShaderConstants : public ConstantBufferConstants
     {
     public:
-        mce::ShaderConstantFloat4* CURRENT_COLOR;
-        mce::ShaderConstantFloat4* DARKEN;
+        ShaderConstantFloat4* CURRENT_COLOR;
+        ShaderConstantFloat4* DARKEN;
 
     public:
         ShaderConstants();

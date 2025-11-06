@@ -1,4 +1,6 @@
 #include "Singleton.h"
 
+using namespace mce;
+
 template <typename T>
-T* mce::Singleton<T>::instance = nullptr;
+T* Singleton<T>::instance = nullptr;

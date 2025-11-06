@@ -40,11 +40,11 @@ void ShaderBase::bindShader(RenderContext& context, const VertexFormat& format, 
 {
 }
 
-void ShaderBase::reflectShader(mce::RenderDevice& renderDevice)
+void ShaderBase::reflectShader(RenderDevice& renderDevice)
 {
 }
 
-const mce::VertexField& ShaderBase::getAttributeForName(const std::string& name, unsigned int id) const
+const VertexField& ShaderBase::getAttributeForName(const std::string& name, unsigned int id) const
 {
     std::map<std::string, VertexField>::iterator it = builtinAttributeMap.find(name);
 

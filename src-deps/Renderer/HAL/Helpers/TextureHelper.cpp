@@ -1,7 +1,9 @@
 #include <typeinfo>
 #include "TextureHelper.h"
 
-unsigned int mce::TextureHelper::textureFormatToByteStride(mce::TextureFormat textureFormat)
+using namespace mce;
+
+unsigned int TextureHelper::textureFormatToByteStride(TextureFormat textureFormat)
 {
     switch (textureFormat)
     {

@@ -8,7 +8,7 @@ namespace mce
     class RenderChunkConstants : public ConstantBufferConstants
     {
     public:
-        mce::ShaderConstantFloat3* CHUNK_ORIGIN;
+        ShaderConstantFloat3* CHUNK_ORIGIN;
 
     public:
         RenderChunkConstants();

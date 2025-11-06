@@ -13,7 +13,7 @@ namespace mce
         std::string m_name;
         unsigned int m_numberOfElements;
         unsigned int m_byteOffset;
-        mce::ShaderPrimitiveTypes m_shaderPrimitiveType;
+        ShaderPrimitiveTypes m_shaderPrimitiveType;
         bool m_dirty;
 
     private:
@@ -21,15 +21,15 @@ namespace mce
 
     public:
         ShaderConstantBase() { _init(); }
-        ShaderConstantBase(const mce::UniformMetaData&);
+        ShaderConstantBase(const UniformMetaData&);
         virtual ~ShaderConstantBase();
 
         void release();
         const std::string& getName() const { return m_name; }
-        const unsigned int getSize() const { return mce::ShaderPrimitiveTypeHelper::sizeInBytesFromShaderPrimitiveType(m_shaderPrimitiveType); }
-        mce::ShaderPrimitiveTypes getType() const { return m_shaderPrimitiveType; }
+        const unsigned int getSize() const { return ShaderPrimitiveTypeHelper::sizeInBytesFromShaderPrimitiveType(m_shaderPrimitiveType); }
+        ShaderPrimitiveTypes getType() const { return m_shaderPrimitiveType; }
         bool isDirty() const { return m_dirty; }
 
-        bool operator==(const mce::ShaderConstantBase& other) const;
+        bool operator==(const ShaderConstantBase& other) const;
     };
 }

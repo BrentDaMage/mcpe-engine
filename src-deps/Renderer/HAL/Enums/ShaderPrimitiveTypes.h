@@ -27,7 +27,7 @@ namespace mce
 	class ShaderPrimitiveTypeHelper
 	{
 	public:
-		static int sizeInBytesFromShaderPrimitiveType(mce::ShaderPrimitiveTypes shaderPrimitiveType);
+		static int sizeInBytesFromShaderPrimitiveType(ShaderPrimitiveTypes shaderPrimitiveType);
 	};
 
 	const char* ShaderPrimitiveTypeToString[SHADER_PRIMITIVES_MAX + 1];

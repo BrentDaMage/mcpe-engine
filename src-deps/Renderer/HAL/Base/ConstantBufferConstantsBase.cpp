@@ -1,6 +1,8 @@
 #include "ConstantBufferConstantsBase.h"
 
-mce::ConstantBufferConstantsBase::ConstantBufferConstantsBase()
+using namespace mce;
+
+ConstantBufferConstantsBase::ConstantBufferConstantsBase()
 {
     m_constantBuffer = nullptr;
 };

@@ -81,7 +81,7 @@ void BufferOGL::createDynamicBuffer(RenderContext& context, unsigned int size, B
     activeBuffer = m_bufferName;
 
     glBufferData(m_target, size, data, GL_STATIC_DRAW);
-    mce::ErrorHandler::checkForErrors();
+    ErrorHandler::checkForErrors();
 }
 
 void BufferOGL::resizeBuffer(RenderContext& context, const void* data, unsigned int size)
