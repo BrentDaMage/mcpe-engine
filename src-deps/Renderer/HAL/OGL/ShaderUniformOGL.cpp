@@ -3,13 +3,10 @@
 using namespace mce;
 
 ShaderUniformOGL::ShaderUniformOGL(const std::string& name, int location, int elements, ShaderPrimitiveTypes shaderPrimitiveType)
-    : m_location(location)
-    , m_elements(elements)
-    , m_name(name)
-    , m_shaderPrimitiveType(shaderPrimitiveType)
+    : ShaderResourceOGL(name, location, elements, shaderPrimitiveType)
 {
-    m_unknown = 0;
     m_shaderConstant = nullptr;
+    m_constantBufferContainer = nullptr;
 }
 
 void ShaderUniformOGL::bind(bool forceBind)

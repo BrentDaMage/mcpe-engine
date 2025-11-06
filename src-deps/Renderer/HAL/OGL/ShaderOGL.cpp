@@ -16,7 +16,7 @@ static ShaderOGL::VertexFieldFormat vertexFieldFormats[] = {
 ShaderOGL::ShaderOGL(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry)
     : ShaderBase(vertex, fragment, geometry)
 {
-    m_shaderProgram = GL_NONE;
+    m_program = GL_NONE;
 
     createAndAttachPrograms();
     linkShader();
@@ -30,8 +30,17 @@ ShaderOGL::~ShaderOGL()
 
 void ShaderOGL::deleteShader()
 {
-    glDeleteProgram(m_shaderProgram);
-    m_shaderProgram = GL_NONE;
+    glDeleteProgram(m_program);
+    m_program = GL_NONE;
+}
+
+void ShaderOGL::finalizeShaderUniforms()
+{
+    for (int i = 0; i < m_uniformList.size(); i++)
+    {
+        ShaderUniformOGL& uniform = m_uniformList[i];
+        uniform.m_shaderConstant = uniform.m_constantBufferContainer->getUnspecializedShaderConstant(uniform.m_name);
+    }
 }
 
 void ShaderOGL::freeCompilerResources()
@@ -48,23 +57,23 @@ void ShaderOGL::resetLastProgram()
 void ShaderOGL::createAndAttachPrograms()
 {
     GLuint program = glCreateProgram();
-    m_shaderProgram = program;
+    m_program = program;
 
     glAttachShader(program, m_vertexShader.m_shaderName);
-    glAttachShader(m_shaderProgram, m_fragmentShader.m_shaderName);
-    if (m_geometryShader.isValid()) glAttachShader(m_shaderProgram, m_geometryShader.m_shaderName);
+    glAttachShader(m_program, m_fragmentShader.m_shaderName);
+    if (m_geometryShader.isValid()) glAttachShader(m_program, m_geometryShader.m_shaderName);
     
     ErrorHandler::checkForErrors();
 }
 
 void ShaderOGL::linkShader()
 {
-    glLinkProgram(m_shaderProgram);
+    glLinkProgram(m_program);
 
     ErrorHandler::checkForErrors();
 
     GLint linkStatus;
-    glGetProgramiv(m_shaderProgram, GL_LINK_STATUS, &linkStatus);
+    glGetProgramiv(m_program, GL_LINK_STATUS, &linkStatus);
 
     if (linkStatus == GL_TRUE)
         return;
@@ -84,20 +93,20 @@ void ShaderOGL::linkShader()
     }
 
     GLint logLength = 0;
-    glGetProgramiv(m_shaderProgram, GL_INFO_LOG_LENGTH, &logLength);
+    glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &logLength);
 
     if (logLength > 1)
     {
         int charsWritten = 0;
         char* infoLog;
-        glGetProgramInfoLog(m_shaderProgram, logLength, &charsWritten, infoLog);
+        glGetProgramInfoLog(m_program, logLength, &charsWritten, infoLog);
 
         //LOG_E("Compiler error:\n" << infoLog);
         throw std::bad_cast();
     }
 
-    glDeleteProgram(m_shaderProgram);
-    m_shaderProgram = 0;
+    glDeleteProgram(m_program);
+    m_program = 0;
 }
 
 void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, const void* vertexData)
@@ -130,25 +139,23 @@ void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, const void*
 
 void ShaderOGL::bindShader(RenderContext& context, const VertexFormat& format, const void *dataBasePtr, unsigned int shaderStageBits)
 {
-    bool shaderChanged = context.m_activeShaderProgram != m_shaderProgram;
+    bool shaderChanged = context.m_activeShaderProgram != m_program;
 
     if (shaderChanged)
     {
-        glUseProgram(m_shaderProgram);
-        context.m_activeShaderProgram = m_shaderProgram;
+        glUseProgram(m_program);
+        context.m_activeShaderProgram = m_program;
     }
 
     bindVertexPointers(format, dataBasePtr);
 
-    for (int i = 0; i < m_uniformList.size(); i++)
+    for (int i = 0; i < m_textureList.size(); i++)
     {
-        if (i >= 8)
-            throw std::out_of_range("context->m_activeTextureUnits[]");
-        const ShaderUniformOGL& shaderUniform = m_uniformList[i];
-        RenderContextOGL::ActiveTextureUnit& activeTextureUnit = context.m_activeTextureUnits[i];
-        if ((shaderChanged && shaderUniform.byte9) || activeTextureUnit.m_bIsShaderUniformDirty)
+        const ShaderResourceOGL& resource = m_textureList[i];
+        RenderContextOGL::ActiveTextureUnit& activeTextureUnit = context.getActiveTextureUnit(i);
+        if ((shaderChanged && resource.m_bValid) || activeTextureUnit.m_bIsShaderUniformDirty)
         {
-            glUniform1i(shaderUniform.m_location, activeTextureUnit.m_textureUnit);
+            glUniform1i(resource.m_location, activeTextureUnit.m_textureUnit);
             activeTextureUnit.m_bIsShaderUniformDirty = false;
         }
     }
@@ -165,7 +172,7 @@ void ShaderOGL::reflectShaderAttributes()
     RenderDeviceBase::AttributeList* attrList = nullptr;
 
     GLint attrCount;
-    glGetProgramiv(m_shaderProgram, GL_ACTIVE_ATTRIBUTES, &attrCount);
+    glGetProgramiv(m_program, GL_ACTIVE_ATTRIBUTES, &attrCount);
 
     if (attrCount)
     {
@@ -176,20 +183,20 @@ void ShaderOGL::reflectShaderAttributes()
 
         for (GLint i = 0; i < attrCount; i++)
         {
-            glGetActiveAttrib(m_shaderProgram, i, sizeof(name), &nameLen, &size, &type, name);
-            GLint location = glGetAttribLocation(this->m_shaderProgram, name);
+            glGetActiveAttrib(m_program, i, sizeof(name), &nameLen, &size, &type, name);
+            GLint location = glGetAttribLocation(this->m_program, name);
             if (location < 0)
                 continue;
 
             std::string attrName(name);
-            const VertexField vertexField = getAttributeForName(attrName, 0);
+            VertexField vertexField = getAttributeForName(attrName, 0);
 
             if (attrList == nullptr)
             {
                 attrList = new RenderDeviceBase::AttributeList();
             }
 
-            Attribute attr(location, size, static_cast<VertexField>(vertexField));
+            Attribute attr(location, size, vertexField);
             attrList->push_back(attr);
 
             glEnableVertexAttribArray(location);

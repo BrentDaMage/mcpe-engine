@@ -3,9 +3,9 @@
 #include <vector>
 
 #include "API_OGL.h"
+#include "ShaderBase.h"
 #include "../../RenderContextImmediate.h"
 #include "ShaderUniformOGL.h"
-#include "ShaderBase.h"
 #include "ShaderProgram.h"
 #include "VertexFormat.h"
 #include "RenderContext.h"
@@ -24,17 +24,16 @@ namespace mce
         };
 
     private:
-        GLuint m_shaderProgram;
+        GLuint m_program;
         std::vector<ShaderUniformOGL> m_uniformList;
-        unsigned int m_vertexArrayObjectName;
-        VertexFieldFormat m_vffmap[10];
+        std::vector<ShaderResourceOGL> m_textureList;
 
     public:
         ShaderOGL(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry);
         ~ShaderOGL();
 
         void deleteShader();
-        void finalizeShaderUniforms(); // @TODO
+        void finalizeShaderUniforms();
         static void freeCompilerResources();
         static void resetLastProgram();
         void createAndAttachPrograms();
