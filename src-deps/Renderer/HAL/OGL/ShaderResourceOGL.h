@@ -16,5 +16,5 @@ namespace mce
         std::string m_name;
 
         ShaderResourceOGL(const std::string& name, int location, int elements, ShaderPrimitiveTypes shaderPrimitiveType);
-    }
+    };
 }

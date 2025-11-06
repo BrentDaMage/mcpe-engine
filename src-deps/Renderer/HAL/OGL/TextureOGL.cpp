@@ -11,38 +11,6 @@ TextureOGL::TextureOGL()
 {
 }
 
-void TextureOGL::deleteTexture()
-{
-    glDeleteTextures(1, m_state.m_textureArray);
-    TextureBase::deleteTexture();
-
-    *this = TextureOGL();
-
-    ErrorHandler::checkForErrors();
-}
-
-void TextureOGL::bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits)
-{
-    ErrorHandler::checkForErrors();
-
-    GLenum texture = (textureUnit + 0x8400) + 0xC0;
-    if (context.m_activeTexture != texture)
-    {
-        glActiveTexture(texture);
-        context.m_activeTexture = texture;
-    }
-
-    ErrorHandler::checkForErrors();
-
-    glBindTexture(m_state.m_textureTarget, m_state.m_textureArray[0]);
-
-    RenderContextOGL::ActiveTextureUnit& activeTextureUnit = context.getActiveTextureUnit(textureUnit);
-    activeTextureUnit.m_textureUnit = textureUnit;
-    activeTextureUnit.m_bIsShaderUniformDirty = true;
-
-    ErrorHandler::checkForErrors();
-}
-
 GLenum TextureOGL::getOpenGLTextureFormat(TextureFormat textureFormat)
 {
     switch (textureFormat)
@@ -77,6 +45,38 @@ GLenum TextureOGL::getOpenGLTextureTypeFromTextureFormat(TextureFormat textureFo
             //LOG_E("Unknown textureFormat: %d", textureFormat);
             throw std::bad_cast();
     }
+}
+
+void TextureOGL::deleteTexture()
+{
+    glDeleteTextures(1, m_state.m_textureArray);
+    TextureBase::deleteTexture();
+
+    *this = TextureOGL();
+
+    ErrorHandler::checkForErrors();
+}
+
+void TextureOGL::bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits)
+{
+    ErrorHandler::checkForErrors();
+
+    GLenum texture = GL_TEXTURE0 + textureUnit;
+    if (context.m_activeTexture != texture)
+    {
+        glActiveTexture(texture);
+        context.m_activeTexture = texture;
+    }
+
+    ErrorHandler::checkForErrors();
+
+    glBindTexture(m_state.m_textureTarget, m_state.m_textureArray[0]);
+
+    RenderContextOGL::ActiveTextureUnit& activeTextureUnit = context.getActiveTextureUnit(textureUnit);
+    activeTextureUnit.m_textureUnit = textureUnit;
+    activeTextureUnit.m_bIsShaderUniformDirty = true;
+
+    ErrorHandler::checkForErrors();
 }
 
 void TextureOGL::convertToMipmapedTexture(RenderContext& context, unsigned int mipmaps)

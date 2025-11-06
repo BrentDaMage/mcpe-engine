@@ -33,12 +33,12 @@ namespace mce
     public:
         TextureOGL();
         
+        static GLenum getOpenGLTextureFormat(TextureFormat textureFormat);
+        static GLint getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat textureFormat);
+        static GLenum getOpenGLTextureTypeFromTextureFormat(TextureFormat textureFormat);
+
         void deleteTexture();
         void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits); // @TODO
-        
-        GLenum getOpenGLTextureFormat(TextureFormat textureFormat);
-        GLint getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat textureFormat);
-        GLenum getOpenGLTextureTypeFromTextureFormat(TextureFormat textureFormat);
         
         void convertToMipmapedTexture(RenderContext& context, unsigned int mipmaps);
 

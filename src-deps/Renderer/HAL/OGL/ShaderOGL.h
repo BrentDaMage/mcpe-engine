@@ -7,6 +7,7 @@
 #include "../../RenderContextImmediate.h"
 #include "ShaderUniformOGL.h"
 #include "ShaderProgram.h"
+#include "ShaderPrimitiveTypes.h"
 #include "VertexFormat.h"
 #include "RenderContext.h"
 #include "ErrorHandler.h"
@@ -18,9 +19,9 @@ namespace mce
     public:
         struct VertexFieldFormat
         {
-            unsigned int componentsType;
-            int components;
-            bool normalized;
+            GLenum componentsType;
+            GLint components;
+            GLboolean normalized;
         };
 
     private:
@@ -31,6 +32,9 @@ namespace mce
     public:
         ShaderOGL(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgram& geometry);
         ~ShaderOGL();
+
+    public:
+        static ShaderPrimitiveTypes shaderPrimitiveTypeFromOGLUniformType(GLenum uniformType);
 
         void deleteShader();
         void finalizeShaderUniforms();

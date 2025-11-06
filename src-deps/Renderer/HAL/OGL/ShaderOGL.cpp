@@ -3,6 +3,9 @@
 
 #include "ShaderOGL.h"
 
+#include "GlobalConstantBufferManager.h"
+#include "ConstantBufferMetaDataManager.h"
+
 using namespace mce;
 
 static ShaderOGL::VertexFieldFormat vertexFieldFormats[] = {
@@ -26,6 +29,28 @@ ShaderOGL::ShaderOGL(ShaderProgram& vertex, ShaderProgram& fragment, ShaderProgr
 ShaderOGL::~ShaderOGL()
 {
     deleteShader();
+}
+
+ShaderPrimitiveTypes ShaderOGL::shaderPrimitiveTypeFromOGLUniformType(GLenum uniformType)
+{
+    switch (uniformType)
+    {
+        case GL_INT:        return SHADER_PRIMITIVE_INT1;
+        case GL_INT_VEC2:   return SHADER_PRIMITIVE_INT2;
+        case GL_INT_VEC3:   return SHADER_PRIMITIVE_INT3;
+        case GL_INT_VEC4:   return SHADER_PRIMITIVE_INT4;
+        case GL_FLOAT:      return SHADER_PRIMITIVE_FLOAT1;
+        case GL_FLOAT_VEC2: return SHADER_PRIMITIVE_FLOAT2;
+        case GL_FLOAT_VEC3: return SHADER_PRIMITIVE_FLOAT3;
+        case GL_FLOAT_VEC4: return SHADER_PRIMITIVE_FLOAT4;
+        case GL_FLOAT_MAT2: return SHADER_PRIMITIVE_MATRIX2x2;
+        case GL_FLOAT_MAT3: return SHADER_PRIMITIVE_MATRIX3x3;
+        case GL_FLOAT_MAT4: return SHADER_PRIMITIVE_MATRIX4x4;
+        case GL_SAMPLER_2D: return SHADER_PRIMITIVE_SAMPLER1D;
+        default:
+            //LOG_W("Unknown type: %d", uniformType);
+            throw std::bad_cast();
+    }
 }
 
 void ShaderOGL::deleteShader()
@@ -56,12 +81,12 @@ void ShaderOGL::resetLastProgram()
 
 void ShaderOGL::createAndAttachPrograms()
 {
-    GLuint program = glCreateProgram();
-    m_program = program;
+    m_program = glCreateProgram();
 
-    glAttachShader(program, m_vertexShader.m_shaderName);
+    glAttachShader(m_program, m_vertexShader.m_shaderName);
     glAttachShader(m_program, m_fragmentShader.m_shaderName);
-    if (m_geometryShader.isValid()) glAttachShader(m_program, m_geometryShader.m_shaderName);
+    if (m_geometryShader.isValid())
+        glAttachShader(m_program, m_geometryShader.m_shaderName);
     
     ErrorHandler::checkForErrors();
 }
@@ -112,7 +137,7 @@ void ShaderOGL::linkShader()
 void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, const void* vertexData)
 {
     RenderDevice& device = RenderDevice::getInstance();
-    RenderDeviceBase::AttributeList attrList = device.getAttributeList(m_attributeListIndex);
+    const RenderDeviceBase::AttributeList& attrList = device.getAttributeList(m_attributeListIndex);
 
     for (int i = 0; i < attrList.size(); i++)
     {
@@ -164,6 +189,52 @@ void ShaderOGL::bindShader(RenderContext& context, const VertexFormat& format, c
     {
         ShaderUniformOGL& shaderUniform = m_uniformList[i];
         shaderUniform.bind(shaderChanged);
+    }
+}
+
+void ShaderOGL::reflectShaderUniforms()
+{
+    GlobalConstantBufferManager& bufferManager = GlobalConstantBufferManager::getInstance();
+
+    GLint uniformCount;
+    glGetProgramiv(m_program, GL_ACTIVE_UNIFORMS, &uniformCount);
+
+    GLsizei length;
+    GLenum type;
+    GLint size;
+    char name[1024];
+    for (int i = 0; i < uniformCount; i++)
+    {
+        glGetActiveUniform(m_program, i, 1024, &length, &size, &type, name);
+        GLint location = glGetUniformLocation(m_program, name);
+
+        if (location < 0)
+            continue;
+
+        ShaderPrimitiveTypes shaderPrimitiveType = shaderPrimitiveTypeFromOGLUniformType(type);
+
+        if (shaderPrimitiveType == SHADER_PRIMITIVE_SAMPLER1D &&
+            strlen(name) > 8 && strstr(name, "TEXTURE_") != NULL)
+        {
+            ShaderResourceOGL texture(name, location, size, shaderPrimitiveType);
+            texture.m_bValid = true;
+            m_textureList.push_back(texture);
+            if (m_textureList.size() > 8)
+            {
+                //LOG_W("You've exeeded the gl spec for minimum number of texture units: %d", 8);
+                throw std::bad_cast();
+            }
+        }
+
+        ShaderUniformOGL uniform(name, location, size, shaderPrimitiveType);
+
+        const UniformMetaData& uniformMetadata = ConstantBufferMetaDataManager::getInstance().findUniformMetaData(name);
+        const std::string& bufferName = uniformMetadata.m_constantBufferMetaDataParent->getConstantBufferName();
+        ConstantBufferContainer* pBufferContainer = bufferManager.findConstantBufferContainer(bufferName);
+        pBufferContainer->registerReflectedShaderParameter(uniformMetadata);
+        uniform.m_constantBufferContainer = pBufferContainer;
+
+        m_uniformList.push_back(uniform);
     }
 }
 
