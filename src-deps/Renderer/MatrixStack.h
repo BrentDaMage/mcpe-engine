@@ -6,25 +6,23 @@
 
 class Matrix
 {
+public:
+    static Matrix IDENTITY;
+    
 private:
-    glm::tmat4x4<float> _m;
+    glm::mat4 _m;
 
 public:
 	Matrix();         // create an empty matrix
-	Matrix(float a);  // create an identity matrix
-	Matrix(float* p); // load matrix from memory
-	Matrix(float a, float b, float c, float d, float e, float f, float g, float h, float i, float j, float k, float l, float m, float n, float o, float p);
-    Matrix(const glm::tmat4x4<float>& m)
-    {
-        _m = m;
-    }
+	Matrix(float s);  // create an identity matrix
+    Matrix(const glm::mat4& v);
 
-    void rotate(float, const Vec3&);
-	void scale(const Vec3&);
-	void setOrtho(float, float, float, float, float, float);
-	void setPerspective(float, float, float, float);
-	void transform3(Vec3&, float&);
-	void translate(const Vec3&);
+    void rotate(float angle, const Vec3& axis);
+	void scale(const Vec3& s);
+	void setOrtho(float left, float right, float bottom, float top, float Znear, float Zfar);
+	void setPerspective(float fov, float aspect, float Znear, float Zfar);
+	void transform3(Vec3& outVec, float& outW);
+	void translate(const Vec3& t);
     
     friend Matrix operator*(const Matrix& a, const Matrix& b)
     {
@@ -50,12 +48,12 @@ public:
     MatrixStack();
     
 private:
-    Matrix* _push();
-    Matrix* _pushIdentity();
+    Matrix& _push();
+    Matrix& _pushIdentity();
 
 public:
-    Matrix* top();
-    Matrix* getTop();
+    const Matrix& top() const;
+    const Matrix& getTop();
     bool empty() const { return m_stack.empty(); }
     bool isDirty() const { return m_bIsDirty; }
     void makeClean() { m_bIsDirty = false; };
@@ -72,7 +70,8 @@ public:
     public:
         Ref();
         Ref(MatrixStack& mtxStk, Matrix& mtx);
-        Ref(Ref& other);
+        Ref(Ref&& other);
+        ~Ref();
         
     private:
         void _move(Ref& other);
@@ -81,7 +80,7 @@ public:
         void release();
 
         Matrix* operator*();
-        void operator=(const Matrix& other);
+        Ref* operator=(const Matrix& value);
         void operator=(Ref&& other);
     };
 };

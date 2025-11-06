@@ -1,6 +1,10 @@
 #include <typeinfo>
 #include <glm/glm.hpp>
+#include <glm/ext/matrix_transform.hpp>
+#include <glm/ext/matrix_clip_space.hpp>
 #include "MatrixStack.h"
+
+Matrix Matrix::IDENTITY = Matrix(1.0f);
 
 MatrixStack MatrixStack::View = MatrixStack();
 MatrixStack MatrixStack::World = MatrixStack();
@@ -8,22 +12,32 @@ MatrixStack MatrixStack::Projection = MatrixStack();
 
 Matrix::Matrix()
 {
-    _m = glm::tmat4x4<float>();
+    _m = glm::mat4();
 }
 
-void Matrix::rotate(float angle, const Vec3& vector)
+Matrix::Matrix(float s)
 {
-    _m = glm::rotate(_m, glm::radians(angle), glm::normalize(glm::vec3(vector.x, vector.y, vector.z)));
+    _m = glm::mat4(s);
 }
 
-void Matrix::scale(const Vec3& vector)
+Matrix::Matrix(const glm::mat4& v)
 {
-    _m = glm::scale(_m, glm::vec3(vector.x, vector.y, vector.z));
+    _m = v;
 }
 
-void Matrix::setOrtho(float left, float right, float top, float bottom, float Znear, float Zfar)
+void Matrix::rotate(float angle, const Vec3& axis)
 {
-    _m = glm::ortho(_m, left, right, top, bottom, Znear, Zfar);
+    _m = glm::rotate(_m, glm::radians(angle), glm::normalize(glm::vec3(axis.x, axis.y, axis.z)));
+}
+
+void Matrix::scale(const Vec3& s)
+{
+    _m = glm::scale(_m, glm::vec3(s.x, s.y, s.z));
+}
+
+void Matrix::setOrtho(float left, float right, float bottom, float top, float Znear, float Zfar)
+{
+    _m = glm::ortho(left, right, bottom, top, Znear, Zfar);
 }
 
 void Matrix::setPerspective(float fov, float aspect, float Znear, float Zfar)
@@ -31,14 +45,20 @@ void Matrix::setPerspective(float fov, float aspect, float Znear, float Zfar)
     _m = glm::perspective(glm::radians(fov), aspect, Znear, Zfar);
 }
 
-void Matrix::transform3(Vec3& var1, float& var2)
+void Matrix::transform3(Vec3& outVec, float& outW)
 {
-    // todo
+    glm::vec4 temp_vec(glm::vec3(outVec.x, outVec.y, outVec.z), outW);
+
+    glm::vec4 result = _m * temp_vec;
+    glm::vec3 result3(result);
+
+    outVec = Vec3(result.x, result.y, result.z);
+    outW = result.w;
 }
 
-void Matrix::translate(const Vec3& vector)
+void Matrix::translate(const Vec3& t)
 {
-    _m = glm::translate(_m, vector);
+    _m = glm::translate(_m, glm::vec3(t.x, t.y, t.z));
 }
 
 MatrixStack::MatrixStack()
@@ -50,34 +70,34 @@ MatrixStack::MatrixStack()
 MatrixStack::Ref* MatrixStack::push()
 {
     m_bIsDirty = true;
-    return new Ref(*this, *_push());
+    return new Ref(*this, _push());
 }
 
 MatrixStack::Ref* MatrixStack::pushIdentity()
 {
     m_bIsDirty = true;
-    return new Ref(*this, *_pushIdentity());
+    return new Ref(*this, _pushIdentity());
 }
 
-Matrix* MatrixStack::_push()
+Matrix& MatrixStack::_push()
 {
-    // todo
+    m_stack.push(Matrix());
 }
 
-Matrix* MatrixStack::_pushIdentity()
+Matrix& MatrixStack::_pushIdentity()
 {
-    // todo
+    m_stack.push(Matrix::IDENTITY);
 }
 
-Matrix* MatrixStack::top()
+const Matrix& MatrixStack::top() const
 {
     return m_stack.top();
 }
 
-Matrix* MatrixStack::getTop()
+const Matrix& MatrixStack::getTop()
 {
     m_bIsDirty = true;
-    return m_stack.top();
+    return top();
 }
 
 void MatrixStack::pop()
@@ -105,9 +125,38 @@ MatrixStack::Ref::Ref(MatrixStack& mtxStk, Matrix& mtx)
 	m_matrix = &mtx;
 }
 
-MatrixStack::Ref::Ref(Ref& other)
+MatrixStack::Ref::Ref(Ref&& other)
 {
 	_move(other);
+}
+
+MatrixStack::Ref::~Ref()
+{
+    release();
+}
+
+void MatrixStack::Ref::_move(MatrixStack::Ref& other)
+{
+    if (this == &other)
+        return;
+
+    if (m_matrix || m_mtxStack)
+    {
+        //LOG_W("It doesn't really make sense to pop here, so can't release");
+        throw std::bad_cast();
+    }
+
+    this->m_mtxStack = other.m_mtxStack;
+    this->m_matrix = other.m_matrix;
+    other.m_mtxStack = nullptr;
+}
+
+void MatrixStack::Ref::release()
+{
+    if (m_mtxStack)
+        m_mtxStack->pop();
+    m_matrix = nullptr;
+    m_mtxStack = nullptr;
 }
 
 Matrix* MatrixStack::Ref::operator*()
@@ -119,4 +168,14 @@ Matrix* MatrixStack::Ref::operator*()
 	}
 	m_mtxStack->m_bIsDirty = true;
 	return m_matrix;
+}
+
+MatrixStack::Ref* MatrixStack::Ref::operator=(const Matrix& value)
+{
+    *(this->m_matrix) = value;
+}
+
+void MatrixStack::Ref::operator=(Ref&& other)
+{
+    _move(other);
 }
