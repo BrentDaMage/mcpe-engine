@@ -36,6 +36,6 @@ namespace mce
         void lock(RenderContext& context);
         void unlock(RenderContext& context);
 
-        bool supportsMipMaps();
+        static bool supportsMipMaps();
     };
 }

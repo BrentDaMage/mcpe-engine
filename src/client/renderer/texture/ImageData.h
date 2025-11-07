@@ -5,8 +5,8 @@
 
 struct ImageData
 {
-    unsigned int m_width;
-    unsigned int m_height;
+    int m_width;
+    int m_height;
     std::string m_data;
     unsigned int m_mipCount;
     ColorSpace m_colorSpace;

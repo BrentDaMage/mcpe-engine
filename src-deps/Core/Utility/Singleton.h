@@ -11,7 +11,7 @@ namespace mce
         static T* instance;
 
     private:
-        void internalCreateInstance()
+        static void internalCreateInstance()
         {
             T* newInstance = new T();
             T* oldInstance = instance;
@@ -55,4 +55,7 @@ namespace mce
             }
         }
     };
+
+    template <typename T>
+    T* Singleton<T>::instance = nullptr;
 }

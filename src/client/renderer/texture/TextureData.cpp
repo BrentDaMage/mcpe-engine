@@ -129,7 +129,7 @@ void TextureData::clear()
 
 void TextureData::bind(unsigned int textureUnit)
 {
-    if (m_texture.isLoaded() && lastBoundTexture[textureUnit] != this )
+    if (m_texture.isLoaded() && lastBoundTexture[textureUnit] != this)
     {
         lastBoundTexture[textureUnit] = this;
         m_texture.bindTexture(mce::RenderContextImmediate::get(), textureUnit);

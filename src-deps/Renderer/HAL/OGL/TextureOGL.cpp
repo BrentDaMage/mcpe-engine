@@ -49,7 +49,7 @@ GLenum getOpenGLTextureTypeFromTextureFormat(TextureFormat textureFormat)
 
 void TextureOGL::deleteTexture()
 {
-    glDeleteTextures(1, m_state.m_textureArray);
+    glDeleteTextures(1, &m_state.m_textureName);
     TextureBase::deleteTexture();
 
     *this = TextureOGL();
@@ -70,7 +70,7 @@ void TextureOGL::bindTexture(RenderContext& context, unsigned int textureUnit, u
 
     ErrorHandler::checkForErrors();
 
-    glBindTexture(m_state.m_textureTarget, m_state.m_textureArray[0]);
+    glBindTexture(m_state.m_textureTarget, m_state.m_textureName);
 
     RenderContextOGL::ActiveTextureUnit& activeTextureUnit = context.getActiveTextureUnit(textureUnit);
     activeTextureUnit.m_textureUnit = textureUnit;
@@ -132,7 +132,7 @@ void TextureOGL::createMipMap(RenderContext& context, const void* pixels, unsign
 void TextureOGL::createTexture(RenderContext& context, TextureDescription const& description)
 {
     TextureBase::createTexture(description);
-    glGenTextures(1, m_state.m_textureArray);
+    glGenTextures(1, &m_state.m_textureName);
     ErrorHandler::checkForErrors();
     
     m_state.m_internalTextureFormat = getOpenGLInternalTextureFormatFromTextureFormat(description.textureFormat);

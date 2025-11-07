@@ -12,7 +12,7 @@ namespace mce
     private:
         struct State
         {
-            GLuint* m_textureArray;
+            GLuint m_textureName;
             GLenum m_textureTarget;
             GLenum m_internalTextureFormat;
             GLenum m_textureFormat;
@@ -20,7 +20,7 @@ namespace mce
 
             State()
             {
-                m_textureArray = nullptr;
+                m_textureName = 0;
                 m_textureTarget = GL_TEXTURE_2D;
                 m_internalTextureFormat = GL_NONE;
                 m_textureFormat = GL_NONE;
@@ -47,6 +47,6 @@ namespace mce
         void lock(RenderContext& context);
         void unlock(RenderContext& context);
 
-        bool supportsMipMaps();
+        static bool supportsMipMaps();
     };
 }

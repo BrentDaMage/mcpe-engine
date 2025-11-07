@@ -8,7 +8,7 @@ class TextureData
 {
 private:
     static TextureData* lastBoundTextureUnit;
-    static TextureData* lastBoundTexture[22];
+    static TextureData* lastBoundTexture[8];
 
 public:
     ImageData m_imageData;
