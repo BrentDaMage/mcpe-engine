@@ -9,6 +9,11 @@ public:
     float a;
 
 public:
+    Color()
+        : Color(NIL)
+    {
+    }
+    
     Color(float r, float g, float b, float a = 1.0f)
         : r(r), g(g), b(b), a(a)
     {

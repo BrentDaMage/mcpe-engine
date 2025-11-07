@@ -104,7 +104,7 @@ void TextureOGL::subBuffer(RenderContext& context, const void* pixels, unsigned 
 
     if (m_state.m_textureTarget != GL_TEXTURE_2D)
     {
-        //LOG_E("Unknown textureTarget " << m_state.m_textureTarget);
+        //LOG_E("Unknown textureTarget %d", m_state.m_textureTarget);
         throw std::bad_cast();
     }
 

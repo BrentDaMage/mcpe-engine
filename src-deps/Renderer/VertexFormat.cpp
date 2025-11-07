@@ -33,7 +33,7 @@ bool VertexFormat::hasField(VertexField vertexField) const
     return ((int)m_fieldMask >> vertexField) & 1;
 }
 
-const void* VertexFormat::getFieldOffset(VertexField vertexField, const void *vertexData = nullptr) const
+const void* VertexFormat::getFieldOffset(VertexField vertexField, const void *vertexData) const
 {
     return (uint8_t*)vertexData + m_fieldOffset[vertexField];
 }

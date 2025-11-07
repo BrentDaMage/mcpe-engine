@@ -7,7 +7,7 @@ Texture::Texture()
 {
 }
 
-void Texture::bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits = SHADER_STAGE_BIT_PIXEL)
+void Texture::bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits)
 {
     TextureOGL::bindTexture(context, textureUnit, shaderStagesBits);
 }

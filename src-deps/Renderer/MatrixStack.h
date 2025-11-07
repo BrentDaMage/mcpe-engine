@@ -80,7 +80,7 @@ public:
         void release();
 
         Matrix* operator*();
-        Ref* operator=(const Matrix& value);
+        Ref& operator=(const Matrix& value);
         void operator=(Ref&& other);
     };
 };

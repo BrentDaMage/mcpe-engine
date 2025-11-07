@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../OGL/RenderContextOGL.h"
-#include "RenderContextBase.h"
+#include "OGL/RenderContextOGL.h"
 
 namespace mce
 {

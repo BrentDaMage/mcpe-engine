@@ -1,4 +1,3 @@
-#include <glm/glm.hpp>
 #include "MatrixStack.h"
 #include "GlobalConstantBufferManager.h"
 #include "RenderContextImmediate.h"
@@ -23,9 +22,9 @@ void WorldConstants::refreshWorldConstants()
     }
 
     // Get the current transformation matrices from the global stacks.
-    const Matrix& projectionMatrix = *MatrixStack::Projection.top();
-    const Matrix& viewMatrix       = *MatrixStack::View.top();
-    const Matrix& worldMatrix      = *MatrixStack::World.top();
+    const Matrix& projectionMatrix = MatrixStack::Projection.top();
+    const Matrix& viewMatrix       = MatrixStack::View.top();
+    const Matrix& worldMatrix      = MatrixStack::World.top();
 
     // Calculate the combined World-View-Projection matrix.
     // The order is crucial: Projection * View * World.

@@ -4,9 +4,9 @@
 #include <windows.h>
 #endif
 
-using namespace mce::Platform::OGL;
+using namespace mce::Platform;
 
-bool InitBindings()
+bool OGL::InitBindings()
 {
     bool result = true;
 
@@ -17,7 +17,7 @@ bool InitBindings()
     return result;
 }
 
-void* GetProcAddress(const char* name)
+void* OGL::GetProcAddress(const char* name)
 {
     void* result = nullptr;
 
@@ -26,7 +26,10 @@ void* GetProcAddress(const char* name)
     if (result == nullptr)
     {
         HMODULE handle = GetModuleHandle(L"opengl32.dll");
-        result = (void*)GetProcAddress(handle, name);
+        if (handle != NULL)
+        {
+            result = (void*)GetProcAddress(handle, name);
+        }
     }
 #endif
 

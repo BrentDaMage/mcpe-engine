@@ -56,11 +56,13 @@ bool RasterizerStateOGL::bindRasterizerState(RenderContext& context, bool forceB
         glPolygonOffset(m_depthBias * 5.0f, m_depthBias * 5.0f);
         ctxDesc.depthBias = m_description.depthBias;
     }
+
+    return RasterizerStateBase::bindRasterizerState(context);
 }
 
 void RasterizerStateOGL::createRasterizerStateDescription(RenderContext& context, const RasterizerStateDescription& desc)
 {
-    createRasterizerStateDescription(context, desc);
+    RasterizerStateBase::createRasterizerStateDescription(context, desc);
     m_enableScissorTest = desc.enableScissorTest;
     switch (desc.cullMode)
     {

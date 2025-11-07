@@ -38,7 +38,7 @@ const std::string& Precision::atLeast(int atleast)
 
     for (int i = 0; i < 3; i++)
     {
-        if (info->m_precision[i] >= atleast)
+        if (info.m_precision[i] >= atleast)
         {
             return name[i];
         }

@@ -135,6 +135,8 @@ std::string RenderMaterial::_buildHeader()
 #if MCE_GFX_API_OGL
     result += Platform::OGL::Precision::buildHeader();
 #endif
+
+    return result;
 }
 
 void RenderMaterial::_parseShaderPaths(const rapidjson::Value& root)

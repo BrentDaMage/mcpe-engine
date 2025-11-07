@@ -9,6 +9,6 @@ namespace mce
     public:
         ConstantBufferContainerOGL();
 
-        void sync();
+        void sync(RenderContext& context);
     };
 }

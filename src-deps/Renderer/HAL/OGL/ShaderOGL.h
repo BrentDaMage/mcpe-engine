@@ -44,7 +44,7 @@ namespace mce
         void linkShader();
         void bindVertexPointers(const VertexFormat&, const void*);
         void bindShader(RenderContext& context, const VertexFormat& format, const void *dataBasePtr, unsigned int shaderStageBits);
-        void reflectShaderUniforms(); // @TODO
+        void reflectShaderUniforms();
         void reflectShaderAttributes();
         void reflectShader();
     };

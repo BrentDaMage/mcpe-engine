@@ -118,5 +118,5 @@ BufferOGL& BufferOGL::operator=(BufferOGL&& other)
     other.m_target = GL_NONE;
     other.m_bufferName = GL_NONE;
 
-    return *this
+    return *this;
 }

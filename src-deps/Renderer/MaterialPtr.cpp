@@ -10,6 +10,7 @@ MaterialPtr MaterialPtr::NONE = MaterialPtr();
 MaterialPtr::MaterialPtr()
 {
     m_group = nullptr;
+    m_material = nullptr;
 }
 
 MaterialPtr::MaterialPtr(MaterialPtr&& other)

@@ -22,10 +22,10 @@ void RenderContextBase::lostContext()
 
 void RenderContextBase::setStencilReference(unsigned int value)
 {
-    m_stencilReference.stencilRef = value;
+    m_stencilReference = value;
 }
 
 unsigned int RenderContextBase::getStencilReference() const
 {
-    return m_stencilReference.stencilRef;
+    return m_stencilReference;
 }

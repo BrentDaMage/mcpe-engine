@@ -17,7 +17,7 @@ ShaderProgramOGL::ShaderProgramOGL(ShaderType shaderType, const std::string& sha
         return;
     }
 
-    unsigned int sourceLength = shaderSource.size();
+    const GLint sourceLength = shaderSource.size();
     const GLchar* sourceStr = (const GLchar*)shaderSource.data();
     m_shaderName = glCreateShader(shaderTypeMap[shaderType]);
     glShaderSource(m_shaderName, 1, &sourceStr, &sourceLength);
@@ -32,7 +32,7 @@ ShaderProgramOGL::ShaderProgramOGL(ShaderType shaderType, const std::string& sha
         if (maxLength > 1)
         {
             std::string infoLog(maxLength, 0);
-            glGetShaderInfoLog(m_shaderName, maxLength, &maxLength, infoLog.data());
+            glGetShaderInfoLog(m_shaderName, maxLength, &maxLength, (GLchar*)infoLog.data());
             //LOG_E("Compiler error:\n %s", infoLog);
         }
         m_bValid = false;

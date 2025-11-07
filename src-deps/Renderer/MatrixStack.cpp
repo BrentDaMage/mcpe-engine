@@ -82,11 +82,13 @@ MatrixStack::Ref* MatrixStack::pushIdentity()
 Matrix& MatrixStack::_push()
 {
     m_stack.push(Matrix());
+    return m_stack.top();
 }
 
 Matrix& MatrixStack::_pushIdentity()
 {
     m_stack.push(Matrix::IDENTITY);
+    return m_stack.top();
 }
 
 const Matrix& MatrixStack::top() const
@@ -170,9 +172,10 @@ Matrix* MatrixStack::Ref::operator*()
 	return m_matrix;
 }
 
-MatrixStack::Ref* MatrixStack::Ref::operator=(const Matrix& value)
+MatrixStack::Ref& MatrixStack::Ref::operator=(const Matrix& value)
 {
     *(this->m_matrix) = value;
+    return *this;
 }
 
 void MatrixStack::Ref::operator=(Ref&& other)

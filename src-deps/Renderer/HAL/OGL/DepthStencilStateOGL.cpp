@@ -154,5 +154,6 @@ bool DepthStencilStateOGL::bindDepthStencilState(RenderContext& context, bool fo
     }
 
     currentDesc.overwroteStencilRef = m_description.overwroteStencilRef;
-    DepthStencilStateBase::bindDepthStencilState(context);
+    
+    return DepthStencilStateBase::bindDepthStencilState(context);
 }

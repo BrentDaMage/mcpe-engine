@@ -10,7 +10,7 @@ unsigned int TextureHelper::textureFormatToByteStride(TextureFormat textureForma
         case TEXTURE_FORMAT_R8G8B8A8_UNORM:
             return 4;
         default:
-            //LOG_E("Unknown textureFormat: " << textureFormat);
+            //LOG_E("Unknown textureFormat: %d", textureFormat);
             throw std::bad_cast();
     }
 }

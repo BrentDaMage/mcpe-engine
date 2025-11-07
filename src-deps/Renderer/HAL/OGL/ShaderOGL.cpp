@@ -105,15 +105,12 @@ void ShaderOGL::linkShader()
 
     if (m_geometryShader.isValid())
     {
-        //LOG_E("Failed to link " << m_vertexShader->m_shaderPath
-        //    << " to " << m_fragmentShader->m_shaderPath
-        //    << " and " << m_geometryShader->m_shaderPath);
+        //LOG_E("Failed to link %s to %s and %s", m_vertexShader.m_shaderPath, m_fragmentShader.m_shaderPath, m_geometryShader.m_shaderPath);
         throw std::bad_cast();
     }
     else
     {
-        //LOG_E("Failed to link " << m_vertexShader->m_shaderPath
-        //    << " to " << m_fragmentShader->m_shaderPath);
+        //LOG_E("Failed to link %s to %s", m_vertexShader.m_shaderPath, m_fragmentShader.m_shaderPath);
         throw std::bad_cast();
     }
 
@@ -126,7 +123,7 @@ void ShaderOGL::linkShader()
         char* infoLog;
         glGetProgramInfoLog(m_program, logLength, &charsWritten, infoLog);
 
-        //LOG_E("Compiler error:\n" << infoLog);
+        //LOG_E("Compiler error:\n%s", infoLog);
         throw std::bad_cast();
     }
 

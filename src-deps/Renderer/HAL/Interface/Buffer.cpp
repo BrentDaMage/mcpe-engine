@@ -17,7 +17,7 @@ void Buffer::createDynamicIndexBuffer(RenderContext& context, unsigned int size)
     createDynamicBuffer(context, size, BUFFER_TYPE_INDEX, nullptr);
 }
 
-void Buffer::createDynamicIndexBuffer(RenderContext& context, unsigned int size)
+void Buffer::createDynamicVertexBuffer(RenderContext& context, unsigned int size)
 {
     createDynamicBuffer(context, size, BUFFER_TYPE_VERTEX, nullptr);
 }

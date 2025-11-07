@@ -1,7 +1,13 @@
 #pragma once
 
-namespace mce::Platform::OGL
+namespace mce
 {
-    bool InitBindings();
-    void* GetProcAddress(const char* name);
+    namespace Platform
+    {
+        namespace OGL
+        {
+            bool InitBindings();
+            void* GetProcAddress(const char* name);
+        }
+    }
 }
