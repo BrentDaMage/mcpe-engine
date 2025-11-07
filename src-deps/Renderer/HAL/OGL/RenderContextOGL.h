@@ -17,10 +17,6 @@ namespace mce
         /*PRIMITIVE_MODE_LINE_LIST*/      GL_LINES,
         /*PRIMITIVE_MODE_LINE_STRIP*/     GL_LINE_STRIP
     };
-    const GLenum shaderTypeMap[] = {
-        /*SHADER_TYPE_VERTEX*/   GL_VERTEX_SHADER,
-        /*SHADER_TYPE_FRAGMENT*/ GL_FRAGMENT_SHADER
-    };
     const GLenum indexType[] = {
         GL_NONE,
         GL_UNSIGNED_BYTE,
