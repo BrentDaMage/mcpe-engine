@@ -34,7 +34,7 @@ namespace mce
         TextureOGL();
 
         void deleteTexture();
-        void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits);
+        void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits = SHADER_STAGE_BIT_PIXEL);
         
         void convertToMipmapedTexture(RenderContext& context, unsigned int mipmaps);
 
@@ -42,7 +42,7 @@ namespace mce
         void subBuffer(RenderContext& context, const void* pixels);
 
         void createMipMap(RenderContext& context, const void* pixels, unsigned int width, unsigned int height, unsigned int level);
-        void createTexture(RenderContext& context, TextureDescription const&);
+        void createTexture(RenderContext& context, const TextureDescription& description);
 
         void lock(RenderContext& context);
         void unlock(RenderContext& context);

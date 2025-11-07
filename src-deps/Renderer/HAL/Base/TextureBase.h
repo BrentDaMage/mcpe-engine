@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TextureDescription.h"
+#include "ShaderStagesBits.h"
 
 namespace mce
 {
@@ -17,7 +18,7 @@ namespace mce
     public:
         const TextureDescription& getDescription() const;
         void deleteTexture();
-        void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits);
+        void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits = SHADER_STAGE_BIT_PIXEL);
         bool isLoaded() const;
 
         void convertToMipmapedTexture(unsigned int mipmaps);

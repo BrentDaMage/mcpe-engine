@@ -129,7 +129,7 @@ void TextureOGL::createMipMap(RenderContext& context, const void* pixels, unsign
     m_bCreated = true;
 }
 
-void TextureOGL::createTexture(RenderContext& context, TextureDescription const& description)
+void TextureOGL::createTexture(RenderContext& context, const TextureDescription& description)
 {
     TextureBase::createTexture(description);
     glGenTextures(1, &m_state.m_textureName);
@@ -139,9 +139,9 @@ void TextureOGL::createTexture(RenderContext& context, TextureDescription const&
     m_state.m_textureFormat = getOpenGLTextureFormat(description.textureFormat);
     m_state.m_textureType = getOpenGLTextureTypeFromTextureFormat(description.textureFormat);
 
-    bindTexture(context, 0, 2);
+    bindTexture(context, 0);
     ErrorHandler::checkForErrors();
-    createMipMap(context, 0, description.width, description.height, 0);
+    createMipMap(context, nullptr, description.width, description.height, 0);
 
     switch (description.filteringLevel)
     {

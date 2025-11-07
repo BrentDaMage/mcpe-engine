@@ -61,6 +61,11 @@ void Matrix::translate(const Vec3& t)
     _m = glm::translate(_m, glm::vec3(t.x, t.y, t.z));
 }
 
+Matrix Matrix::operator*(const Matrix& other) const
+{
+    return Matrix(this->_m * other._m);
+}
+
 MatrixStack::MatrixStack()
 {
     m_bIsDirty = true;
