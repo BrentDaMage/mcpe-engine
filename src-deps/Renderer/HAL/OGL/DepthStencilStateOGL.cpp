@@ -11,7 +11,7 @@ DepthStencilStateOGL::DepthStencilStateOGL()
     m_stencilWriteMask = 0;
 }
 
-GLenum DepthStencilStateOGL::getDepthStencilFunc(ComparisonFunc depthFunc)
+GLenum getDepthStencilFunc(ComparisonFunc depthFunc)
 {
     switch (depthFunc)
     {
@@ -23,19 +23,19 @@ GLenum DepthStencilStateOGL::getDepthStencilFunc(ComparisonFunc depthFunc)
     case COMPARISON_FUNC_GREATER_EQUAL: return GL_GEQUAL;
     case COMPARISON_FUNC_LESS_EQUAL:    return GL_LEQUAL;
     default:
-        //LOG_W("Unknown depthFunc: %d", depthFunc);
+        //LOG_E("Unknown depthFunc: %d", depthFunc);
         throw std::bad_cast();
     }
 }
 
-GLenum DepthStencilStateOGL::getStencilOpAction(StencilOp stencilOp)
+GLenum getStencilOpAction(StencilOp stencilOp)
 {
     switch (stencilOp)
     {
     case STENCIL_OP_KEEP:    return GL_KEEP;
     case STENCIL_OP_REPLACE: return GL_REPLACE;
     default:
-        //LOG_W("Unknown stencilOp: %d", stencilOp);
+        //LOG_E("Unknown stencilOp: %d", stencilOp);
         throw std::bad_cast();
     }
 }

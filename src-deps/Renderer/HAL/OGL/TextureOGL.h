@@ -32,13 +32,9 @@ namespace mce
 
     public:
         TextureOGL();
-        
-        static GLenum getOpenGLTextureFormat(TextureFormat textureFormat);
-        static GLint getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat textureFormat);
-        static GLenum getOpenGLTextureTypeFromTextureFormat(TextureFormat textureFormat);
 
         void deleteTexture();
-        void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits); // @TODO
+        void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits);
         
         void convertToMipmapedTexture(RenderContext& context, unsigned int mipmaps);
 
@@ -48,8 +44,8 @@ namespace mce
         void createMipMap(RenderContext& context, const void* pixels, unsigned int width, unsigned int height, unsigned int level);
         void createTexture(RenderContext& context, TextureDescription const&);
 
-        void lock(RenderContext& context); // @TODO
-        void unlock(RenderContext& context); // @TODO
+        void lock(RenderContext& context);
+        void unlock(RenderContext& context);
 
         bool supportsMipMaps();
     };

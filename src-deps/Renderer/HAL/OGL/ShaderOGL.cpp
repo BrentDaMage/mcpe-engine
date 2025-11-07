@@ -48,7 +48,7 @@ ShaderPrimitiveTypes ShaderOGL::shaderPrimitiveTypeFromOGLUniformType(GLenum uni
         case GL_FLOAT_MAT4: return SHADER_PRIMITIVE_MATRIX4x4;
         case GL_SAMPLER_2D: return SHADER_PRIMITIVE_SAMPLER1D;
         default:
-            //LOG_W("Unknown type: %d", uniformType);
+            //LOG_E("Unknown type: %d", uniformType);
             throw std::bad_cast();
     }
 }
@@ -221,7 +221,7 @@ void ShaderOGL::reflectShaderUniforms()
             m_textureList.push_back(texture);
             if (m_textureList.size() > 8)
             {
-                //LOG_W("You've exeeded the gl spec for minimum number of texture units: %d", 8);
+                //LOG_E("You've exeeded the gl spec for minimum number of texture units: %d", 8);
                 throw std::bad_cast();
             }
         }

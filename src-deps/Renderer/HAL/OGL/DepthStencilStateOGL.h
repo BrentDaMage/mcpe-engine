@@ -34,10 +34,6 @@ namespace mce
     public:
         DepthStencilStateOGL();
 
-    protected:
-        static GLenum getDepthStencilFunc(ComparisonFunc depthFunc);
-        static GLenum getStencilOpAction(StencilOp stencilOp);
-
     public:
         void createDepthState(RenderContext& context, const DepthStencilStateDescription& description);
         bool bindDepthStencilState(RenderContext& context, bool force = false);

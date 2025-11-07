@@ -142,7 +142,7 @@ void MatrixStack::Ref::_move(MatrixStack::Ref& other)
 
     if (m_matrix || m_mtxStack)
     {
-        //LOG_W("It doesn't really make sense to pop here, so can't release");
+        //LOG_E("It doesn't really make sense to pop here, so can't release");
         throw std::bad_cast();
     }
 

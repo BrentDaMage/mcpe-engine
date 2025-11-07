@@ -10,7 +10,7 @@ namespace mce
 	{
         unsigned int unknown1;
         unsigned int mipCount;
-        bool bUnknown2;
+        bool bWrap;
         TextureFiltering filteringLevel;
         uint8_t unknown3;
 		

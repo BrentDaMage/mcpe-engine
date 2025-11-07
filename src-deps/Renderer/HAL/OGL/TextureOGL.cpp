@@ -11,7 +11,7 @@ TextureOGL::TextureOGL()
 {
 }
 
-GLenum TextureOGL::getOpenGLTextureFormat(TextureFormat textureFormat)
+GLenum getOpenGLTextureFormat(TextureFormat textureFormat)
 {
     switch (textureFormat)
     {
@@ -23,7 +23,7 @@ GLenum TextureOGL::getOpenGLTextureFormat(TextureFormat textureFormat)
     }
 }
 
-GLint TextureOGL::getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat textureFormat)
+GLint getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat textureFormat)
 {
     switch (textureFormat)
     {
@@ -35,7 +35,7 @@ GLint TextureOGL::getOpenGLInternalTextureFormatFromTextureFormat(TextureFormat 
     }
 }
 
-GLenum TextureOGL::getOpenGLTextureTypeFromTextureFormat(TextureFormat textureFormat)
+GLenum getOpenGLTextureTypeFromTextureFormat(TextureFormat textureFormat)
 {
     switch (textureFormat)
     {
