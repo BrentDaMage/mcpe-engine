@@ -4,6 +4,11 @@
 
 using namespace mce;
 
+TextureBase::TextureBase()
+{
+	m_bCreated = false;
+}
+
 const TextureDescription& TextureBase::getDescription() const
 {
     return m_description;

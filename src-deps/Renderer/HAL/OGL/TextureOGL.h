@@ -5,8 +5,6 @@
 
 namespace mce
 {
-    class Texture;
-
     class TextureOGL : public TextureBase
     {
     private:
