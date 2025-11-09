@@ -74,17 +74,20 @@ void TextureData::_loadTexData(mce::Texture& texture, bool enableFiltering, bool
         uint8_t* rgbData = (uint8_t*)m_imageData.m_data.data();
         rgbaData = new uint8_t[4 * height * width];
 
+        uint8_t* rgbDataItr = rgbData;
+        uint8_t* rgbaDataItr = rgbaData;
+
         // translate RGB buffer into RGBA buffer
         uint8_t* rgbDataEnd = &rgbData[3 * size];
-        while (rgbData != rgbDataEnd)
+        while (rgbDataItr != rgbDataEnd)
         {
-            rgbaData[0] = rgbData[0]; // red
-            rgbaData[1] = rgbData[1]; // green
-            rgbaData[2] = rgbData[2]; // blue
-            rgbaData[3] = -1;         // alpha
+            rgbaDataItr[0] = rgbDataItr[0]; // red
+            rgbaDataItr[1] = rgbDataItr[1]; // green
+            rgbaDataItr[2] = rgbDataItr[2]; // blue
+            rgbaDataItr[3] = 255;           // alpha
 
-            rgbData += 3;
-            rgbaData += 4;
+            rgbDataItr += 3;
+            rgbaDataItr += 4;
         }
     }
 

@@ -14,7 +14,7 @@ namespace mce
         {
             GLuint m_textureName;
             GLenum m_textureTarget;
-            GLenum m_internalTextureFormat;
+            GLint  m_internalTextureFormat;
             GLenum m_textureFormat;
             GLenum m_textureType;
 
@@ -34,7 +34,7 @@ namespace mce
         TextureOGL();
 
         void deleteTexture();
-        void bindTexture(RenderContext& context, unsigned int textureUnit, unsigned int shaderStagesBits = SHADER_STAGE_BIT_PIXEL);
+        void bindTexture(RenderContext& context, unsigned int textureUnit = 0, unsigned int shaderStagesBits = SHADER_STAGE_BIT_PIXEL);
         
         void convertToMipmapedTexture(RenderContext& context, unsigned int mipmaps);
 

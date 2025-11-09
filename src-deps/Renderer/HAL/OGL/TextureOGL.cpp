@@ -87,7 +87,7 @@ void TextureOGL::convertToMipmapedTexture(RenderContext& context, unsigned int m
         throw std::bad_cast();
     }
 
-    bindTexture(context, 0, 2);
+    bindTexture(context);
     TextureBase::convertToMipmapedTexture(mipmaps - 1);
 
     glTexParameteri(m_state.m_textureTarget, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
@@ -139,7 +139,7 @@ void TextureOGL::createTexture(RenderContext& context, const TextureDescription&
     m_state.m_textureFormat = getOpenGLTextureFormat(description.textureFormat);
     m_state.m_textureType = getOpenGLTextureTypeFromTextureFormat(description.textureFormat);
 
-    bindTexture(context, 0);
+    bindTexture(context);
     ErrorHandler::checkForErrors();
     createMipMap(context, nullptr, description.width, description.height, 0);
 
@@ -178,7 +178,7 @@ void TextureOGL::lock(RenderContext& context)
 
 void TextureOGL::unlock(RenderContext& context)
 {
-    bindTexture(context, 0, 2);
+    bindTexture(context);
     subBuffer(context, context.m_activePixels.data());
     context.m_activePixels.clear();
 }
