@@ -1,5 +1,6 @@
 #pragma once
 
+#include "API_OGL.h"
 #include "DepthStencilStateBase.h"
 
 namespace mce

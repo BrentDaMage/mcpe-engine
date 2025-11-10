@@ -2,6 +2,7 @@
 
 #include "RenderContextStateBase.h"
 #include "VertexFormat.h"
+#include "PrimitiveMode.h"
 #include "ImmediateBuffer.h"
 #include "RenderDevice.h"
 
@@ -25,8 +26,12 @@ namespace mce
         RenderContextBase();
 
     public:
-        RenderDevice* getDevice();
+        void draw(PrimitiveMode primitiveMode, unsigned int startOffset, unsigned int count);
+        void drawIndexed(PrimitiveMode primitiveMode, unsigned int count, uint8_t indexSize);
+        void drawIndexed(PrimitiveMode primitiveMode, unsigned int count, unsigned int startOffset, uint8_t indexSize);
         void lostContext();
+
+        RenderDevice* getDevice();
         void setStencilReference(unsigned int value);
         unsigned int getStencilReference() const;
     };
