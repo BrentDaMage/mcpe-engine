@@ -1,6 +1,5 @@
-#pragma once
-
-#include "Core/Utility/JsonParser.h"
+#include <map>
+#include <string>
 #include "RenderState.h"
 
 namespace mce
@@ -16,10 +15,4 @@ namespace mce
         {"InvertCulling", RS_INVERT_CULLING},
         {"EnableStencilTest", RS_ENABLE_STENCIL_TEST},
     };
-
-    template <>
-    bool parse<RenderState>(const rapidjson::Value& root, const std::string& name, RenderState& out)
-    {
-        return parse<RenderState>(root, name, _renderStateMap, out);
-    }
 }

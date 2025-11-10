@@ -2,9 +2,11 @@
 
 #include "PlatformDefinitions.h"
 
-#include "HAL/Enums/RenderState_JsonParser.h"
-#include "HAL/Enums/ComparisonFunc_JsonParser.h"
-#include "HAL/Enums/StencilOp_JsonParser.h"
+#include "Core/Utility/JsonParser.h"
+
+#include "HAL/Enums/RenderState.h"
+#include "HAL/Enums/ComparisonFunc.h"
+#include "HAL/Enums/StencilOp.h"
 #include "HAL/Enums/ShaderStagesBits.h"
 
 #include "EnableScissorTest.h"
@@ -14,6 +16,8 @@
 #endif
 
 using namespace mce;
+
+RenderMaterial* RenderMaterial::lastUsedMaterial = nullptr;
 
 RenderMaterial::RenderMaterial()
 {

@@ -3,24 +3,24 @@
 using namespace mce;
 
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_FLOAT1>::syncUniform(int value)    { xglUniform1fv(value, 1, (const GLfloat*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_FLOAT1>::syncUniform(int value)    { glUniform1fv(value, 1, (const GLfloat*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_FLOAT2>::syncUniform(int value)    { xglUniform2fv(value, 1, (const GLfloat*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_FLOAT2>::syncUniform(int value)    { glUniform2fv(value, 1, (const GLfloat*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_FLOAT3>::syncUniform(int value)    { xglUniform3fv(value, 1, (const GLfloat*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_FLOAT3>::syncUniform(int value)    { glUniform3fv(value, 1, (const GLfloat*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_FLOAT4>::syncUniform(int value)    { xglUniform4fv(value, 1, (const GLfloat*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_FLOAT4>::syncUniform(int value)    { glUniform4fv(value, 1, (const GLfloat*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_INT1>::syncUniform(int value)      { xglUniform1iv(value, 1, (const GLint*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_INT1>::syncUniform(int value)      { glUniform1iv(value, 1, (const GLint*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_INT2>::syncUniform(int value)      { xglUniform2iv(value, 1, (const GLint*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_INT2>::syncUniform(int value)      { glUniform2iv(value, 1, (const GLint*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_INT3>::syncUniform(int value)      { xglUniform3iv(value, 1, (const GLint*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_INT3>::syncUniform(int value)      { glUniform3iv(value, 1, (const GLint*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_INT4>::syncUniform(int value)      { xglUniform4iv(value, 1, (const GLint*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_INT4>::syncUniform(int value)      { glUniform4iv(value, 1, (const GLint*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_MATRIX2x2>::syncUniform(int value) { xglUniformMatrix2fv(value, 1, 0, (const GLfloat*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_MATRIX2x2>::syncUniform(int value) { glUniformMatrix2fv(value, 1, 0, (const GLfloat*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_MATRIX3x3>::syncUniform(int value) { xglUniformMatrix3fv(value, 1, 0, (const GLfloat*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_MATRIX3x3>::syncUniform(int value) { glUniformMatrix3fv(value, 1, 0, (const GLfloat*)m_data); }
 template <>
-void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_MATRIX4x4>::syncUniform(int value) { xglUniformMatrix4fv(value, 1, 0, (const GLfloat*)m_data); }
+void ShaderConstantWithDataOGL<SHADER_PRIMITIVE_MATRIX4x4>::syncUniform(int value) { glUniformMatrix4fv(value, 1, 0, (const GLfloat*)m_data); }

@@ -70,7 +70,7 @@ void RenderContextOGL::lostContext()
     m_activeBuffer[1] = GL_NONE;
 }
 
-int RenderContextOGL::getMaxVertexCount() const
+int RenderContextOGL::getMaxVertexCount()
 {
     return gl::getMaxVertexCount();
 }
