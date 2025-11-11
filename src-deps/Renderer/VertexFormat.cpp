@@ -1,11 +1,21 @@
 #include <string.h>
 
 #include "VertexFormat.h"
+#include "Core/Math/Vec3.h"
 
 using namespace mce;
 
 const VertexFormat VertexFormat::EMPTY = VertexFormat();
-const unsigned int VertexFormat::FieldSize[8] = { 0xC, 4, 4, 4, 4, 0, 0, 0 };
+const unsigned int VertexFormat::FieldSize[] = {
+    /* VERTEX_FIELD_POSITION */ sizeof(Vec3),
+    /* VERTEX_FIELD_COLOR */    sizeof(uint32_t),
+    /* VERTEX_FIELD_NORMAL */   sizeof(uint32_t),
+    /* VERTEX_FIELD_UV0 */      sizeof(float), // 4 on 0.12.1, but shouldn't it be 8 for both floats?
+    /* VERTEX_FIELD_UV1 */      sizeof(float),
+    /* VERTEX_FIELD_UV2 */      0,
+    /* VERTEX_FIELD_PBR_IDX */  0,
+    /* VERTEX_FIELD_BONEID_0 */ 0
+};
 
 VertexFormat::VertexFormat()
 {

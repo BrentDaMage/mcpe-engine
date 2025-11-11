@@ -222,22 +222,24 @@ void ShaderOGL::reflectShaderUniforms()
                 throw std::bad_cast();
             }
         }
+        else
+        {
+            ShaderUniformOGL uniform(name, location, size, shaderPrimitiveType);
 
-        ShaderUniformOGL uniform(name, location, size, shaderPrimitiveType);
+            const UniformMetaData& uniformMetadata = ConstantBufferMetaDataManager::getInstance().findUniformMetaData(name);
+            const std::string& bufferName = uniformMetadata.m_constantBufferMetaDataParent->getConstantBufferName();
+            ConstantBufferContainer* pBufferContainer = bufferManager.findConstantBufferContainer(bufferName);
+            pBufferContainer->registerReflectedShaderParameter(uniformMetadata);
+            uniform.m_constantBufferContainer = pBufferContainer;
 
-        const UniformMetaData& uniformMetadata = ConstantBufferMetaDataManager::getInstance().findUniformMetaData(name);
-        const std::string& bufferName = uniformMetadata.m_constantBufferMetaDataParent->getConstantBufferName();
-        ConstantBufferContainer* pBufferContainer = bufferManager.findConstantBufferContainer(bufferName);
-        pBufferContainer->registerReflectedShaderParameter(uniformMetadata);
-        uniform.m_constantBufferContainer = pBufferContainer;
-
-        m_uniformList.push_back(uniform);
+            m_uniformList.push_back(uniform);
+        }
     }
 }
 
 void ShaderOGL::reflectShaderAttributes()
 {
-    RenderDeviceBase::AttributeList* attrList = nullptr;
+    RenderDeviceBase::AttributeList attrList;
 
     GLint attrCount;
     glGetProgramiv(m_program, GL_ACTIVE_ATTRIBUTES, &attrCount);
@@ -259,20 +261,15 @@ void ShaderOGL::reflectShaderAttributes()
             std::string attrName(name);
             VertexField vertexField = getAttributeForName(attrName, 0);
 
-            if (attrList == nullptr)
-            {
-                attrList = new RenderDeviceBase::AttributeList();
-            }
-
             Attribute attr(location, size, vertexField);
-            attrList->push_back(attr);
+            attrList.push_back(attr);
 
             glEnableVertexAttribArray(location);
             glVertexAttribPointer(0, 1, GL_UNSIGNED_BYTE, 0, 1, this);
         }
     }
 
-    m_attributeListIndex = RenderDevice::getInstance().registerOrGetAttributeListIndex(*attrList);
+    m_attributeListIndex = RenderDevice::getInstance().registerOrGetAttributeListIndex(attrList);
 }
 
 void ShaderOGL::reflectShader()

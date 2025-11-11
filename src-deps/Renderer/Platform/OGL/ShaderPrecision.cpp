@@ -26,8 +26,9 @@ Precision::Precision(GLenum shaderType)
 
 GLint Precision::_getPrecision(GLenum shaderType, GLenum precisionType)
 {
-    GLint range, precision;
-    glGetShaderPrecisionFormat(shaderType, precisionType, &range, &precision);
+    GLint range[2];
+    GLint precision;
+    glGetShaderPrecisionFormat(shaderType, precisionType, range, &precision);
 
     return precision;
 }

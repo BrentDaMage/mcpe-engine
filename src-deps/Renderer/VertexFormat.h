@@ -16,7 +16,7 @@ namespace mce
 
     public:
         static const VertexFormat EMPTY;
-        static const unsigned int FieldSize[8];
+        static const unsigned int FieldSize[VERTEX_FIELDS_COUNT];
 
     private:
         uint8_t m_fieldMask;
@@ -37,6 +37,6 @@ namespace mce
         bool operator==(const VertexFormat &other) const;
         bool operator!=(const VertexFormat &other) const;
         bool operator<(const VertexFormat &other) const;
-        operator bool() const { return this != &VertexFormat::EMPTY; }
+        operator bool() const { return *this != VertexFormat::EMPTY; }
     };
 }
