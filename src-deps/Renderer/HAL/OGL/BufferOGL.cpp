@@ -68,9 +68,9 @@ void BufferOGL::createBuffer(RenderContext& context, unsigned int stride, const 
     ErrorHandler::checkForErrors();
 }
 
-void BufferOGL::createDynamicBuffer(RenderContext& context, unsigned int size, BufferType bufferType, const void *data)
+void BufferOGL::createDynamicBuffer(RenderContext& context, unsigned int stride, BufferType bufferType, const void *data)
 {
-    BufferBase::createDynamicBuffer(context, size, bufferType, data);
+    BufferBase::createDynamicBuffer(context, stride, bufferType, data);
     m_target = mce::glTargetFromBufferType(bufferType);
 
     glGenBuffers(1, &m_bufferName);
@@ -80,7 +80,7 @@ void BufferOGL::createDynamicBuffer(RenderContext& context, unsigned int size, B
     GLuint& activeBuffer = context.getActiveBuffer(m_bufferType);
     activeBuffer = m_bufferName;
 
-    glBufferData(m_target, size, data, GL_STATIC_DRAW);
+    glBufferData(m_target, stride, data, GL_STATIC_DRAW);
     ErrorHandler::checkForErrors();
 }
 

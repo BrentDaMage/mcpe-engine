@@ -35,7 +35,7 @@ void VertexFormat::enableField(VertexField vertexField)
     m_vertexSize = v6;
     if (v8)
         m_vertexSize += 4 - v8;
-    m_fieldMask = (1 << vertexField) | m_fieldMask;
+    m_fieldMask |= (1 << vertexField);
 }
 
 bool VertexFormat::hasField(VertexField vertexField) const

@@ -20,8 +20,8 @@ namespace mce
         void release();
         void bindBuffer(RenderContext& context);
 		void createBuffer(RenderContext& context, unsigned int stride, const void *data, unsigned int count, BufferType bufferType);
-		void createDynamicBuffer(RenderContext& context, unsigned int size, BufferType bufferType, const void *data);
-        void resizeBuffer(RenderContext& context, const void* data, unsigned int size);
+		void createDynamicBuffer(RenderContext& context, unsigned int stride, BufferType bufferType, const void *data);
+        void resizeBuffer(RenderContext& context, const void* data, unsigned int stride);
         void updateBuffer(RenderContext& context, unsigned int stride, const void *data, unsigned int count);
         bool isValid() const { return m_bufferName != GL_NONE; }
 

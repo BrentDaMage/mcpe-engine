@@ -111,6 +111,7 @@ void Mesh::render(const MaterialPtr& materialPtr, unsigned int startOffset, unsi
 
         if (!immediateBuffer.isValid())
         {
+            // Create 1MB shared vertex buffer in VRAM
             immediateBuffer.createDynamicBuffer(context, 0x100000, BUFFER_TYPE_VERTEX, nullptr);
         }
 
@@ -129,11 +130,12 @@ void Mesh::render(const MaterialPtr& materialPtr, unsigned int startOffset, unsi
 
     if (m_primitiveMode == PRIMITIVE_MODE_QUAD_LIST)
     {
-        Buffer& quadIndexBuffer = QuadIndexBuffer::get(context, m_vertexCount, m_indexSize);
+        uint8_t indexSize = m_indexSize;
+        Buffer& quadIndexBuffer = QuadIndexBuffer::get(context, m_vertexCount, indexSize);
         quadIndexBuffer.bindBuffer(context);
 
         unsigned int indexCountToDraw = (count > 0) ? count : (m_vertexCount / 4) * 6;
-        context.drawIndexed(m_primitiveMode, indexCountToDraw, startOffset, m_indexSize);
+        context.drawIndexed(m_primitiveMode, indexCountToDraw, startOffset, indexSize);
     }
     else if (m_indexCount > 0)
     {

@@ -1,3 +1,4 @@
+#include <utility>
 #include "BufferBase.h"
 
 using namespace mce;
@@ -46,9 +47,9 @@ void BufferBase::createBuffer(RenderContext& context, unsigned int stride, const
     m_internalSize = count * stride;
 }
 
-void BufferBase::createDynamicBuffer(RenderContext& context, unsigned int size, BufferType bufferType, const void *data)
+void BufferBase::createDynamicBuffer(RenderContext& context, unsigned int stride, BufferType bufferType, const void *data)
 {
-    m_internalSize = size;
+    m_internalSize = stride;
     m_bufferType = bufferType;
     m_stride = 0;
     m_count = 0;

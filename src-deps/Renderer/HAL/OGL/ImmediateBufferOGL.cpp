@@ -11,13 +11,13 @@ ImmediateBufferOGL::ImmediateBufferOGL()
     m_target = GL_NONE;
 }
 
-void ImmediateBufferOGL::createDynamicBuffer(RenderContext& context, unsigned int bufferSize, BufferType bufferType, void const* data)
+void ImmediateBufferOGL::createDynamicBuffer(RenderContext& context, unsigned int stride, BufferType bufferType, void const* data)
 {
     m_bufferType = bufferType;
     m_target = glTargetFromBufferType(bufferType);
 }
 
-void ImmediateBufferOGL::updateBuffer(RenderContext& context, unsigned int itemSize, void const* data, unsigned int bufferSize)
+void ImmediateBufferOGL::updateBuffer(RenderContext& context, unsigned int stride, const void* data, unsigned int count)
 {
     glBindBuffer(m_target, GL_NONE);
     GLuint& activeBuffer = context.getActiveBuffer(m_bufferType);

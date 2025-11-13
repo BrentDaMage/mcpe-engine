@@ -13,8 +13,8 @@ namespace mce
     public:
         ImmediateBufferOGL();
 
-        void createDynamicBuffer(RenderContext& context, unsigned int bufferSize, BufferType bufferType, void const* data);
-        void updateBuffer(RenderContext& context, unsigned int itemSize, void const* data, unsigned int bufferSize);
+        void createDynamicBuffer(RenderContext& context, unsigned int stride, BufferType bufferType, void const* data);
+        void updateBuffer(RenderContext& context, unsigned int stride, const void* data, unsigned int count);
         
         bool isValid() const;
     };
