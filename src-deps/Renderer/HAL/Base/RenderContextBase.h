@@ -3,6 +3,7 @@
 #include "RenderContextStateBase.h"
 #include "VertexFormat.h"
 #include "PrimitiveMode.h"
+#include "ShaderType.h"
 #include "ImmediateBuffer.h"
 #include "RenderDevice.h"
 
@@ -13,11 +14,10 @@ namespace mce
     public:
         RenderContextStateBase m_currentState;
         VertexFormat m_lastVertexFormat;
-        // These are unused in OGL HAL
+        // Unused in OGL
         int field_34;
-        int field_38;
-        int field_3C;
-        int field_40;
+        // Only used in DX11
+        ShaderProgram *m_lastShaderPrograms[SHADER_TYPES_COUNT];
         ImmediateBuffer m_immediateBuffer;
         StencilRefObject m_stencilReference;
         RenderDevice *m_renderDevice;

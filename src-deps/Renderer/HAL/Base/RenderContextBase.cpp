@@ -22,9 +22,9 @@ void RenderContextBase::drawIndexed(PrimitiveMode primitiveMode, unsigned int co
 void RenderContextBase::lostContext()
 {
     m_immediateBuffer = ImmediateBuffer();
-    field_38 = 0;
-    field_3C = 0;
-    field_40 = 0;
+    m_lastShaderPrograms[SHADER_TYPE_VERTEX] = nullptr;
+    m_lastShaderPrograms[SHADER_TYPE_FRAGMENT] = nullptr;
+    m_lastShaderPrograms[SHADER_TYPE_GEOMETRY] = nullptr;
 }
 
 RenderDevice* RenderContextBase::getDevice()
