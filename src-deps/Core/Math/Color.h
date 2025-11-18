@@ -21,14 +21,6 @@ public:
 
     void fromHSB(float h, float s, float b);
 
-    void operator=(const Color& other)
-    {
-        this->r = other.r;
-        this->g = other.g;
-        this->b = other.b;
-        this->a = other.a;
-    }
-
 public:
     static Color SHADE_WEST_EAST;
     static Color SHADE_NORTH_SOUTH;

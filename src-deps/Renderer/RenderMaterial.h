@@ -38,7 +38,6 @@ namespace mce
 
     public:
         RenderMaterial();
-        RenderMaterial(const RenderMaterial& other);
         RenderMaterial(const rapidjson::Value& root, const RenderMaterial& parent);
 
     protected:

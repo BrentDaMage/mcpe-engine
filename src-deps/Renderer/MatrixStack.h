@@ -50,20 +50,21 @@ private:
 
 public:
     const Matrix& top() const;
-    const Matrix& getTop();
+    Matrix& getTop();
     bool empty() const { return m_stack.empty(); }
     bool isDirty() const { return m_bIsDirty; }
     void makeClean() { m_bIsDirty = false; };
     void pop();
     size_t size() const { return m_stack.size(); }
-    Ref* push();
-    Ref* pushIdentity();
+    Ref push();
+    Ref pushIdentity();
 
     class Ref
     {
     private:
-        MatrixStack* m_mtxStack;
-        Matrix* m_matrix;
+        MatrixStack* m_pStack;
+        Matrix* m_pMatrix;
+
     public:
         Ref();
         Ref(MatrixStack& mtxStk, Matrix& mtx);
@@ -75,6 +76,9 @@ public:
 
     public:
         void release();
+
+        MatrixStack* getStack() const { return m_pStack; }
+        Matrix* getMatrix() const { return m_pMatrix; }
 
         Matrix* operator*();
         Ref& operator=(const Matrix& value);
