@@ -120,8 +120,8 @@ void RenderMaterialGroup::_loadList()
 
         if (value.HasMember("defines"))
         {
-            const rapidjson::Value& defines = value["defines"];
-            for (rapidjson::Value::ConstValueIterator it = root.Begin(); it != root.End(); it++)
+            const rapidjson::Value& defines = value["defines"].GetArray();
+            for (rapidjson::Value::ConstValueIterator it = defines.Begin(); it != defines.End(); it++)
             {
                 material.m_defines.insert(it->GetString());
             }
@@ -133,7 +133,7 @@ void RenderMaterialGroup::_loadList()
             tag = value["tag"].GetString();
         }
 
-        fileContents = AppPlatform::singleton()->readAssetFileStr(path, false);
+        fileContents = AppPlatform::singleton()->readAssetFile(path);
         rapidjson::Document doc;
         doc.Parse(fileContents.c_str());
         if (!doc.HasParseError())
