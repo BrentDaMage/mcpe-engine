@@ -202,6 +202,11 @@ RenderMaterial& RenderMaterialGroup::_getMaterialOrDefault(const std::string& na
         return defaultMaterial;
 }
 
+MaterialPtr RenderMaterialGroup::getMaterial(const std::string& name)
+{
+    return MaterialPtr(*this, name);
+}
+
 void RenderMaterialGroup::loadList(const std::string listPath)
 {
     if (!m_listPath.empty())

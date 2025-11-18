@@ -40,6 +40,7 @@ namespace mce
         RenderMaterial* _getMaterial(const std::string& name);
         RenderMaterial& _getMaterialOrDefault(const std::string& name, RenderMaterial& defaultMaterial);
 
+        MaterialPtr getMaterial(const std::string& name);
         void loadList(const std::string listPath);
 
         void onAppResumed() override;
