@@ -5,8 +5,8 @@
 #include "Core/Math/Color.h"
 
 // couldn't find that these were even initialized
-static Color currentShaderColor;
-static Color currentShaderDarkColor;
+extern Color currentShaderColor;
+extern Color currentShaderDarkColor;
 
 namespace mce
 {

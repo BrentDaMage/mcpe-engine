@@ -22,13 +22,12 @@ void WorldConstants::refreshWorldConstants()
     }
 
     // Get the current transformation matrices from the global stacks.
-    const Matrix& projectionMatrix = MatrixStack::Projection.top();
-    const Matrix& viewMatrix       = MatrixStack::View.top();
-    const Matrix& worldMatrix      = MatrixStack::World.top();
+    const Matrix& projMatrix  = MatrixStack::Projection.top();
+    const Matrix& viewMatrix  = MatrixStack::View.top();
+    const Matrix& worldMatrix = MatrixStack::World.top();
 
-    // Calculate the combined World-View-Projection matrix.
-    // The order is crucial: Projection * View * World.
-    Matrix worldViewProjMatrix = (projectionMatrix * viewMatrix) * worldMatrix;
+    // Order matters!
+    Matrix worldViewProjMatrix = projMatrix * viewMatrix * worldMatrix;
 
     if (WORLDVIEWPROJ)
         WORLDVIEWPROJ->setData(&worldViewProjMatrix);
@@ -42,8 +41,7 @@ void WorldConstants::refreshWorldConstants()
     MatrixStack::World.makeClean();
 
     // Sync the updated constant buffer data to the GPU.
-    RenderContext& renderContext = RenderContextImmediate::get();
-    m_constantBuffer->sync(renderContext);
+    sync();
 }
 
 void WorldConstants::init()

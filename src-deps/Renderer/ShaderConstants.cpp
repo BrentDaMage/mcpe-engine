@@ -12,10 +12,11 @@ ShaderConstants::ShaderConstants()
 
 void ShaderConstants::setShaderColor(const Color& shaderColor)
 {
-    CURRENT_COLOR->m_data = (uint8_t*)&shaderColor;
+    Color* pCurrentColor = (Color*)CURRENT_COLOR->m_data;
+    *pCurrentColor = shaderColor;
     CURRENT_COLOR->m_dirty = true;
     
-    m_constantBuffer->sync(RenderContextImmediate::get());
+    sync();
 }
 
 void ShaderConstants::setShaderColors(const Color& shaderColor, const Color& shaderDarkenColor)
@@ -28,7 +29,7 @@ void ShaderConstants::setShaderColors(const Color& shaderColor, const Color& sha
     *pDarkenColor = shaderDarkenColor;
     DARKEN->m_dirty = true;
 
-    m_constantBuffer->sync(RenderContextImmediate::get());
+    sync();
 }
 
 void ShaderConstants::init()

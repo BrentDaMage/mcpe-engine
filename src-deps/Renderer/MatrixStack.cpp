@@ -86,13 +86,13 @@ MatrixStack::Ref MatrixStack::pushIdentity()
 
 Matrix& MatrixStack::_push()
 {
-    m_stack.push(Matrix());
+    m_stack.push(Matrix(m_stack.top()));
     return m_stack.top();
 }
 
 Matrix& MatrixStack::_pushIdentity()
 {
-    m_stack.push(Matrix::IDENTITY);
+    m_stack.push(Matrix(1.0f)); // cannot count on Matrix::IDENTITY being initialized
     return m_stack.top();
 }
 
