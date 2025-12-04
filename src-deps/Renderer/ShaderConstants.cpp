@@ -1,6 +1,5 @@
-#include "GlobalConstantBufferManager.h"
-#include "RenderContextImmediate.h"
 #include "ShaderConstants.h"
+#include "GlobalConstantBufferManager.h"
 
 using namespace mce;
 
