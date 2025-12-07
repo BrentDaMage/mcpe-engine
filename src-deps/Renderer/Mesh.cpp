@@ -169,5 +169,5 @@ Mesh& Mesh::operator=(Mesh&& other)
 
 void Mesh::clearGlobalBuffers()
 {
-    // Empty on OGL
+    // Empty on OGL and DX11
 }

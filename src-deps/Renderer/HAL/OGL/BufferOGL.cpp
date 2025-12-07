@@ -80,7 +80,7 @@ void BufferOGL::createDynamicBuffer(RenderContext& context, unsigned int stride,
     GLuint& activeBuffer = context.getActiveBuffer(m_bufferType);
     activeBuffer = m_bufferName;
 
-    glBufferData(m_target, stride, data, GL_STATIC_DRAW);
+    glBufferData(m_target, stride, data, GL_STATIC_DRAW); // Why is this static and not dynamic, what crack were they smoking?
     ErrorHandler::checkForErrors();
 }
 
