@@ -111,7 +111,7 @@ void Mesh::render(const MaterialPtr& materialPtr, unsigned int startOffset, unsi
 
         if (!immediateBuffer.isValid())
         {
-            // Create 1MB shared vertex buffer in VRAM
+            // Create 1MbFF shared vertex buffer in VRAM
             immediateBuffer.createDynamicBuffer(context, 0x100000, BUFFER_TYPE_VERTEX, nullptr);
         }
 
