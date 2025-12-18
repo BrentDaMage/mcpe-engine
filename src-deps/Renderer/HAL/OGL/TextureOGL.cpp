@@ -1,8 +1,8 @@
 #include <typeinfo>
 
-#include "ErrorHandler.h"
-#include "API_OGL.h"
 #include "TextureOGL.h"
+#include "API_OGL.h"
+#include "ErrorHandler.h"
 
 using namespace mce;
 

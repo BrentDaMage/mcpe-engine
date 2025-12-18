@@ -4,6 +4,7 @@
 #include "VertexFormat.h"
 #include "PrimitiveMode.h"
 #include "ShaderType.h"
+#include "ShaderProgram.h"
 #include "ImmediateBuffer.h"
 #include "RenderDevice.h"
 
@@ -13,11 +14,12 @@ namespace mce
     {
     public:
         RenderContextStateBase m_currentState;
-        VertexFormat m_lastVertexFormat;
-        // Unused in OGL
-        int field_34;
+        
         // Only used in DX11
+        VertexFormat m_lastVertexFormat;
+        unsigned int m_lastAttributeListIndex;
         ShaderProgram *m_lastShaderPrograms[SHADER_TYPES_COUNT];
+
         ImmediateBuffer m_immediateBuffer;
         StencilRefObject m_stencilReference;
         RenderDevice *m_renderDevice;
