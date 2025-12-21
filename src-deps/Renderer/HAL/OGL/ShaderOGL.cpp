@@ -259,7 +259,7 @@ void ShaderOGL::reflectShaderAttributes()
                 continue;
 
             std::string attrName(name);
-            VertexField vertexField = getAttributeForName(attrName, 0);
+            const VertexField& vertexField = getAttributeForName(attrName, 0);
 
             Attribute attr(location, size, vertexField);
             attrList.push_back(attr);
