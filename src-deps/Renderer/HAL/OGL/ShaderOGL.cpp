@@ -145,7 +145,7 @@ void ShaderOGL::bindVertexPointers(const VertexFormat& vertexFormat, const void*
             continue;
 
         GLuint location = attr.getLocation();
-        const VertexFieldFormat& format = vertexFieldFormats[vertexField];
+        VertexFieldFormat format = vertexFieldFormats[vertexField];
         glVertexAttribPointer(
             location,
             format.components,
@@ -259,7 +259,7 @@ void ShaderOGL::reflectShaderAttributes()
                 continue;
 
             std::string attrName(name);
-            const VertexField& vertexField = getAttributeForName(attrName, 0);
+            VertexField vertexField = getAttributeForName(attrName, 0);
 
             Attribute attr(location, size, vertexField);
             attrList.push_back(attr);

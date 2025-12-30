@@ -46,7 +46,7 @@ void ShaderBase::reflectShader(RenderDevice& renderDevice)
 {
 }
 
-const VertexField& ShaderBase::getAttributeForName(const std::string& name, unsigned int id) const
+VertexField ShaderBase::getAttributeForName(const std::string& name, unsigned int semanticIndex) const
 {
     std::map<std::string, VertexField>::iterator it = builtinAttributeMap.find(name);
 
@@ -57,7 +57,7 @@ const VertexField& ShaderBase::getAttributeForName(const std::string& name, unsi
     else
     {
         std::stringstream ss;
-        ss << name << id;
+        ss << name << semanticIndex;
         it = builtinAttributeMap.find(ss.str());
 
         return it->second;

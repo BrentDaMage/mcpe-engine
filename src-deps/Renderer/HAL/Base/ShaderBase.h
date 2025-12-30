@@ -32,6 +32,6 @@ namespace mce
         void validateVertexFormat(const VertexFormat& vertexFormat);
         void bindShader(RenderContext& context, const VertexFormat& format, const void *dataBasePtr, unsigned int shaderStageBits);
         void reflectShader(RenderDevice& renderDevice);
-        const VertexField& getAttributeForName(const std::string& name, unsigned int id) const;
+        VertexField getAttributeForName(const std::string& name, unsigned int semanticIndex) const;
     };
 }
