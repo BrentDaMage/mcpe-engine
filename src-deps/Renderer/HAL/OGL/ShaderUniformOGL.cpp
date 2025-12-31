@@ -6,7 +6,7 @@ ShaderUniformOGL::ShaderUniformOGL(const std::string& name, int location, int el
     : ShaderResourceOGL(name, location, elements, shaderPrimitiveType)
 {
     m_shaderConstant = nullptr;
-    m_constantBufferContainer = nullptr;
+    m_pConstantBufferContainer = nullptr;
 }
 
 void ShaderUniformOGL::bind(bool forceBind)

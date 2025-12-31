@@ -7,7 +7,7 @@ using namespace mce;
 
 void ConstantBufferContainerBase::_init()
 {
-    m_currentlyMapped = false;
+    m_bCurrentlyMapped = false;
 }
 
 // causes more problems than it solves, only called in 0.12.1 in vector::reserve

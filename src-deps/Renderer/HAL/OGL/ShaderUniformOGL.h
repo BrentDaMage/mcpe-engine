@@ -9,7 +9,7 @@ namespace mce
     {
     public:
         ShaderConstantOGL* m_shaderConstant;
-        ConstantBufferContainer *m_constantBufferContainer;
+        ConstantBufferContainer *m_pConstantBufferContainer;
 
     public:
         ShaderUniformOGL(const std::string& name, int location, int elements, ShaderPrimitiveTypes shaderPrimitiveType);

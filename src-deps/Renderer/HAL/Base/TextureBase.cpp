@@ -33,7 +33,9 @@ void TextureBase::convertToMipmapedTexture(unsigned int mipmaps)
     if (m_description.mipCount == mipmaps)
         return;
     
-    if (m_description.filteringLevel == TEXTURE_FILTERING_BILINEAR)
+    m_description.mipCount = mipmaps;
+
+    if (m_description.filteringLevel != TEXTURE_FILTERING_POINT)
     {
         //LOG_E("Unsupported filtering level for mip maps, please add the correct filtering case: %d", m_description.filteringLevel);
         throw std::bad_cast();
