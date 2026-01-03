@@ -69,7 +69,7 @@ void TextureBase::createTexture(const TextureDescription& description)
     m_description = description;
 }
 
-void TextureBase::createTexture(RenderContext& context, TextureDescription const&)
+void TextureBase::createTexture(RenderContext& context, const TextureDescription& description)
 {
 }
 

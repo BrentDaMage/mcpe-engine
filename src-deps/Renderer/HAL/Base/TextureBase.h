@@ -35,7 +35,7 @@ namespace mce
         void createMipMap(RenderContext& context, const void* pixels, unsigned int width, unsigned int height, unsigned int level);
         
         void createTexture(const TextureDescription& description);
-        void createTexture(RenderContext& context, TextureDescription const&);
+        void createTexture(RenderContext& context, const TextureDescription& description);
 
         void lock(RenderContext& context);
         void unlock(RenderContext& context);
