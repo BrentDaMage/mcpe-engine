@@ -21,8 +21,8 @@ Mesh::Mesh(Mesh&& other)
 }
 
 Mesh::Mesh(const VertexFormat& vertexFormat, unsigned int vertexCount, unsigned int indexCount, uint8_t indexSize, PrimitiveMode primitiveMode, uint8_t *data, bool temporary)
-    : m_vertexCount(vertexCount)
-    , m_indexCount(indexCount)
+    : m_indexCount(indexCount)
+    , m_vertexCount(vertexCount)
     , m_primitiveMode(primitiveMode)
     , m_vertexFormat(vertexFormat)
     , m_indexSize(indexSize)
@@ -48,8 +48,8 @@ Mesh::~Mesh()
 
 void Mesh::_move(Mesh& other)
 {
-    this->m_vertexBuffer = std::move(other.m_vertexBuffer);
     this->m_indexBuffer = std::move(other.m_indexBuffer);
+    this->m_vertexBuffer = std::move(other.m_vertexBuffer);
     this->m_vertexCount = other.m_vertexCount;
     this->m_vertexFormat = other.m_vertexFormat;
     this->m_indexCount = other.m_indexCount;
