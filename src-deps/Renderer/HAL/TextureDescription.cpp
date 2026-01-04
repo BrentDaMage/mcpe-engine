@@ -8,5 +8,5 @@ TextureDescription::TextureDescription()
     mipCount = 1;
     bWrap = false;
     filteringLevel = TEXTURE_FILTERING_POINT;
-    bExcludeGpu = false;
+    bIsStaging = false;
 }
