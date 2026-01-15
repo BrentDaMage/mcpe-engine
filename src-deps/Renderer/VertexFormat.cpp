@@ -29,7 +29,7 @@ void VertexFormat::enableField(VertexField vertexField)
     if (hasField(vertexField)) return;
 
     m_fieldOffset[vertexField] = m_vertexSize;
-    m_vertexSize = m_vertexSize + VertexFormat::FieldSize[vertexField];
+    m_vertexSize += VertexFormat::FieldSize[vertexField];
     if (m_vertexSize != 4 * (m_vertexSize >> 2))
         m_vertexSize  = 4 * (m_vertexSize >> 2) + 4;
     m_fieldMask |= (1 << vertexField);
